@@ -15,7 +15,7 @@ var sceneName = "test";
 // Audio Files
 var audioFilenames = [
 	{
-		src: "water.wav",
+		name: "water",
 		elem: "sloth"
 	}
 ];
@@ -39,23 +39,34 @@ var width 	= window.innerWidth,
 var circleWidth = width / magGlassScale;
 // Intialize globally needed variables and position
 // magnifying glass in the middle of the page
+var audioContext;
 var sloth;
+var vol;
 var circleX 	= width / 2;
 var circleY 	= height / 2;
 // Various booleans for settings
 var success = false;
 var audio 	= true;
-// Add all the audio files to the HTML
-if (audio) {
-	for (var i in audioFilenames) {
-		$("body").append($("<audio src=" + audioSrc + audioFilenames[i].src + " id=" + audioFilenames[i].src + " autoplay loop />"));
-	}
-}
 // Set canvas width and height
 $("#outside").attr("width", width).attr("height", height);
 // Initialize canvas
 var foreground = document.getElementById("outside");
 var ctx = foreground.getContext("2d");
+
+//
+// Audio
+//
+
+// Create an audio context
+try {
+	window.AudioContext = window.AudioContext || window.webkitAudioContext;
+	audioContext = new AudioContext();
+} catch(e) {
+	// WebAudio API not supported
+	throw new Error('Web Audio API not supported.');
+}
+var source = audioContext.createBufferSource();
+loadSounds(audioFilenames);
 
 // ------------------------------------------
 //
@@ -159,15 +170,53 @@ function onMouseMove(evt) {
 		}
 	}
 }
-
-function directionalAudio(event, elem) {
-	var audio 	= document.getElementById(elem.src);
+// Load several sounds from a JSON list
+function loadSounds(list) {
+	var len = list.length, i;
+	for (i in list) {
+		if (list.hasOwnProperty(i)) {
+			loadSound(list[i]);
+		}
+	}
+}
+// Load a single sound
+function loadSound(obj) {
+	var request = new XMLHttpRequest();
+	request.open('GET', audioSrc + obj.name + ".wav", true);
+	request.responseType = 'arraybuffer';
+	request.onload = function() {
+		// request.response is encoded... so decode it now
+		audioContext.decodeAudioData(request.response, function(buffer) {
+			// Save the buffer to the corresponding sound
+			obj.buffer = buffer;
+			// When it is loaded, play the sound
+			playSoundObj(obj);
+		}, function(err) {
+		  throw new Error(err);
+		});
+	}
+	request.send();
+}
+// Play a sound
+function playSoundObj(obj) {
+	// Gets the source
+	source = audioContext.createBufferSource();
+	source.buffer = obj.buffer;
+	// Sets initial gain to 1
+	obj.gainNode = audioContext.createGain();
+	obj.gainNode.gain.value = 1;
+	// Loops and starts the sound
+	source.loop = true;
+	source.start(0);
+}
+// Adjusts volume of sound based on how far away the mouse is from the source point
+function directionalAudio(event, obj) {
 	var cursorX = event.pageX;
 	var cursorY = event.pageY;
-	var audioRect = document.getElementById(elem.elem).getBoundingClientRect();
+	var audioRect = document.getElementById(obj.elem).getBoundingClientRect();
 	var audioX 	= audioRect.left + audioRect.width / 2;
 	var audioY 	= audioRect.top + audioRect.height / 2;
-	var vol;
+	var prevVol = vol;
 
 	// cX/Y = cursorX/Y, aX/Y = audioX/Y
 	//
@@ -218,6 +267,18 @@ function directionalAudio(event, elem) {
 		if (vol < 0.05) {
 			vol = 0;
 		}
-		audio.volume = vol;
+		console.log(vol);
+		// Create a gain (volume) node
+		obj.gainNode = audioContext.createGain();
+		source.connect(obj.gainNode);
+		// Set gain
+		console.log("vol", vol);
+		obj.gainNode.gain.value = obj.gainNode.gain.value * prevVol;
+		console.log("BEFORE obj.gainNode.gain.value", obj.gainNode.gain.value);
+		obj.gainNode.gain.value = vol;
+		console.log("AFTER obj.gainNode.gain.value", obj.gainNode.gain.value);
+		obj.gainNode.connect(audioContext.destination);
+	} else {
+		console.log("aui");
 	}
 }
