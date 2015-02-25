@@ -12,6 +12,13 @@ var insideBackgroundColor = "#1875b8";
 var magGlassOuterRingColor = "black";
 // Scene
 var sceneName = "test";
+// Audio Files
+var audioFilenames = [
+	{
+		src: "water.wav",
+		elem: "sloth"
+	}
+];
 
 // ------------------------------------------
 //
@@ -20,11 +27,11 @@ var sceneName = "test";
 //
 
 // Put together src urls for easy scene swapping
-var src = "../scenes/" + sceneName;
+var src 				= "../scenes/" + sceneName;
 var animationSrc 		= src + "/animation/animation.gif";
 var sceneryOutsideSrc 	= src + "/sceneries/outside.svg";
 var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
-var audioSrc 			= src + "/audio";
+var audioSrc 			= src + "/audio/";
 // Just to save a few characters
 var width 	= window.innerWidth,
 	height 	= window.innerHeight;
@@ -33,11 +40,17 @@ var circleWidth = width / magGlassScale;
 // Intialize globally needed variables and position
 // magnifying glass in the middle of the page
 var sloth;
-var audioPos;
 var circleX 	= width / 2;
 var circleY 	= height / 2;
+// Various booleans for settings
+var success = false;
+var audio 	= true;
 // Add all the audio files to the HTML
-// addAudio(audioSrc);
+if (audio) {
+	for (var i in audioFilenames) {
+		$("body").append($("<audio src=" + audioSrc + audioFilenames[i].src + " id=" + audioFilenames[i].src + " autoplay loop />"));
+	}
+}
 // Set canvas width and height
 $("#outside").attr("width", width).attr("height", height);
 // Initialize canvas
@@ -53,7 +66,6 @@ var ctx = foreground.getContext("2d");
 // Load the inside, then specify target
 $("#inside").load(sceneryInsideSrc, function() {
 	sloth = document.getElementById("sloth").getBoundingClientRect();
-	audioPos = sloth;
 });
 // Draw Outside first so you can't see the
 // inside whilst the outside is loading
@@ -80,14 +92,16 @@ $(document).ready(function() {
 // Add interactivity
 //
 //
-
-$(document).mousemove(onMouseMove);
-$(document).click(event, function() {
-	// If the sloth is clicked show success message
-	if ((event.x > sloth.left && event.x < sloth.left + sloth.width) && (event.y > sloth.top && event.y < sloth.top + sloth.height)) {
-		$(".success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
-	}
-})
+if (success === false) {
+	$(document).mousemove(onMouseMove);
+	$(document).click(event, function() {
+		// If the sloth is clicked show success message
+		if ((event.x > sloth.left && event.x < sloth.left + sloth.width) && (event.y > sloth.top && event.y < sloth.top + sloth.height)) {
+			$(".success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
+			success === true;
+		}
+	});
+}
 
 // ------------------------------------------
 //
@@ -139,27 +153,20 @@ function onMouseMove(evt) {
 	circleY = evt.pageY;
 	// Then redraw the canvas
 	draw();
-	directionalAudio(evt);
-}
-// Get all audio files and append them in the HTML
-function addAudio(src) {
-	$.ajax({
-	    url: src,
-	    success: function (data) {
-	        $(data).find("a:contains(" + ".wav" + ")").each(function () {
-	            var filename = this.href.replace(window.location.host, "").replace("http:///", "");
-	            $("body").append($("<audio src=" + src + filename + " autoplay loop />"));
-	        });
-	    }
-	});
+	if (audio) {
+		for (var i in audioFilenames) {
+			directionalAudio(evt, audioFilenames[i]);
+		}
+	}
 }
 
-function directionalAudio(event) {
-	var audio 	= document.getElementById("water");
+function directionalAudio(event, elem) {
+	var audio 	= document.getElementById(elem.src);
 	var cursorX = event.pageX;
 	var cursorY = event.pageY;
-	var audioX 	= audioPos.left + audioPos.width / 2;
-	var audioY 	= audioPos.top + audioPos.height / 2;
+	var audioRect = document.getElementById(elem.elem).getBoundingClientRect();
+	var audioX 	= audioRect.left + audioRect.width / 2;
+	var audioY 	= audioRect.top + audioRect.height / 2;
 	var vol;
 
 	// cX/Y = cursorX/Y, aX/Y = audioX/Y
@@ -186,23 +193,23 @@ function directionalAudio(event) {
 	// Top right quadrant
 	} else if (cursorX > audioX && cursorY < audioY){
 		if (cursorX / audioX > audioY / cursorY) {
-			vol = Math.pow(audioX / cursorX, 4);
+			vol = audioX / cursorX;
 		} else {
 			vol = cursorY / audioY;
 		}
 	// Bottom right quadrant
 	} else if (cursorX > audioX && cursorY > audioY) {
 		if (audioX / cursorX < audioY / cursorY) {
-			vol = Math.pow(audioX / cursorX, 4);
+			vol = audioX / cursorX;
 		} else {
-			vol = Math.pow(audioY / cursorY, 4);
+			vol = audioY / cursorY;
 		}
 	// Bottom left quadrant
 	} else if (cursorX < audioX && cursorY > audioY) {
 		if (audioX / cursorX > cursorY / audioY) {
 			vol = cursorX / audioX;
 		} else {
-			vol = Math.pow(audioY / cursorY, 4);
+			vol = audioY / cursorY;
 		}
 	} else {
 		vol = 0;
