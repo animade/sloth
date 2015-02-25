@@ -1,4 +1,67 @@
-
 @import "base/base";
 
 @import "modules/toy";
+
+// Z-INDEX LAYERS
+// -------------------
+// Success Message (2)
+// Foreground (1)
+// Animations (0)
+// Background (-1)
+
+// Hide all scrollbars to avoid inconsistencies
+// in width & height between CSS and JS
+body {
+	margin: 0;
+	overflow: hidden;
+}
+
+body:hover {
+	cursor: crosshair;
+}
+
+#inside {
+	z-index: -1;
+}
+
+// Make the inside of the scenery the same size as the outside
+#inside svg,
+#animations img {
+	width: 100%;
+	height: calc(100vw * (1080 / 1550));
+}
+
+#animations {
+	z-index: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#outside {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+
+.success {
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: #7ec0ee;
+    opacity: 0;
+    text-align: center;
+    transition: opacity 200ms ease-in-out;
+    -moz-transition: opacity 200ms ease-in-out;
+    -webkit-transition: opacity 200ms ease-in-out;
+}
+
+.success:hover {
+	cursor: default;
+}
