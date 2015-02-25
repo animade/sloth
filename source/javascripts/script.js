@@ -67,6 +67,7 @@ try {
 }
 var source = audioContext.createBufferSource();
 loadSounds(audioFilenames);
+var gainNode = audioContext.createGain();
 
 // ------------------------------------------
 //
@@ -269,15 +270,14 @@ function directionalAudio(event, obj) {
 		}
 		console.log(vol);
 		// Create a gain (volume) node
-		obj.gainNode = audioContext.createGain();
-		source.connect(obj.gainNode);
+		source.connect(gainNode);
 		// Set gain
 		console.log("vol", vol);
-		obj.gainNode.gain.value = obj.gainNode.gain.value * prevVol;
-		console.log("BEFORE obj.gainNode.gain.value", obj.gainNode.gain.value);
-		obj.gainNode.gain.value = vol;
-		console.log("AFTER obj.gainNode.gain.value", obj.gainNode.gain.value);
-		obj.gainNode.connect(audioContext.destination);
+		gainNode.gain.value = gainNode.gain.value * prevVol;
+		console.log("BEFORE gainNode.gain.value", gainNode.gain.value);
+		gainNode.gain.value = vol;
+		console.log("AFTER gainNode.gain.value", gainNode.gain.value);
+		gainNode.connect(audioContext.destination);
 	} else {
 		console.log("aui");
 	}
