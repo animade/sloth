@@ -13,12 +13,7 @@ var magGlassOuterRingColor = "black";
 // Scene
 var sceneName = "test";
 // Audio Files
-var audioFilenames = [
-	{
-		name: "water",
-		elem: "sloth"
-	}
-];
+var audioFilenames = [{name: "water", elem: "sloth"}];
 
 // ------------------------------------------
 //
@@ -52,21 +47,14 @@ $("#outside").attr("width", width).attr("height", height);
 // Initialize canvas
 var foreground = document.getElementById("outside");
 var ctx = foreground.getContext("2d");
-
-//
-// Audio
-//
-
 // Create an audio context
-try {
-	window.AudioContext = window.AudioContext || window.webkitAudioContext;
-	audioContext = new AudioContext();
-} catch(e) {
-	// WebAudio API not supported
-	throw new Error('Web Audio API not supported.');
-}
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+audioContext = new AudioContext();
+// Create a source from the audio context
 var source = audioContext.createBufferSource();
+// Load the sounds
 loadSounds(audioFilenames);
+// Create a gain (volume) node (controller)
 var gainNode = audioContext.createGain();
 
 // ------------------------------------------
@@ -205,7 +193,7 @@ function playSoundObj(obj) {
 	source.buffer = obj.buffer;
 	// Sets initial gain to 1
 	obj.gainNode = audioContext.createGain();
-	obj.gainNode.gain.value = 1;
+	obj.gainNode.gain.value = 0.2;
 	// Loops and starts the sound
 	source.loop = true;
 	source.start(0);
@@ -256,7 +244,7 @@ function directionalAudio(event, obj) {
 		}
 	// Bottom left quadrant
 	} else if (cursorX < audioX && cursorY > audioY) {
-		if (audioX / cursorX > cursorY / audioY) {
+		if (cursorX / audioX < audioY / cursorY) {
 			vol = cursorX / audioX;
 		} else {
 			vol = audioY / cursorY;
@@ -265,13 +253,9 @@ function directionalAudio(event, obj) {
 		vol = 0;
 	}
 	if (vol < 1) {
-		if (vol < 0.05) {
-			vol = 0;
-		}
 		// Create a gain (volume) node
 		source.connect(gainNode);
 		// Set gain
-		gainNode.gain.value = gainNode.gain.value * prevVol;
 		gainNode.gain.value = vol;
 		gainNode.connect(audioContext.destination);
 	}
