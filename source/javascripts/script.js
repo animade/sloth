@@ -268,17 +268,11 @@ function directionalAudio(event, obj) {
 		if (vol < 0.05) {
 			vol = 0;
 		}
-		console.log(vol);
 		// Create a gain (volume) node
 		source.connect(gainNode);
 		// Set gain
-		console.log("vol", vol);
 		gainNode.gain.value = gainNode.gain.value * prevVol;
-		console.log("BEFORE gainNode.gain.value", gainNode.gain.value);
 		gainNode.gain.value = vol;
-		console.log("AFTER gainNode.gain.value", gainNode.gain.value);
 		gainNode.connect(audioContext.destination);
-	} else {
-		console.log("aui");
 	}
 }
