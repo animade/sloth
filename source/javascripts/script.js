@@ -90,7 +90,7 @@ $(document).ready(function() {
 
 // ------------------------------------------
 //
-// Add interactivity
+// Add interactivity and responsiveness
 //
 //
 
@@ -103,6 +103,13 @@ if (success === false) {
 			audio = false;
 			$(".success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
 		}
+	});
+	$(window).resize(function(){
+		width 	= window.innerWidth;
+		height 	= window.innerHeight;
+		foreground.width = width;
+		foreground.height = height;
+		draw();
 	});
 }
 
