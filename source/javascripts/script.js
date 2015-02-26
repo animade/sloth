@@ -33,7 +33,7 @@ var audioSrc 			= src + "/audio/";
 var width 	= window.innerWidth,
 	height 	= window.innerHeight;
 // Calculate the width of the magnifying glass
-var circleWidth = width / magGlassScale;
+var circleWidth;
 // Intialize globally needed variables and position
 // magnifying glass in the middle of the page
 var audioContext;
@@ -65,7 +65,7 @@ loadSounds(audioFilenames);
 //
 //
 
-// Load the inside, then specify target
+// Load the inside, inject it into the HTML and then specify target
 $("#inside").load(sceneryInsideSrc, function() {
 	sloth = document.getElementById("sloth").getBoundingClientRect();
 });
@@ -96,9 +96,11 @@ $(document).ready(function() {
 
 if (success === false) {
 	$(document).mousemove(onMouseMove);
-	$(document).on(event, function() {
+	$(document).click(function(evt) {
+    console.log("evt.clientX", evt.clientX, "evt.clientY", evt.clientY);
+    console.log(sloth);
 		// If the sloth is clicked show success message
-		if ((event.x > sloth.left && event.x < sloth.left + sloth.width) && (event.y > sloth.top && event.y < sloth.top + sloth.height)) {
+		if ((evt.clientX > sloth.left && evt.clientX < sloth.left + sloth.width) && (evt.clientY > sloth.top && evt.clientY < sloth.top + sloth.height)) {
 			success = true;
 			audio = false;
 			$(".success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
@@ -109,6 +111,7 @@ if (success === false) {
 		height 	= window.innerHeight;
 		foreground.width = width;
 		foreground.height = height;
+    sloth = document.getElementById("sloth").getBoundingClientRect();
 		draw();
 	});
 }
@@ -123,6 +126,7 @@ if (success === false) {
 function draw() {
 	// Redraw area where circle was before
 	ctx.clearRect(prevCircleX - circleWidth * 1.5, prevCircleY - circleWidth * 1.5, circleWidth * 3, circleWidth * 3);
+  circleWidth = width / magGlassScale;
 	// Draw magnifying glass
 	ctx.beginPath();
 		ctx.arc(circleX,circleY,circleWidth,0,Math.PI*2,true);
@@ -206,6 +210,8 @@ function loadSound(obj) {
 			obj.gainNode = audioContext.createGain();
 			// Set loaded to true and play the audio
 			obj.loaded = true;
+      // Get position of origin of audio
+      obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
 			playSoundObj(obj);
 		});
 	}
@@ -225,9 +231,8 @@ function directionalAudio(event, obj) {
 	// Variables used throughout this function only
 	var cursorX = event.pageX;
 	var cursorY = event.pageY;
-	var audioRect = document.getElementById(obj.elem).getBoundingClientRect();
-	var audioX 	= audioRect.left + audioRect.width / 2;
-	var audioY 	= audioRect.top + audioRect.height / 2;
+	var audioX 	= obj.audioRect.left + obj.audioRect.width / 2;
+	var audioY 	= obj.audioRect.top + obj.audioRect.height / 2;
 
 	// cX/Y = cursorX/Y, aX/Y = audioX/Y
 	//

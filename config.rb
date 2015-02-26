@@ -1,5 +1,6 @@
 # Reload the browser automatically whenever files change
 configure :development do
+  activate :autoprefixer
   activate :livereload
 end
 
@@ -20,6 +21,11 @@ configure :build do
 
   # Use relative URLs
   activate :relative_assets
+
+  # Autoprefix CSS
+  activate :autoprefixer do |config|
+    config.browsers = ['last 2 versions', 'Explorer >= 9']
+  end
 
   # Or use a different image path
   # set :http_prefix, "/Content/images/"
