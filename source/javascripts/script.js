@@ -175,7 +175,9 @@ function onMouseMove(evt) {
 	// based on position. Otherwise turn off audio.
 	if (audio) {
 		for (var i in audioFilenames) {
-			directionalAudio(evt, audioFilenames[i]);
+      if (audioFilenames[i].loaded) {
+        directionalAudio(evt, audioFilenames[i]);
+      }
 		}
 	} else {
 		source.stop();
