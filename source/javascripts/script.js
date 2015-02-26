@@ -41,6 +41,8 @@ var sloth;
 var vol;
 var circleX 	= width / 2;
 var circleY 	= height / 2;
+var prevCircleX;
+var prevCircleY;
 // Various booleans for settings
 var success = false;
 var audio 	= true;
@@ -112,9 +114,8 @@ if (success === false) {
 
 // Main function, called whenever the mouse is moved
 function draw() {
-	// Clear whole canvas
-	foreground.width = width;
-	foreground.height = height;
+	// Redraw area where circle was before
+	ctx.clearRect(prevCircleX - circleWidth * 1.5, prevCircleY - circleWidth * 1.5, circleWidth * 3, circleWidth * 3);
 	// Draw magnifying glass
 	ctx.beginPath();
 		ctx.arc(circleX,circleY,circleWidth,0,Math.PI*2,true);
@@ -128,6 +129,8 @@ function draw() {
 		ctx.stroke();
 		ctx.strokeStyle = magGlassOuterRingColor;
 	ctx.closePath();
+	prevCircleX = circleX;
+	prevCircleY = circleY;
 }
 // Called to clip the image
 function clippedImage(img) {
