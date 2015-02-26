@@ -81,7 +81,7 @@ sceneryOutside.src = sceneryOutsideSrc;
 // Add animation after the document is loaded
 $(document).ready(function() {
 	var img = new Image();
-	var div = document.getElementById('animations');
+	var div = document.getElementById('animationwrapper');
 	img.onload = function() {
 	  div.appendChild(img);
 	};
@@ -147,13 +147,20 @@ function clippedImage(img) {
 		ctx.clip();
 		// Calculate height for correct aspect ratio
 		var imgHeight = width * (img.height / img.width);
+		var imgWidth = width;
+		var imgX = 0;
+		if (imgHeight > height) {
+			imgHeight = height;
+			imgWidth = imgHeight * (img.width / img.height);
+			imgX = (width - imgWidth) / 2;
+		}
 		// Where the image isn't draw background
 	  	if (imgHeight < height){
 	    	ctx.fillStyle = outsideBackgroundColor;
 	    	ctx.fill();
 	  	}
 	  	// Draw the image
-	  	ctx.drawImage(img,0,height - imgHeight,width,imgHeight);
+	  	ctx.drawImage(img,imgX,height - imgHeight,imgWidth,imgHeight);
 	// Restore everything that hasn't changed
   	ctx.restore();
 }

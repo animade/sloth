@@ -14,6 +14,7 @@
 body {
 	margin: 0;
 	overflow: hidden;
+	background-color: #1875b8;
 }
 
 body:hover {
@@ -23,29 +24,33 @@ body:hover {
 #inside {
 	z-index: -1;
 	position: absolute;
-	top: 0;
+	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 100%;
+	height: auto;
 }
 
 // Make the inside of the scenery the same size as the outside
 #inside svg,
-#animations img {
-	position: absolute;
-	bottom: 0;
-	left: 0;
+#animationwrapper img {
 	width: 100%;
 	height: calc(100vw * (1080 / 1550));
+	max-height: 100vh;
 }
 
 #animations {
 	z-index: 0;
 	position: absolute;
-	top: 0;
+	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 100%;
+	height: auto;
+}
+
+#animationwrapper {
+	position: relative;
+	margin: 0 auto;
+	max-width: 1550px;
 }
 
 #outside {
