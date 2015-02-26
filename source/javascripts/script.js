@@ -13,7 +13,9 @@ var magGlassOuterRingColor = "black";
 // Scene
 var sceneName = "test";
 // Audio Files
-var audioFilenames = [{name: "water", elem: "sloth"}];
+var audioFilenames = [
+	{ name: "water", elem: "sloth", vol: 0.5, loaded: false }
+];
 
 // ------------------------------------------
 //
@@ -54,8 +56,6 @@ audioContext = new AudioContext();
 var source = audioContext.createBufferSource();
 // Load the sounds
 loadSounds(audioFilenames);
-// Create a gain (volume) node (controller)
-var gainNode = audioContext.createGain();
 
 // ------------------------------------------
 //
@@ -71,7 +71,6 @@ $("#inside").load(sceneryInsideSrc, function() {
 // inside whilst the outside is loading
 sceneryOutside = new Image();
 sceneryOutside.onload = function() {
-	// IMPORTANT
 	// When the image of the outside is loaded
 	// begin drawing
 	draw();
@@ -92,13 +91,15 @@ $(document).ready(function() {
 // Add interactivity
 //
 //
+
 if (success === false) {
 	$(document).mousemove(onMouseMove);
 	$(document).click(event, function() {
 		// If the sloth is clicked show success message
 		if ((event.x > sloth.left && event.x < sloth.left + sloth.width) && (event.y > sloth.top && event.y < sloth.top + sloth.height)) {
+			success = true;
+			audio = false;
 			$(".success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
-			success === true;
 		}
 	});
 }
@@ -153,10 +154,14 @@ function onMouseMove(evt) {
 	circleY = evt.pageY;
 	// Then redraw the canvas
 	draw();
+	// If audio is on, check if we need to change gain
+	// based on position. Otherwise turn off audio.
 	if (audio) {
 		for (var i in audioFilenames) {
 			directionalAudio(evt, audioFilenames[i]);
 		}
+	} else {
+		source.stop();
 	}
 }
 // Load several sounds from a JSON list
@@ -178,10 +183,11 @@ function loadSound(obj) {
 		audioContext.decodeAudioData(request.response, function(buffer) {
 			// Save the buffer to the corresponding sound
 			obj.buffer = buffer;
-			// When it is loaded, play the sound
+			// Add a gain node
+			obj.gainNode = audioContext.createGain();
+			// Set loaded to true and play the audio
+			obj.loaded = true;
 			playSoundObj(obj);
-		}, function(err) {
-		  throw new Error(err);
 		});
 	}
 	request.send();
@@ -191,21 +197,18 @@ function playSoundObj(obj) {
 	// Gets the source
 	source = audioContext.createBufferSource();
 	source.buffer = obj.buffer;
-	// Sets initial gain to 1
-	obj.gainNode = audioContext.createGain();
-	obj.gainNode.gain.value = 0.2;
 	// Loops and starts the sound
 	source.loop = true;
 	source.start(0);
 }
 // Adjusts volume of sound based on how far away the mouse is from the source point
 function directionalAudio(event, obj) {
+	// Variables used throughout this function only
 	var cursorX = event.pageX;
 	var cursorY = event.pageY;
 	var audioRect = document.getElementById(obj.elem).getBoundingClientRect();
 	var audioX 	= audioRect.left + audioRect.width / 2;
 	var audioY 	= audioRect.top + audioRect.height / 2;
-	var prevVol = vol;
 
 	// cX/Y = cursorX/Y, aX/Y = audioX/Y
 	//
@@ -252,11 +255,12 @@ function directionalAudio(event, obj) {
 	} else {
 		vol = 0;
 	}
-	if (vol < 1 && vol > 0) {
-		// Create a gain (volume) node
-		source.connect(gainNode);
-		// Set gain
-		gainNode.gain.value = vol;
-		gainNode.connect(audioContext.destination);
+	if (vol < 1 && vol > 0 && obj.loaded === true) {
+		// Connect all the nodes to the source
+		source.connect(obj.gainNode);
+		// Set gain (volume)
+		obj.gainNode.gain.value = vol * 2 * obj.vol;
+		// Connect all the nodes to the destination
+		obj.gainNode.connect(audioContext.destination);
 	}
 }
