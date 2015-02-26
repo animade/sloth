@@ -96,7 +96,7 @@ $(document).ready(function() {
 
 if (success === false) {
 	$(document).mousemove(onMouseMove);
-	$(document).click(event, function() {
+	$(document).on(event, function() {
 		// If the sloth is clicked show success message
 		if ((event.x > sloth.left && event.x < sloth.left + sloth.width) && (event.y > sloth.top && event.y < sloth.top + sloth.height)) {
 			success = true;

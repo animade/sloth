@@ -24,4 +24,9 @@ title: Page Title
 %div.success
   %h1 SUCCESS
 
+:javascript
+  if (!Modernizr.webaudio) {
+    $("body").append("<script src='javascripts/waapisim.js' />");
+  }
+
 %script{:src => "javascripts/script.js"}
