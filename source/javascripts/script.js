@@ -231,28 +231,28 @@ function directionalAudio(event, obj) {
 	// Top right quadrant
 	} else if (cursorX > audioX && cursorY < audioY){
 		if (cursorX / audioX > audioY / cursorY) {
-			vol = audioX / cursorX;
+			vol = (audioX - (cursorX - audioX)) / audioX;
 		} else {
 			vol = cursorY / audioY;
 		}
 	// Bottom right quadrant
 	} else if (cursorX > audioX && cursorY > audioY) {
 		if (audioX / cursorX < audioY / cursorY) {
-			vol = audioX / cursorX;
+			vol = (audioX - (cursorX - audioX)) / audioX;
 		} else {
-			vol = audioY / cursorY;
+			vol = (audioY - (cursorY - audioY)) / audioY;
 		}
 	// Bottom left quadrant
 	} else if (cursorX < audioX && cursorY > audioY) {
 		if (cursorX / audioX < audioY / cursorY) {
 			vol = cursorX / audioX;
 		} else {
-			vol = audioY / cursorY;
+			vol = (audioY - (cursorY - audioY)) / audioY;
 		}
 	} else {
 		vol = 0;
 	}
-	if (vol < 1) {
+	if (vol < 1 && vol > 0) {
 		// Create a gain (volume) node
 		source.connect(gainNode);
 		// Set gain
