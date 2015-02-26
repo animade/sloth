@@ -153,7 +153,7 @@ function clippedImage(img) {
 	    	ctx.fill();
 	  	}
 	  	// Draw the image
-	  	ctx.drawImage(img,0,0,width,imgHeight);
+	  	ctx.drawImage(img,0,height - imgHeight,width,imgHeight);
 	// Restore everything that hasn't changed
   	ctx.restore();
 }
