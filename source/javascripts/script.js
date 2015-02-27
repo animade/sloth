@@ -14,7 +14,8 @@ var magGlassOuterRingColor = "black";
 var sceneName = "test";
 // Audio Files
 var audioFilenames = [
-	{ name: "water", elem: "sloth", vol: 0.5, loaded: false }
+	{ name: "water", elem: "sloth", vol: 0.5, loaded: false, dirAudio: true },
+  { name: "wind", elem: "nightingale", vol: 1, loaded: false, dirAudio: true}
 ];
 
 // ------------------------------------------
@@ -51,13 +52,15 @@ $("#outside").attr("width", width).attr("height", height);
 // Initialize canvas
 var foreground = document.getElementById("outside");
 var ctx = foreground.getContext("2d");
-// Create an audio context
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
-audioContext = new AudioContext();
-// Create a source from the audio context
-var source = audioContext.createBufferSource();
-// Load the sounds
-loadSounds(audioFilenames);
+if (audio) {
+  // Create an audio context
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  audioContext = new AudioContext();
+  // Create a source from the audio context
+  var source = audioContext.createBufferSource();
+  // Load the sounds
+  loadSounds(audioFilenames);
+}
 
 // ------------------------------------------
 //
@@ -179,7 +182,7 @@ function onMouseMove(evt) {
 	// based on position. Otherwise turn off audio.
 	if (audio) {
 		for (var i in audioFilenames) {
-      if (audioFilenames[i].loaded) {
+      if (audioFilenames[i].loaded && audioFilenames[i].dirAudio) {
         directionalAudio(evt, audioFilenames[i]);
       }
 		}
@@ -211,7 +214,12 @@ function loadSound(obj) {
 			// Set loaded to true and play the audio
 			obj.loaded = true;
       // Get position of origin of audio
-      obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
+      if (obj.dirAudio) {
+        obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
+        obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
+        obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
+      }
+      obj.gainNode.gain.value = 0 ;
 			playSoundObj(obj);
 		});
 	}
@@ -231,50 +239,48 @@ function directionalAudio(event, obj) {
 	// Variables used throughout this function only
 	var cursorX = event.pageX;
 	var cursorY = event.pageY;
-	var audioX 	= obj.audioRect.left + obj.audioRect.width / 2;
-	var audioY 	= obj.audioRect.top + obj.audioRect.height / 2;
 
 	// cX/Y = cursorX/Y, aX/Y = audioX/Y
 	//
 	// cX < aX	|	cX > aX
-	//   &&		|	  &&
+	//   &&		  |	  &&
 	// cY < aY	|	cY < aY
-	//			|
+	//			    |
 	// -------- + --------> x
-	//			|
+	//			    |
 	// cX < aX	|	cX > aX
-	//   &&		|	  &&
+	//   &&		  |	  &&
 	// cY > aY	|	cY > aY
-	//			v
-	//			y
+	//			    v
+	//			    y
 
 	// Top left quadrant
-	if (cursorX < audioX && cursorY < audioY) {
-		if (audioX / cursorX > audioY / cursorY) {
-			vol = cursorX / audioX;
+	if (cursorX < obj.audioX && cursorY < obj.audioY) {
+		if (obj.audioX / cursorX > obj.audioY / cursorY) {
+			vol = cursorX / obj.audioX;
 		} else {
-			vol = cursorY/ audioY;
+			vol = cursorY/ obj.audioY;
 		}
 	// Top right quadrant
-	} else if (cursorX > audioX && cursorY < audioY){
-		if (cursorX / audioX > audioY / cursorY) {
-			vol = (audioX - (cursorX - audioX)) / audioX;
+	} else if (cursorX > obj.audioX && cursorY < obj.audioY){
+		if (cursorX / obj.audioX > obj.audioY / cursorY) {
+			vol = (obj.audioX - (cursorX - obj.audioX)) / obj.audioX;
 		} else {
-			vol = cursorY / audioY;
+			vol = cursorY / obj.audioY;
 		}
 	// Bottom right quadrant
-	} else if (cursorX > audioX && cursorY > audioY) {
-		if (audioX / cursorX < audioY / cursorY) {
-			vol = (audioX - (cursorX - audioX)) / audioX;
+	} else if (cursorX > obj.audioX && cursorY > obj.audioY) {
+		if (obj.audioX / cursorX < obj.audioY / cursorY) {
+			vol = (obj.audioX - (cursorX - obj.audioX)) / obj.audioX;
 		} else {
-			vol = (audioY - (cursorY - audioY)) / audioY;
+			vol = (obj.audioY - (cursorY - obj.audioY)) / obj.audioY;
 		}
 	// Bottom left quadrant
-	} else if (cursorX < audioX && cursorY > audioY) {
-		if (cursorX / audioX < audioY / cursorY) {
-			vol = cursorX / audioX;
+	} else if (cursorX < obj.audioX && cursorY > obj.audioY) {
+		if (cursorX / obj.audioX < obj.audioY / cursorY) {
+			vol = cursorX / obj.audioX;
 		} else {
-			vol = (audioY - (cursorY - audioY)) / audioY;
+			vol = (obj.audioY - (cursorY - obj.audioY)) / obj.audioY;
 		}
 	} else {
 		vol = 0;
