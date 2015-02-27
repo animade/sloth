@@ -14,8 +14,8 @@ var magGlassOuterRingColor = "black";
 var sceneName = "test";
 // Audio Files
 var audioFilenames = [
-	{ name: "water", elem: "sloth", vol: 0.5, loaded: false, dirAudio: true },
-  { name: "wind", elem: "nightingale", vol: 1, loaded: false, dirAudio: true}
+	{ name: "water", elem: "sloth", vol: 1, loaded: false, dirAudio: true },
+    { name: "wind", elem: "nightingale", vol: 0.5, loaded: false, dirAudio: true}
 ];
 
 // ------------------------------------------
@@ -44,6 +44,7 @@ var circleX 	= width / 2;
 var circleY 	= height / 2;
 var prevCircleX;
 var prevCircleY;
+var pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
 // Various booleans for settings
 var success = false;
 var audio 	= true;
@@ -53,13 +54,13 @@ $("#outside").attr("width", width).attr("height", height);
 var foreground = document.getElementById("outside");
 var ctx = foreground.getContext("2d");
 if (audio) {
-  // Create an audio context
-  window.AudioContext = window.AudioContext || window.webkitAudioContext;
-  audioContext = new AudioContext();
-  // Create a source from the audio context
-  var source = audioContext.createBufferSource();
-  // Load the sounds
-  loadSounds(audioFilenames);
+    // Create an audio context
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioContext = new AudioContext();
+    // Create a source from the audio context
+    var source = audioContext.createBufferSource();
+    // Load the sounds
+    loadSounds(audioFilenames);
 }
 
 // ------------------------------------------
@@ -100,8 +101,6 @@ $(document).ready(function() {
 if (success === false) {
 	$(document).mousemove(onMouseMove);
 	$(document).click(function(evt) {
-    console.log("evt.clientX", evt.clientX, "evt.clientY", evt.clientY);
-    console.log(sloth);
 		// If the sloth is clicked show success message
 		if ((evt.clientX > sloth.left && evt.clientX < sloth.left + sloth.width) && (evt.clientY > sloth.top && evt.clientY < sloth.top + sloth.height)) {
 			success = true;
@@ -115,6 +114,7 @@ if (success === false) {
 		foreground.width = width;
 		foreground.height = height;
     sloth = document.getElementById("sloth").getBoundingClientRect();
+    pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
 		draw();
 	});
 }
@@ -129,7 +129,7 @@ if (success === false) {
 function draw() {
 	// Redraw area where circle was before
 	ctx.clearRect(prevCircleX - circleWidth * 1.5, prevCircleY - circleWidth * 1.5, circleWidth * 3, circleWidth * 3);
-  circleWidth = width / magGlassScale;
+    circleWidth = width / magGlassScale;
 	// Draw magnifying glass
 	ctx.beginPath();
 		ctx.arc(circleX,circleY,circleWidth,0,Math.PI*2,true);
@@ -182,17 +182,16 @@ function onMouseMove(evt) {
 	// based on position. Otherwise turn off audio.
 	if (audio) {
 		for (var i in audioFilenames) {
-      if (audioFilenames[i].loaded && audioFilenames[i].dirAudio) {
-        directionalAudio(evt, audioFilenames[i]);
-      }
-		}
+            if (audioFilenames[i].loaded && audioFilenames[i].dirAudio) {
+                directionalAudio(evt, audioFilenames[i]);
+            }
+        }
 	} else {
 		source.stop();
 	}
 }
 // Load several sounds from a JSON list
 function loadSounds(list) {
-	var len = list.length, i;
 	for (i in list) {
 		if (list.hasOwnProperty(i)) {
 			loadSound(list[i]);
@@ -205,22 +204,22 @@ function loadSound(obj) {
 	request.open('GET', audioSrc + obj.name + ".wav", true);
 	request.responseType = 'arraybuffer';
 	request.onload = function() {
-		// request.response is encoded... so decode it now
+		// request.response is encode so decode it now
 		audioContext.decodeAudioData(request.response, function(buffer) {
-			// Save the buffer to the corresponding sound
-			obj.buffer = buffer;
-			// Add a gain node
-			obj.gainNode = audioContext.createGain();
-			// Set loaded to true and play the audio
-			obj.loaded = true;
-      // Get position of origin of audio
-      if (obj.dirAudio) {
-        obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
-        obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
-        obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
-      }
-      obj.gainNode.gain.value = 0 ;
-			playSoundObj(obj);
+		// Save the buffer to the corresponding sound
+		obj.buffer = buffer;
+		// Add a gain node
+		obj.gainNode = audioContext.createGain();
+		// Set loaded to true and play the audio
+		obj.loaded = true;
+        // Get position of origin of audio
+        if (obj.dirAudio) {
+            obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
+            obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
+            obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
+        }
+        obj.gainNode.gain.value = 0 ;
+		playSoundObj(obj);
 		});
 	}
 	request.send();
@@ -243,53 +242,35 @@ function directionalAudio(event, obj) {
 	// cX/Y = cursorX/Y, aX/Y = audioX/Y
 	//
 	// cX < aX	|	cX > aX
-	//   &&		  |	  &&
+	//   &&		|	  &&
 	// cY < aY	|	cY < aY
-	//			    |
+	//			|
 	// -------- + --------> x
-	//			    |
+	//			|
 	// cX < aX	|	cX > aX
-	//   &&		  |	  &&
+	//   &&		|	  &&
 	// cY > aY	|	cY > aY
-	//			    v
-	//			    y
+	//			v
+	//			y
 
 	// Top left quadrant
 	if (cursorX < obj.audioX && cursorY < obj.audioY) {
-		if (obj.audioX / cursorX > obj.audioY / cursorY) {
-			vol = cursorX / obj.audioX;
-		} else {
-			vol = cursorY/ obj.audioY;
-		}
+        vol = (Math.pow((obj.audioX - cursorX), 2) + Math.pow((obj.audioY - cursorY), 2)) / pageDiagonal;
 	// Top right quadrant
 	} else if (cursorX > obj.audioX && cursorY < obj.audioY){
-		if (cursorX / obj.audioX > obj.audioY / cursorY) {
-			vol = (obj.audioX - (cursorX - obj.audioX)) / obj.audioX;
-		} else {
-			vol = cursorY / obj.audioY;
-		}
+        vol = (Math.pow((cursorX - obj.audioX), 2) + Math.pow((obj.audioY - cursorY), 2)) / pageDiagonal;
 	// Bottom right quadrant
 	} else if (cursorX > obj.audioX && cursorY > obj.audioY) {
-		if (obj.audioX / cursorX < obj.audioY / cursorY) {
-			vol = (obj.audioX - (cursorX - obj.audioX)) / obj.audioX;
-		} else {
-			vol = (obj.audioY - (cursorY - obj.audioY)) / obj.audioY;
-		}
+		vol = (Math.pow((cursorX - obj.audioX), 2) + Math.pow((cursorY - obj.audioY), 2)) / pageDiagonal;
 	// Bottom left quadrant
 	} else if (cursorX < obj.audioX && cursorY > obj.audioY) {
-		if (cursorX / obj.audioX < obj.audioY / cursorY) {
-			vol = cursorX / obj.audioX;
-		} else {
-			vol = (obj.audioY - (cursorY - obj.audioY)) / obj.audioY;
-		}
-	} else {
-		vol = 0;
+		vol = (Math.pow((obj.audioX - cursorX), 2) + Math.pow((cursorY - obj.audioY), 2)) / pageDiagonal;
 	}
 	if (vol < 1 && vol > 0 && obj.loaded === true) {
 		// Connect all the nodes to the source
 		source.connect(obj.gainNode);
 		// Set gain (volume)
-		obj.gainNode.gain.value = vol * 2 * obj.vol;
+		obj.gainNode.gain.value = 1 - (vol * obj.vol);
 		// Connect all the nodes to the destination
 		obj.gainNode.connect(audioContext.destination);
 	}
