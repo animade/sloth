@@ -14,8 +14,9 @@ var magGlassOuterRingColor = "black";
 var sceneName = "test";
 // Audio Files
 var audioFilenames = [
-	{ name: "water", elem: "sloth", vol: 1, loaded: false, dirAudio: true },
-    { name: "wind", elem: "nightingale", vol: 0.5, loaded: false, dirAudio: true}
+    { name: "rain", vol: 1, loaded: false, dirAudio: false },
+	{ name: "chatter", elem: "sloth", vol: 1, loaded: false, dirAudio: true },
+    { name: "wind", elem: "nightingale", vol: 1, loaded: false, dirAudio: true}
 ];
 
 // ------------------------------------------
@@ -57,8 +58,6 @@ if (audio) {
     // Create an audio context
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     audioContext = new AudioContext();
-    // Create a source from the audio context
-    var source = audioContext.createBufferSource();
     // Load the sounds
     loadSounds(audioFilenames);
 }
@@ -179,16 +178,14 @@ function onMouseMove(evt) {
 	// Then redraw the canvas
 	draw();
 	// If audio is on, check if we need to change gain
-	// based on position. Otherwise turn off audio.
+	// based on position.
 	if (audio) {
 		for (var i in audioFilenames) {
             if (audioFilenames[i].loaded && audioFilenames[i].dirAudio) {
                 directionalAudio(evt, audioFilenames[i]);
             }
         }
-	} else {
-		source.stop();
-	}
+	} 
 }
 // Load several sounds from a JSON list
 function loadSounds(list) {
@@ -201,37 +198,42 @@ function loadSounds(list) {
 // Load a single sound
 function loadSound(obj) {
 	var request = new XMLHttpRequest();
+    // Create a source from the audio context
+    obj.source = audioContext.createBufferSource();
 	request.open('GET', audioSrc + obj.name + ".wav", true);
 	request.responseType = 'arraybuffer';
 	request.onload = function() {
 		// request.response is encode so decode it now
 		audioContext.decodeAudioData(request.response, function(buffer) {
-		// Save the buffer to the corresponding sound
-		obj.buffer = buffer;
-		// Add a gain node
-		obj.gainNode = audioContext.createGain();
-		// Set loaded to true and play the audio
-		obj.loaded = true;
-        // Get position of origin of audio
-        if (obj.dirAudio) {
-            obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
-            obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
-            obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
-        }
-        obj.gainNode.gain.value = 0 ;
-		playSoundObj(obj);
+    		// Save the buffer to the corresponding sound
+    		obj.buffer = buffer;
+    		// Add a gain node
+    		obj.gainNode = audioContext.createGain();
+    		// Set loaded to true and play the audio
+    		obj.loaded = true;
+            // Get position of origin of audio
+            if (obj.dirAudio) {
+                obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
+                obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
+                obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
+            }
+            obj.gainNode.gain.value = obj.vol;
+    		playSoundObj(obj);
 		});
 	}
 	request.send();
 }
 // Play a sound
 function playSoundObj(obj) {
-	// Gets the source
-	source = audioContext.createBufferSource();
-	source.buffer = obj.buffer;
+	obj.source.buffer = obj.buffer;
+    obj.source.gainNode = audioContext.createGain();
 	// Loops and starts the sound
-	source.loop = true;
-	source.start(0);
+	obj.source.loop = true;
+    obj.source.gainNode.gain.value = obj.vol;
+    if (!obj.dirAudio) {
+        obj.source.connect(audioContext.destination);
+    }
+	obj.source.start(0);
 }
 // Adjusts volume of sound based on how far away the mouse is from the source point
 function directionalAudio(event, obj) {
@@ -268,9 +270,9 @@ function directionalAudio(event, obj) {
 	}
 	if (vol < 1 && vol > 0 && obj.loaded === true) {
 		// Connect all the nodes to the source
-		source.connect(obj.gainNode);
+		obj.source.connect(obj.gainNode);
 		// Set gain (volume)
-		obj.gainNode.gain.value = 1 - (vol * obj.vol);
+		obj.gainNode.gain.value = Math.pow(1 - (vol * obj.vol), 10);
 		// Connect all the nodes to the destination
 		obj.gainNode.connect(audioContext.destination);
 	}

@@ -12,6 +12,8 @@ title: Find the sloth
 
 / Haml
 
+%div#nightingale
+
 %div#controls
 
 %div#inside
@@ -24,9 +26,6 @@ title: Find the sloth
 %div.success
   %h1 SUCCESS
 
-:javascript
-  if (!Modernizr.webaudio) {
-    $("body").append("<script src='javascripts/waapisim.js' />");
-  }
-
+%script{:src => "javascripts/flashcanvas.js"}
+%script{:src => "javascripts/waapisim.js"}
 %script{:src => "javascripts/script.js"}

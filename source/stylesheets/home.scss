@@ -60,6 +60,16 @@ body:hover {
 	z-index: 1;
 }
 
+#nightingale {
+	position: absolute;
+	top: 10vh;
+	left: 10vw;
+	width: 10px;
+	height: 10px;
+	background-color: black;
+	z-index: 20;
+}
+
 .success {
     width: 0;
     height: 0;
