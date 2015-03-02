@@ -282,8 +282,10 @@ function loadSound(obj) {
     		obj.gainNode = audioContext.createGain();
 			// Connect the node to the source
 			obj.source.connect(obj.gainNode);
-			// Connect all the nodes to the destination
+			// Connect the nodes to the destination
 			obj.gainNode.connect(audioContext.destination);
+			// Set Volume to zero
+            obj.gainNode.gain.value = 0;
     		// Set loaded to true and play the audio
     		obj.loaded = true;
             // Get position of origin of audio
@@ -291,9 +293,10 @@ function loadSound(obj) {
                 obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
                 obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
                 obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
+            } else {
+            	// Set volume of non directional Audio files on load
+            	obj.gainNode.gain.value = obj.vol;
             }
-            // Set initial volume
-            obj.gainNode.gain.value = obj.vol;
             // Start playing the sound
     		playSoundObj(obj);
 		});
@@ -303,9 +306,7 @@ function loadSound(obj) {
 // Play a sound
 function playSoundObj(obj) {
 	obj.source.buffer = obj.buffer;
-    obj.source.gainNode = audioContext.createGain();
 	// Loops and starts the sound
 	obj.source.loop = true;
-    obj.source.gainNode.gain.value = obj.vol;
 	obj.source.start(0);
 }
