@@ -185,6 +185,7 @@ function onMouseMove(evt) {
 	circleY = evt.pageY;
 	// If touch, set circleX and circleY to touch origin
 	if (circleX === undefined || circleY === undefined) {
+		evt.preventDefault();
 		var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
 		circleX = touch.pageX;
 		// Move circle up the Y axis by height/15,

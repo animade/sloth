@@ -10,6 +10,10 @@ set :images_dir, 'images'
 
 # Build-specific configuration
 configure :build do
+  # All the bower components get compiled
+  # into the home.js file anyway.
+  ignore 'bower_components/**/*'
+
   # For example, change the Compass output style for deployment
   activate :minify_css
 
