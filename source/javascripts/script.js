@@ -31,7 +31,7 @@ var audioFilenames = [
 //
 
 // Put together src urls for easy scene swapping
-var src 				= "../scenes/" + sceneName;
+var src 				= "scenes/" + sceneName;
 var animationSrc 		= src + "/animation/animation.gif";
 var sceneryOutsideSrc 	= src + "/sceneries/outside.svg";
 var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
@@ -53,7 +53,7 @@ var prevCircleY;
 var pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
 // Various booleans for settings
 var success = false;
-var audio 	= false;
+var audio 	= true;
 // Set canvas width and height
 $("#outside").attr("width", width).attr("height", height);
 // Initialize canvas
