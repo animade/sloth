@@ -104,6 +104,7 @@ $(document).ready(function() {
 
 if (success === false) {
 	$(document).mousemove(onMouseMove);
+	$(document).bind('touchmove', onMouseMove);
 	$(document).click(function(evt) {
 		// If the sloth is clicked show success message
 		if ((evt.clientX > sloth.left && evt.clientX < sloth.left + sloth.width) && (evt.clientY > sloth.top && evt.clientY < sloth.top + sloth.height)) {
@@ -130,6 +131,7 @@ if (success === false) {
 //
 // Main function, called whenever the mouse is moved
 function draw() {
+	// draw.preventDefault();
 	// Redraw area where circle was before
 	ctx.clearRect(prevCircleX - circleWidth * 1.5, prevCircleY - circleWidth * 1.5, circleWidth * 3, circleWidth * 3);
     circleWidth = width / magGlassScale;
@@ -179,6 +181,14 @@ function onMouseMove(evt) {
 	// Move the circle around
 	circleX = evt.pageX;
 	circleY = evt.pageY;
+
+	// If touch event
+	if (circleX === undefined || circleY === undefined) {
+		var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
+		circleX = touch.pageX;
+		circleY = touch.pageY - height / 15;
+	}
+
 	// Then redraw the canvas
 	draw();
 	// If audio is on, check if we need to change gain
@@ -241,10 +251,17 @@ function playSoundObj(obj) {
 	obj.source.start(0);
 }
 // Adjusts volume of sound based on how far away the mouse is from the source point
-function directionalAudio(event, obj) {
+function directionalAudio(evt, obj) {
 	// Variables used throughout this function only
-	var cursorX = event.pageX;
-	var cursorY = event.pageY;
+	var cursorX = evt.pageX;
+	var cursorY = evt.pageY;
+
+	// If touch event
+	if (cursorX === undefined || cursorY === undefined) {
+		var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
+		cursorX = touch.pageX;
+		cursorY = touch.pageY;
+	}
 
 	// cX/Y = cursorX/Y, aX/Y = audioX/Y
 	//
