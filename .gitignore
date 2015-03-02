@@ -24,3 +24,7 @@
 
 # Middleman build folder
 /build/
+
+# Ignore all images except for test
+source/scenes/*
+!source/scenes/test
