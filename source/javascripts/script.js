@@ -1,5 +1,5 @@
 // Console log with link to GitHub repo
-console.log("%cInstead of wading through all this minified and obfuscated slush, why not have a look at the full, commented source of this game? You can find it here:", "color: #F05050");
+console.log("%cInstead of wading through all this minified and obfuscated slush, why not have a look at the full, commented source? You can find it here:", "color: #F05050");
 console.log("%chttps://github.com/mstoiber/find-the-sloth", "color: #2C85BD; text-decoration: underline");
 
 // ------------------------------------------
@@ -72,16 +72,15 @@ if (audio) {
 // Draw all the stuff
 //
 //
-
-// Load the inside, inject it into the HTML and then specify target
-$("#inside").load(sceneryInsideSrc, function() {
-	sloth = document.getElementById("sloth").getBoundingClientRect();
-});
 // Draw outside
 sceneryOutside = new Image();
 sceneryOutside.onload = function() {
-	// When the image of the outside is loaded
-	// begin drawing
+	// When the image of the outside is loaded load the inside,
+	// inject it into the HTML and then specify target
+	$("#inside").load(sceneryInsideSrc, function() {
+		sloth = document.getElementById("sloth").getBoundingClientRect();
+	});
+	// Begin drawing
 	draw();
 }
 sceneryOutside.src = sceneryOutsideSrc;
@@ -107,8 +106,17 @@ if (success === false) {
 	$(document).bind('touchmove', onMouseMove);
 	// Click/touch
 	$(document).click(function(evt) {
+		var clickX = evt.clientX;
+		var clickY = evt.clientY;
+		// If touch event
+		if (clickX === undefined || clickY === undefined) {
+			evt.preventDefault();
+			var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
+			clickX = touch.pageX;
+			clickY = touch.pageY;
+		}
 		// If the sloth is clicked show success message
-		if ((evt.clientX > sloth.left && evt.clientX < sloth.left + sloth.width) && (evt.clientY > sloth.top && evt.clientY < sloth.top + sloth.height)) {
+		if ((clickX > sloth.left && clickX < sloth.left + sloth.width) && (clickY > sloth.top && clickY < sloth.top + sloth.height)) {
 			success = true;
 			audio = false;
 			$(".success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
