@@ -12,10 +12,11 @@ var insideBackgroundColor = "#1875b8";
 var magGlassOuterRingColor = "black";
 // Scene
 var sceneName = "test";
-// Audio Files
+// Audio
+var dirAudioScale = 15; // The bigger the number the smaller the radius in which you hear the directional Audio
 var audioFilenames = [
     { name: "rain", vol: 1, loaded: false, dirAudio: false },
-	{ name: "chatter", elem: "sloth", vol: 1, loaded: false, dirAudio: true },
+	{ name: "chatter", elem: "sloth", vol: 0.5, loaded: false, dirAudio: true },
     { name: "wind", elem: "nightingale", vol: 1, loaded: false, dirAudio: true}
 ];
 
@@ -209,6 +210,10 @@ function loadSound(obj) {
     		obj.buffer = buffer;
     		// Add a gain node
     		obj.gainNode = audioContext.createGain();
+			// Connect the node to the source
+			obj.source.connect(obj.gainNode);
+			// Connect all the nodes to the destination
+			obj.gainNode.connect(audioContext.destination);
     		// Set loaded to true and play the audio
     		obj.loaded = true;
             // Get position of origin of audio
@@ -230,9 +235,6 @@ function playSoundObj(obj) {
 	// Loops and starts the sound
 	obj.source.loop = true;
     obj.source.gainNode.gain.value = obj.vol;
-    if (!obj.dirAudio) {
-        obj.source.connect(audioContext.destination);
-    }
 	obj.source.start(0);
 }
 // Adjusts volume of sound based on how far away the mouse is from the source point
@@ -269,11 +271,9 @@ function directionalAudio(event, obj) {
 		vol = (Math.pow((obj.audioX - cursorX), 2) + Math.pow((cursorY - obj.audioY), 2)) / pageDiagonal;
 	}
 	if (vol < 1 && vol > 0 && obj.loaded === true) {
-		// Connect all the nodes to the source
-		obj.source.connect(obj.gainNode);
+		vol = Math.pow(1 - vol, dirAudioScale) * obj.vol;
 		// Set gain (volume)
-		obj.gainNode.gain.value = Math.pow(1 - (vol * obj.vol), 10);
-		// Connect all the nodes to the destination
-		obj.gainNode.connect(audioContext.destination);
+		obj.gainNode.gain.value = vol;
+		console.log(obj.name, obj.gainNode.gain.value);
 	}
 }
