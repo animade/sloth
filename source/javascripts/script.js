@@ -1,3 +1,7 @@
+// Console log with link to GitHub repo
+console.log("%cInstead of wading through all this minified and obfuscated slush, why not have a look at the full, commented source of this game? You can find it here:", "color: #F05050");
+console.log("%chttps://github.com/mstoiber/find-the-sloth", "color: #2C85BD; text-decoration: underline");
+
 // ------------------------------------------
 //
 // Settings
@@ -49,7 +53,7 @@ var prevCircleY;
 var pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
 // Various booleans for settings
 var success = false;
-var audio 	= true;
+var audio 	= false;
 // Set canvas width and height
 $("#outside").attr("width", width).attr("height", height);
 // Initialize canvas
@@ -185,7 +189,7 @@ function onMouseMove(evt) {
                 directionalAudio(evt, audioFilenames[i]);
             }
         }
-	} 
+	}
 }
 // Load several sounds from a JSON list
 function loadSounds(list) {

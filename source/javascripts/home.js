@@ -33,8 +33,6 @@
 
       var self = this;
 
-      console.log('hello world');
-
     }
 
   };
