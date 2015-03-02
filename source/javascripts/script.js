@@ -124,7 +124,6 @@ if (success === false) {
 // Functions
 //
 //
-
 // Main function, called whenever the mouse is moved
 function draw() {
 	// Redraw area where circle was before
@@ -274,6 +273,5 @@ function directionalAudio(event, obj) {
 		vol = Math.pow(1 - vol, dirAudioScale) * obj.vol;
 		// Set gain (volume)
 		obj.gainNode.gain.value = vol;
-		console.log(obj.name, obj.gainNode.gain.value);
 	}
 }
