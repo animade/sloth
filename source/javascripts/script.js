@@ -46,8 +46,8 @@ var circleWidth;
 var audioContext;
 var sloth;
 var vol;
-var circleX 	= width / 2;
-var circleY 	= height / 2;
+var circleX = width / 2;
+var circleY = height / 2;
 var prevCircleX;
 var prevCircleY;
 var pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
@@ -77,8 +77,7 @@ if (audio) {
 $("#inside").load(sceneryInsideSrc, function() {
 	sloth = document.getElementById("sloth").getBoundingClientRect();
 });
-// Draw Outside first so you can't see the
-// inside whilst the outside is loading
+// Draw outside
 sceneryOutside = new Image();
 sceneryOutside.onload = function() {
 	// When the image of the outside is loaded
@@ -103,8 +102,10 @@ $(document).ready(function() {
 //
 
 if (success === false) {
+	// Mouse/Finger move
 	$(document).mousemove(onMouseMove);
 	$(document).bind('touchmove', onMouseMove);
+	// Click/touch
 	$(document).click(function(evt) {
 		// If the sloth is clicked show success message
 		if ((evt.clientX > sloth.left && evt.clientX < sloth.left + sloth.width) && (evt.clientY > sloth.top && evt.clientY < sloth.top + sloth.height)) {
@@ -113,13 +114,14 @@ if (success === false) {
 			$(".success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
 		}
 	});
+	// Responsiveness
 	$(window).resize(function(){
 		width 	= window.innerWidth;
 		height 	= window.innerHeight;
 		foreground.width = width;
 		foreground.height = height;
-    sloth = document.getElementById("sloth").getBoundingClientRect();
-    pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
+    	sloth = document.getElementById("sloth").getBoundingClientRect();
+    	pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
 		draw();
 	});
 }
@@ -176,23 +178,23 @@ function clippedImage(img) {
 	// Restore everything that hasn't changed
   	ctx.restore();
 }
-// Called onmousemove
+// Called on mouse move and touch move
 function onMouseMove(evt) {
 	// Move the circle around
 	circleX = evt.pageX;
 	circleY = evt.pageY;
-
-	// If touch event
+	// If touch, set circleX and circleY to touch origin
 	if (circleX === undefined || circleY === undefined) {
 		var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
 		circleX = touch.pageX;
+		// Move circle up the Y axis by height/15,
+		// Otherwise the finger would cover up the hole
 		circleY = touch.pageY - height / 15;
 	}
-
 	// Then redraw the canvas
 	draw();
-	// If audio is on, check if we need to change gain
-	// based on position.
+	// If audio is on, check if we need to
+	// change volume based on position.
 	if (audio) {
 		for (var i in audioFilenames) {
             if (audioFilenames[i].loaded && audioFilenames[i].dirAudio) {
@@ -200,55 +202,6 @@ function onMouseMove(evt) {
             }
         }
 	}
-}
-// Load several sounds from a JSON list
-function loadSounds(list) {
-	for (i in list) {
-		if (list.hasOwnProperty(i)) {
-			loadSound(list[i]);
-		}
-	}
-}
-// Load a single sound
-function loadSound(obj) {
-	var request = new XMLHttpRequest();
-    // Create a source from the audio context
-    obj.source = audioContext.createBufferSource();
-	request.open('GET', audioSrc + obj.name + ".wav", true);
-	request.responseType = 'arraybuffer';
-	request.onload = function() {
-		// request.response is encode so decode it now
-		audioContext.decodeAudioData(request.response, function(buffer) {
-    		// Save the buffer to the corresponding sound
-    		obj.buffer = buffer;
-    		// Add a gain node
-    		obj.gainNode = audioContext.createGain();
-			// Connect the node to the source
-			obj.source.connect(obj.gainNode);
-			// Connect all the nodes to the destination
-			obj.gainNode.connect(audioContext.destination);
-    		// Set loaded to true and play the audio
-    		obj.loaded = true;
-            // Get position of origin of audio
-            if (obj.dirAudio) {
-                obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
-                obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
-                obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
-            }
-            obj.gainNode.gain.value = obj.vol;
-    		playSoundObj(obj);
-		});
-	}
-	request.send();
-}
-// Play a sound
-function playSoundObj(obj) {
-	obj.source.buffer = obj.buffer;
-    obj.source.gainNode = audioContext.createGain();
-	// Loops and starts the sound
-	obj.source.loop = true;
-    obj.source.gainNode.gain.value = obj.vol;
-	obj.source.start(0);
 }
 // Adjusts volume of sound based on how far away the mouse is from the source point
 function directionalAudio(evt, obj) {
@@ -295,4 +248,55 @@ function directionalAudio(evt, obj) {
 		// Set gain (volume)
 		obj.gainNode.gain.value = vol;
 	}
+}
+// Load several sounds from a JSON list
+function loadSounds(list) {
+	for (var i in list) {
+		if (list.hasOwnProperty(i)) {
+			loadSound(list[i]);
+		}
+	}
+}
+// Load a single sound
+function loadSound(obj) {
+	var request = new XMLHttpRequest();
+    // Create a source from the audio context
+    obj.source = audioContext.createBufferSource();
+	request.open('GET', audioSrc + obj.name + ".wav", true);
+	request.responseType = 'arraybuffer';
+	request.onload = function() {
+		// request.response is encode so decode it now
+		audioContext.decodeAudioData(request.response, function(buffer) {
+    		// Save the buffer to the corresponding sound
+    		obj.buffer = buffer;
+    		// Add a gain node
+    		obj.gainNode = audioContext.createGain();
+			// Connect the node to the source
+			obj.source.connect(obj.gainNode);
+			// Connect all the nodes to the destination
+			obj.gainNode.connect(audioContext.destination);
+    		// Set loaded to true and play the audio
+    		obj.loaded = true;
+            // Get position of origin of audio
+            if (obj.dirAudio) {
+                obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
+                obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
+                obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
+            }
+            // Set initial volume
+            obj.gainNode.gain.value = obj.vol;
+            // Start playing the sound
+    		playSoundObj(obj);
+		});
+	}
+	request.send();
+}
+// Play a sound
+function playSoundObj(obj) {
+	obj.source.buffer = obj.buffer;
+    obj.source.gainNode = audioContext.createGain();
+	// Loops and starts the sound
+	obj.source.loop = true;
+    obj.source.gainNode.gain.value = obj.vol;
+	obj.source.start(0);
 }
