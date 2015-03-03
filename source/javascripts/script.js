@@ -148,7 +148,8 @@ if (success === false) {
 function draw() {
 	// draw.preventDefault();
 	// Redraw area where circle was before
-	ctx.clearRect(prevCircleX - circleRadius * 1.5, prevCircleY - circleRadius * 1.5, circleRadius * 3, circleRadius * 3);
+	ctx.clearRect(0, 0, width, height);
+	// ctx.clearRect(prevCircleX - circleRadius * 1.5, prevCircleY - circleRadius * 1.5, circleRadius * 3, circleRadius * 3);
     circleRadius = $("#inside svg").height() / magGlassScale;
 	// Draw magnifying glass
 	ctx.beginPath();
