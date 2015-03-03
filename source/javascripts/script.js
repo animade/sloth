@@ -38,13 +38,12 @@ var audioSrc 			= src + "/audio/";
 // Just to save a few characters
 var width 	= window.innerWidth,
 	height 	= window.innerHeight;
-// Calculate the width of the magnifying glass
-var circleRadius;
 // Intialize globally needed variables and position
 // magnifying glass in the middle of the page
 var audioContext;
 var sloth;
 var vol;
+var circleRadius;
 var circleX = width / 2;
 var circleY = height / 2;
 var prevCircleX;
@@ -53,6 +52,7 @@ var pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
 // Various booleans for settings
 var success = false;
 var audio 	= true;
+
 // Set canvas width and height
 $("#outside").attr("width", width).attr("height", height);
 // Initialize canvas
