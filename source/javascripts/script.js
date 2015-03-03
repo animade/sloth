@@ -37,7 +37,7 @@ if (sceneName === "test") {
 // Put together src urls for easy scene swapping
 var src 				= "scenes/" + sceneName;
 var animationSrc 		= src + "/animation/animation.gif";
-var sceneryOutsideSrc 	= src + "/sceneries/outside-01.png";
+var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
 var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
 var audioSrc 			= src + "/audio/";
 // Just to save a few characters
@@ -121,7 +121,7 @@ if (success === false) {
 			clickY = touch.pageY;
 		}
 		// If the sloth is clicked show success message
-		if ((clickX > sloth.left && clickX < sloth.left + sloth.width) && (clickY > sloth.top && clickY < sloth.top + sloth.height)) {
+		if ((clickX > sloth.left - circleRadius && clickX < sloth.left + sloth.width + (circleRadius - sloth.width)) && (clickY > sloth.top - circleRadius && clickY < sloth.top + sloth.height + (circleRadius - sloth.height))) {
 			success = true;
 			audio = false;
 			$(".success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
