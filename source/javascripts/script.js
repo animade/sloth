@@ -133,9 +133,9 @@ if (success === false) {
 		height 	= window.innerHeight;
 		foreground.width = width;
 		foreground.height = height;
+		draw();
     	sloth = document.getElementById("sloth").getBoundingClientRect();
     	pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
-		draw();
 	});
 }
 
