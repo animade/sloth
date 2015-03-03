@@ -18,26 +18,27 @@ body {
 }
 
 body:hover {
-	cursor: crosshair;
+	cursor: none;
 }
 
 #inside {
 	z-index: -1;
-	position: absolute;
-	bottom: -0.25%;
-	left: 0;
-	width: 100%;
-	height: auto;
+	position: relative;
+	width: 100vw;
+	height: 100vh;
 }
 
 // Make the inside of the scenery the same size as the outside
 #inside svg {
+	position: absolute;
+	bottom: 0;
+	left: 0;
 	width: 100%;
-	height: calc(100vw * (1080 / 1550));
+	height: calc(100vw * (1080 / 1920));
 	max-height: 100vh;
 }
 #animationwrapper img {
-	height: calc(100vw * (1080 / 1550));
+	height: calc(100vw * (1080 / 1920));
 	max-height: 100vh;
 	display: block;
 	margin: 0 auto;
@@ -55,14 +56,14 @@ body:hover {
 #animationwrapper {
 	position: relative;
 	margin: 0 auto;
-	height: calc(100vw * (1080 / 1550));
+	height: calc(100vw * (1080 / 1920));
 	max-height: 100vh;
 	max-width: 1550px;
 }
 
 #outside {
 	position: absolute;
-	top: 0;
+	bottom: 0;
 	left: 0;
 	z-index: 1;
 }

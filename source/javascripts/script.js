@@ -10,18 +10,10 @@ console.log("%chttps://github.com/mstoiber/find-the-sloth", "color: #2C85BD; tex
 
 // Magnifying glass
 var magGlassScale = 20; // The bigger the number the smaller the magnifying glass
-// Colors
-var outsideBackgroundColor = "#7ec0ee";
-var insideBackgroundColor = "#1875b8";
-var magGlassOuterRingColor = "black";
 // Scene
-var sceneName = "test";
+var sceneName = "skyline";
 // Audio
 var dirAudioScale = 15; // The bigger the number the smaller the radius in which you hear the directional Audio
-var audioFilenames = [
-    { name: "rain", vol: 1, loaded: false, dirAudio: false },
-	{ name: "chatter", elem: "sloth", vol: 0.5, loaded: false, dirAudio: true }
-];
 
 // ------------------------------------------
 //
@@ -29,10 +21,23 @@ var audioFilenames = [
 //
 //
 
+if (sceneName === "test") {
+	var audioFilenames = [
+	    { name: "rain", vol: 1, loaded: false, dirAudio: false },
+		{ name: "chatter", elem: "sloth", vol: 0.5, loaded: false, dirAudio: true }
+	];
+} else if (sceneName === "skyline") {
+	var audioFilenames = [];
+	var outsideBackgroundColor = "#b8fbdd";
+	var insideBackgroundColor = "#b8fbdd";
+	var magGlassOuterRingColor = "black";
+	var magGlassOuterRingWidth = 3;
+}
+
 // Put together src urls for easy scene swapping
 var src 				= "scenes/" + sceneName;
 var animationSrc 		= src + "/animation/animation.gif";
-var sceneryOutsideSrc 	= src + "/sceneries/outside.svg";
+var sceneryOutsideSrc 	= src + "/sceneries/outside-01.png";
 var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
 var audioSrc 			= src + "/audio/";
 // Just to save a few characters
@@ -77,6 +82,7 @@ sceneryOutside.onload = function() {
 	// When the image of the outside is loaded load the inside,
 	// inject it into the HTML and then specify target
 	$("#inside").load(sceneryInsideSrc, function() {
+		$("body").css("background-color", insideBackgroundColor);
 		sloth = document.getElementById("sloth").getBoundingClientRect();
 	});
 	// Begin drawing
@@ -143,7 +149,7 @@ function draw() {
 	// draw.preventDefault();
 	// Redraw area where circle was before
 	ctx.clearRect(prevCircleX - circleRadius * 1.5, prevCircleY - circleRadius * 1.5, circleRadius * 3, circleRadius * 3);
-    circleRadius = height / magGlassScale;
+    circleRadius = $("#inside svg").height() / magGlassScale;
 	// Draw magnifying glass
 	ctx.beginPath();
 		ctx.arc(circleX,circleY,circleRadius,0,Math.PI*2,true);
@@ -155,6 +161,7 @@ function draw() {
 	ctx.beginPath();
 		ctx.arc(circleX,circleY,circleRadius,0,Math.PI*2,true);
 		ctx.stroke();
+		ctx.lineWidth = magGlassOuterRingWidth;
 		ctx.strokeStyle = magGlassOuterRingColor;
 	ctx.closePath();
 	prevCircleX = circleX;
