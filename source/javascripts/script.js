@@ -20,8 +20,7 @@ var sceneName = "test";
 var dirAudioScale = 15; // The bigger the number the smaller the radius in which you hear the directional Audio
 var audioFilenames = [
     { name: "rain", vol: 1, loaded: false, dirAudio: false },
-	{ name: "chatter", elem: "sloth", vol: 0.5, loaded: false, dirAudio: true },
-    { name: "wind", elem: "nightingale", vol: 1, loaded: false, dirAudio: true}
+	{ name: "chatter", elem: "sloth", vol: 0.5, loaded: false, dirAudio: true }
 ];
 
 // ------------------------------------------
@@ -53,7 +52,7 @@ var prevCircleY;
 var pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
 // Various booleans for settings
 var success = false;
-var audio 	= true;
+var audio 	= false;
 // Set canvas width and height
 $("#outside").attr("width", width).attr("height", height);
 // Initialize canvas
