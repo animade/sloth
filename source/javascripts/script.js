@@ -39,7 +39,7 @@ var audioSrc 			= src + "/audio/";
 var width 	= window.innerWidth,
 	height 	= window.innerHeight;
 // Calculate the width of the magnifying glass
-var circleWidth;
+var circleRadius;
 // Intialize globally needed variables and position
 // magnifying glass in the middle of the page
 var audioContext;
@@ -142,18 +142,18 @@ if (success === false) {
 function draw() {
 	// draw.preventDefault();
 	// Redraw area where circle was before
-	ctx.clearRect(prevCircleX - circleWidth * 1.5, prevCircleY - circleWidth * 1.5, circleWidth * 3, circleWidth * 3);
-    circleWidth = width / magGlassScale;
+	ctx.clearRect(prevCircleX - circleRadius * 1.5, prevCircleY - circleRadius * 1.5, circleRadius * 3, circleRadius * 3);
+    circleRadius = height / magGlassScale;
 	// Draw magnifying glass
 	ctx.beginPath();
-		ctx.arc(circleX,circleY,circleWidth,0,Math.PI*2,true);
+		ctx.arc(circleX,circleY,circleRadius,0,Math.PI*2,true);
 		ctx.rect(0,0,width,height);
 	ctx.closePath();
 	// Clip the image
 	clippedImage(sceneryOutside);
 	// Draw outer ring of magnifying glass
 	ctx.beginPath();
-		ctx.arc(circleX,circleY,circleWidth,0,Math.PI*2,true);
+		ctx.arc(circleX,circleY,circleRadius,0,Math.PI*2,true);
 		ctx.stroke();
 		ctx.strokeStyle = magGlassOuterRingColor;
 	ctx.closePath();
