@@ -52,7 +52,7 @@ var prevCircleY;
 var pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
 // Various booleans for settings
 var success = false;
-var audio 	= false;
+var audio 	= true;
 // Set canvas width and height
 $("#outside").attr("width", width).attr("height", height);
 // Initialize canvas
@@ -209,6 +209,12 @@ function onMouseMove(evt) {
                 directionalAudio(evt, audioFilenames[i]);
             }
         }
+	} else {
+		for (var i in audioFilenames) {
+	        if (audioFilenames[i].loaded) {
+	            audioFilenames[i].source.stop(0);
+	        }
+	    }
 	}
 }
 // Adjusts volume of sound based on how far away the mouse is from the source point
