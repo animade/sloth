@@ -183,11 +183,9 @@ function clippedImage(img) {
 			imgWidth = imgHeight * (img.width / img.height);
 			imgX = (width - imgWidth) / 2;
 		}
-		// Where the image isn't draw background
-	  	if (imgHeight < height){
-	    	ctx.fillStyle = outsideBackgroundColor;
-	    	ctx.fill();
-	  	}
+		// Draw background
+    	ctx.fillStyle = outsideBackgroundColor;
+    	ctx.fill();
 	  	// Draw the image
 	  	ctx.drawImage(img,imgX,height - imgHeight,imgWidth,imgHeight);
 	// Restore everything that hasn't changed
