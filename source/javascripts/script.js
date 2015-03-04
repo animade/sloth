@@ -13,7 +13,7 @@ var magGlassScale = 20; // The bigger the number the smaller the magnifying glas
 // Scene
 var sceneName = "skyline";
 // Audio
-var dirAudioScale = 15; // The bigger the number the smaller the radius in which you hear the directional Audio
+var dirAudioScale = 500; // The bigger the number the smaller the radius in which you hear the directional Audio
 
 // ------------------------------------------
 //
@@ -21,13 +21,19 @@ var dirAudioScale = 15; // The bigger the number the smaller the radius in which
 //
 //
 
+var audioFilenames;
+
 if (sceneName === "test") {
-	var audioFilenames = [
+	audioFilenames = [
 	    { name: "rain", vol: 1, loaded: false, dirAudio: false },
 		{ name: "chatter", elem: "sloth", vol: 0.5, loaded: false, dirAudio: true }
 	];
 } else if (sceneName === "skyline") {
-	var audioFilenames = [];
+	audioFilenames = [
+		{ name: "street", vol: 1, loaded: false, dirAudio: false },
+		{ name: "bells", elem: "santa", vol: 0.5, loaded: false, dirAudio: true },
+		{ name: "shower", elem: "shower", vol: 0.5, loaded: false, dirAudio: true}
+	];
 	var outsideBackgroundColor = "#b8fbdd";
 	var insideBackgroundColor = "#b8fbdd";
 	var magGlassOuterRingColor = "black";
@@ -53,7 +59,7 @@ var circleX = width / 2;
 var circleY = height / 2;
 var prevCircleX;
 var prevCircleY;
-var pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
+var pageDiagonal;
 // Various booleans for settings
 var success = false;
 var audio 	= true;
@@ -83,6 +89,7 @@ sceneryOutside.onload = function() {
 	// inject it into the HTML and then specify target
 	$("#inside").load(sceneryInsideSrc, function() {
 		$("body").css("background-color", insideBackgroundColor);
+		pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
 		sloth = document.getElementById("sloth").getBoundingClientRect();
 	});
 	// Begin drawing
@@ -135,7 +142,7 @@ if (success === false) {
 		foreground.height = height;
 		draw();
     	sloth = document.getElementById("sloth").getBoundingClientRect();
-    	pageDiagonal = Math.pow(width, 2) + Math.pow(height, 2);
+    	pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
 	});
 }
 
