@@ -203,6 +203,8 @@ function init() {
 	    	ctx.fill();
 		  	// Draw the image
 		  	ctx.drawImage(img,imgX,height - imgHeight,imgWidth,imgHeight);
+		  	var div = document.getElementById('animationwrapper');
+		  	div.style.width = imgWidth;
 		// Restore everything that hasn't changed
 	  	ctx.restore();
 	}

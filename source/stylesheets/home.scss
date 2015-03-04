@@ -59,6 +59,7 @@ body:hover {
 #animationwrapper img {
 	height: calc(100vw * (1080 / 1920));
 	max-height: 100vh;
+	max-width: 100%;
 	display: block;
 	margin: 0 auto;
 }
@@ -77,7 +78,6 @@ body:hover {
 	margin: 0 auto;
 	height: calc(100vw * (1080 / 1920));
 	max-height: 100vh;
-	max-width: 1550px;
 }
 
 #outside {
