@@ -28,3 +28,6 @@
 # Ignore all images except for test
 source/scenes/*
 !source/scenes/test
+
+# Ignore .env file
+.env
