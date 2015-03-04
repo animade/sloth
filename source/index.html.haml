@@ -12,6 +12,10 @@ title: Find the sloth
 
 / Haml
 
+%div#loading
+  %button#play{:onclick => "playButtonClick()"} Play
+  %span#loadingindicator
+
 %div#controls
 
 %div#inside
@@ -25,6 +29,5 @@ title: Find the sloth
 %div.success
   %h1 SUCCESS
 
-%script{:src => "javascripts/flashcanvas.js"}
-%script{:src => "javascripts/waapisim.js"}
-%script{:src => "javascripts/script.js"}
+%script{:src => "javascripts/preloadjs.min.js"}
+%script{:src => "javascripts/initial.js"}

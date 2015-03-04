@@ -4,7 +4,8 @@
 
 // Z-INDEX LAYERS
 // -------------------
-// Success Message / Audio Control (2)
+// Loading screen (3)
+// Success Message / Controls (2)
 // Foreground (1)
 // Animations (0)
 // Background (-1)
@@ -19,6 +20,24 @@ body {
 
 body:hover {
 	cursor: none;
+}
+
+#loading {
+	width: 100vw;
+	height: 100vh;
+	background-color: #b8fbdd;
+	z-index: 3;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#loading:hover {
+	cursor: default;
+}
+
+#loadingindicator {
+	opacity: 0;
 }
 
 #inside {
