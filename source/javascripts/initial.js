@@ -9,6 +9,7 @@ var queue = new createjs.LoadQueue();
 var complete = false;
 var playClicked = false;
 var sceneName = "skyline";
+localStorage.setItem("sceneName", sceneName);
 
 // Event handlers
 queue.on("progress", handleProgress, this);

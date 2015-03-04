@@ -11,8 +11,6 @@ function init() {
 
 	// Magnifying glass
 	var magGlassScale = 20; // The bigger the number the smaller the magnifying glass
-	// Scene
-	var sceneName = "skyline";
 	// Audio
 	var dirAudioScale = 500; // The bigger the number the smaller the radius in which you hear the directional Audio
 
@@ -23,7 +21,20 @@ function init() {
 	//
 
 	var audioFilenames;
+	// Test if local storage is supported (Private browsing disables it in some browsers)
+	if(typeof(Storage) !== "undefined") {
+		// Get scene name from localStorage as set in intial.js
+		var sceneName = localStorage.getItem("sceneName");
+		// If there is no item there, default it to skyline
+		if (sceneName === null) {
+	    	var sceneName = "skyline";
+		}
+	} else {
+		// If there is no localStorage support, default to skyline
+	    var sceneName = "skyline";
+	}
 
+	// Set scene specific variables
 	if (sceneName === "test") {
 		audioFilenames = [
 		    { name: "rain", vol: 1, loaded: false, dirAudio: false },
@@ -70,13 +81,11 @@ function init() {
 	// Initialize canvas
 	var foreground = document.getElementById("outside");
 	var ctx = foreground.getContext("2d");
-	if (audio) {
-	    // Create an audio context
-	    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-	    audioContext = new AudioContext();
-	    // Load the sounds
-	    loadSounds(audioFilenames);
-	}
+    // Create an audio context
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioContext = new AudioContext();
+    // Load the sounds
+    loadSounds(audioFilenames);
 
 	// ------------------------------------------
 	//
@@ -97,15 +106,13 @@ function init() {
 		draw();
 	}
 	sceneryOutside.src = sceneryOutsideSrc;
-	// Add animation after the document is loaded
-	$(document).ready(function() {
-		var img = new Image();
-		var div = document.getElementById('animationwrapper');
-		img.onload = function() {
-		  div.appendChild(img);
-		};
-		img.src = animationSrc;
-	});
+	// Add animation
+	var img = new Image();
+	var div = document.getElementById('animationwrapper');
+	img.onload = function() {
+	  div.appendChild(img);
+	};
+	img.src = animationSrc;
 
 	// ------------------------------------------
 	//
