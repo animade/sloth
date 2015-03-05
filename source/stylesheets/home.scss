@@ -54,10 +54,10 @@ body:hover {
 #loadingindicator {
 	visibility: hidden;
 	opacity: 0;
-	width: 11em;
+	width: 9em;
 	height: 0.8em;
 	background-color: #66a99d;
-	margin: 0.5em auto;
+	margin: 0em auto;
 	transition: opacity .25s ease-in-out;
 	   -moz-transition: opacity .25s ease-in-out;
 	   -webkit-transition: opacity .25s ease-in-out;
@@ -71,6 +71,9 @@ body:hover {
 	transition: opacity .25s ease-in-out;
 	   -moz-transition: opacity .25s ease-in-out;
 	   -webkit-transition: opacity .25s ease-in-out;
+	transition: width 500ms linear;
+	   -moz-transition: width 500ms linear;
+	   -webkit-transition: width 500ms linear;
 }
 
 #buttonwrapper {
@@ -79,7 +82,10 @@ body:hover {
 
 #play {
 	display:inline-block;
-	margin: 0 auto;
+	margin: 2em auto;
+	margin-bottom: 0.4em;
+	height: 80%;
+	width: 80%;
 }
 
 #play:hover {
