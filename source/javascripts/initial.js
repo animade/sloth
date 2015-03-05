@@ -24,19 +24,11 @@ $(window).resize(function(){
 queue.on("progress", handleProgress, this);
 queue.on("complete", handleComplete, this);
 
-// Audio Filenames
-audioFilenames = [
-	{ name: "street", vol: 1, loaded: false, dirAudio: false },
-	{ name: "bells", elem: "santa", vol: 0.5, loaded: false, dirAudio: true },
-	{ name: "shower", elem: "shower", vol: 0.5, loaded: false, dirAudio: true}
-];
-
 // Put together filenames
 var src 				= "scenes/" + sceneName;
 var animationSrc 		= src + "/animation/animation.gif";
 var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
 var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
-var audioSrc 			= src + "/audio/";
 
 // Preload all the files
 queue.loadFile(animationSrc);
@@ -46,13 +38,6 @@ queue.loadFile("javascripts/waapisim.js");
 queue.loadFile("javascripts/flashcanvas.js");
 queue.loadFile("javascripts/home.js");
 queue.loadFile("javascripts/script.js");
-
-// Load the audio files
-for (var i in audioFilenames) {
-	if (audioFilenames.hasOwnProperty(i)) {
-		queue.loadFile(audioSrc + audioFilenames[i].name + ".wav");
-	}
-}
 
 // Show percentage on loading indicator
 function handleProgress(evt) {
