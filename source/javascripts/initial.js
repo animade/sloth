@@ -11,6 +11,16 @@ var playClicked = false;
 var sceneName = "skyline";
 localStorage.setItem("sceneName", sceneName);
 
+// Position main div of the loading screen
+var div = $("#loadingwrapper");
+div.css("top", $(document).height() / 2 - div.height() / 2);
+div.css("left", $(document).width() / 2 - div.width() / 2);
+
+$(window).resize(function(){
+	div.css("top", $(document).height() / 2 - div.height() / 2);
+	div.css("left", $(document).width() / 2 - div.width() / 2);
+});
+
 // Event handlers
 queue.on("progress", handleProgress, this);
 queue.on("complete", handleComplete, this);
@@ -29,7 +39,7 @@ var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
 var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
 var audioSrc 			= src + "/audio/";
 
-// Actually load everything
+// Preload all the files
 queue.loadFile(animationSrc);
 queue.loadFile(sceneryOutsideSrc);
 queue.loadFile(sceneryInsideSrc);
@@ -49,7 +59,7 @@ for (var i in audioFilenames) {
 function handleProgress(evt) {
 	var percent = evt.loaded.toFixed(2) * 100;
 	// Set the text of the loading indicator to the percentage that has been loaded
-	document.getElementById('loadingindicator').innerHTML = percent + "%";
+	document.getElementById('loadingbar').style.width = percent + "%";
 }
 
 // Handle the completion of the preloading
@@ -65,13 +75,18 @@ function handleComplete(evt) {
 
 // Called when the play button is clicked
 function playButtonClick() {
+	console.log("yes");
 	playClicked = true;
 	// If the game is loaded, initialize the game
 	if (complete) {
 		initGame();
 	// otherwise show the loading indicator
 	} else {
+		var loadingbar = document.getElementById("loadingbar");
+		loadingbar.style.visibility = "visible";
+		loadingbar.style.opacity = "1";
 		var loadingindicator = document.getElementById("loadingindicator");
+		loadingindicator.style.visibility = "visible";
 		loadingindicator.style.opacity = "1";
 	}
 }
@@ -80,7 +95,7 @@ function playButtonClick() {
 function initGame() {
 	// Fade out loading screen
 	var loading = $("#loading");
-	loading.fadeOut();
+	loading.css("opacity", "0");
 	// Call the init() function of the script.js file
 	init();
 }

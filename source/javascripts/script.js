@@ -21,19 +21,6 @@ function init() {
 	//
 
 	var audioFilenames;
-	// Test if local storage is supported (Private browsing disables it in some browsers)
-	if(typeof(Storage) !== "undefined") {
-		// Get scene name from localStorage as set in intial.js
-		var sceneName = localStorage.getItem("sceneName");
-		// If there is no item there, default it to skyline
-		if (sceneName === null) {
-	    	var sceneName = "skyline";
-		}
-	} else {
-		// If there is no localStorage support, default to skyline
-	    var sceneName = "skyline";
-	}
-
 	// Set scene specific variables
 	if (sceneName === "test") {
 		audioFilenames = [

@@ -22,6 +22,13 @@ body:hover {
 	cursor: none;
 }
 
+#logo {
+	width: 75%;
+	max-width: 1500px;
+	display: block;
+	margin: 0 auto;
+}
+
 #loading {
 	width: 100vw;
 	height: 100vh;
@@ -36,8 +43,44 @@ body:hover {
 	cursor: default;
 }
 
+#loadingwrapper {
+	display: inline-block;
+	position: absolute;
+}
+
 #loadingindicator {
+	visibility: hidden;
 	opacity: 0;
+	width: 11em;
+	height: 0.8em;
+	background-color: #66a99d;
+	margin: 0.5em auto;
+	transition: opacity .25s ease-in-out;
+	   -moz-transition: opacity .25s ease-in-out;
+	   -webkit-transition: opacity .25s ease-in-out;
+}
+
+#loadingbar {
+	visibility: hidden;
+	opacity: 0;
+	height: 0.8em;
+	background-color: #1d302f;
+	transition: opacity .25s ease-in-out;
+	   -moz-transition: opacity .25s ease-in-out;
+	   -webkit-transition: opacity .25s ease-in-out;
+}
+
+#buttonwrapper {
+	text-align: center;
+}
+
+#play {
+	display:inline-block;
+	margin: 0 auto;
+}
+
+#play:hover {
+	cursor: pointer;
 }
 
 #inside {
