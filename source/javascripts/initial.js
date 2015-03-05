@@ -8,8 +8,7 @@
 var queue = new createjs.LoadQueue();
 var complete = false;
 var playClicked = false;
-var sceneName = "skyline";
-localStorage.setItem("sceneName", sceneName);
+sceneName = "skyline";
 
 // Position main div of the loading screen
 var div = $("#loadingwrapper");
@@ -96,6 +95,9 @@ function initGame() {
 	// Fade out loading screen
 	var loading = $("#loading");
 	loading.css("opacity", "0");
+	setTimeout(function() {
+		loading.css("visibility", "hidden");
+	}, 250);
 	// Call the init() function of the script.js file
 	init();
 }
