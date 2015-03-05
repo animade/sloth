@@ -30,21 +30,24 @@ function init() {
 	} else if (sceneName === "skyline") {
 		audioFilenames = [
 			{ name: "street", vol: 1, loaded: false, dirAudio: false },
-			{ name: "bells", elem: "santa", vol: 0.5, loaded: false, dirAudio: true },
+			{ name: "bells", elem: "xmas", vol: 0.5, loaded: false, dirAudio: true },
 			{ name: "shower", elem: "shower", vol: 0.5, loaded: false, dirAudio: true}
 		];
 		var outsideBackgroundColor = "#b8fbdd";
 		var insideBackgroundColor = "#b8fbdd";
-		var magGlassOuterRingColor = "black";
-		var magGlassOuterRingWidth = 3;
+		var magGlassOuterRingColor = "#86d1bc";
+		var magGlassOuterRingWidth = 5;
 	}
 
+	// Take one of 4 sloth positions
+	var randomnumber = Math.floor(Math.random()*2) + 1;
 	// Put together src urls for easy scene swapping
 	var src 				= "scenes/" + sceneName;
 	var animationSrc 		= src + "/animation/animation.gif";
 	var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
 	var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
 	var audioSrc 			= src + "/audio/";
+	var slothSrc			= src + "/animation/sloth" + randomnumber + ".gif";
 	// Just to save a few characters
 	var width 	= window.innerWidth,
 		height 	= window.innerHeight;
@@ -87,7 +90,8 @@ function init() {
 		$("#inside").load(sceneryInsideSrc, function() {
 			$("body").css("background-color", insideBackgroundColor);
 			pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
-			sloth = document.getElementById("sloth").getBoundingClientRect();
+			var slothString = "sloth" + randomnumber;
+			sloth = document.getElementById(slothString).getBoundingClientRect();
 		});
 		// Begin drawing
 		draw();
@@ -95,11 +99,21 @@ function init() {
 	sceneryOutside.src = sceneryOutsideSrc;
 	// Add animation
 	var img = new Image();
-	var div = document.getElementById('animationwrapper');
+	var animationwrapper = document.getElementById('animationwrapper');
 	img.onload = function() {
-	  div.appendChild(img);
+	  animationwrapper.appendChild(img).setAttribute("id", "animationimg");
+	  	var animationimgelem = $("#animationimg");
+		animationimgelem.css("left", width / 2 - animationimgelem.width() / 2);
 	};
 	img.src = animationSrc;
+	// Add sloth
+	var slothimg = new Image();
+	slothimg.onload = function() {
+		animationwrapper.appendChild(slothimg).setAttribute("id", "slothimg");
+		var slothimgelem = $("#slothimg");
+		slothimgelem.css("left", width / 2 - slothimgelem.width() / 2);
+	};
+	slothimg.src = slothSrc;
 
 	// ------------------------------------------
 	//
@@ -190,8 +204,8 @@ function init() {
 	    	ctx.fill();
 		  	// Draw the image
 		  	ctx.drawImage(img,imgX,height - imgHeight,imgWidth,imgHeight);
-		  	var div = document.getElementById('animationwrapper');
-		  	div.style.width = imgWidth;
+		  	var animationwrapper = document.getElementById('animationwrapper');
+		  	animationwrapper.style.width = imgWidth;
 		// Restore everything that hasn't changed
 	  	ctx.restore();
 	}
@@ -221,7 +235,7 @@ function init() {
 	        }
 		} else {
 			for (var i in audioFilenames) {
-		        if (audioFilenames[i].loaded) {
+		        if (audioFilenames[i].loaded && audioFilenames[i].playing) {
 		            audioFilenames[i].source.stop(0);
 		        }
 		    }
@@ -321,6 +335,8 @@ function init() {
 	// Play a sound
 	function playSoundObj(obj) {
 		obj.source.buffer = obj.buffer;
+		// Sets playing to true
+		obj.playing = true;
 		// Loops and starts the sound
 		obj.source.loop = true;
 		obj.source.start(0);

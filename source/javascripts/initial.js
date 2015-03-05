@@ -59,7 +59,6 @@ function handleComplete(evt) {
 
 // Called when the play button is clicked
 function playButtonClick() {
-	console.log("yes");
 	playClicked = true;
 	// If the game is loaded, initialize the game
 	if (complete) {

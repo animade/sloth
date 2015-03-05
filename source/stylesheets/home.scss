@@ -4,10 +4,11 @@
 
 // Z-INDEX LAYERS
 // -------------------
-// Loading screen (3)
-// Success Message / Controls (2)
-// Foreground (1)
-// Animations (0)
+// Loading screen (4)
+// Success Message / Controls (3)
+// Foreground (2)
+// Sloth Animation (1)
+// Big Animation (0)
 // Background (-1)
 
 // Hide all scrollbars to avoid inconsistencies
@@ -33,7 +34,7 @@ body:hover {
 	width: 100vw;
 	height: 100vh;
 	background-color: #b8fbdd;
-	z-index: 3;
+	z-index: 4;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -119,7 +120,11 @@ body:hover {
 	height: calc(100vw * (1080 / 1920));
 	max-height: 100vh;
 }
+
 #animationwrapper img {
+	position: absolute;
+	bottom: 0;
+	left: 0;
 	height: calc(100vw * (1080 / 1920));
 	max-height: 100vh;
 	max-width: 100%;
@@ -143,6 +148,10 @@ body:hover {
 	max-height: 100vh;
 }
 
+#slothimg {
+	z-index: 1;
+}
+
 #outside {
 	position: absolute;
 	bottom: 0;
@@ -156,7 +165,7 @@ body:hover {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 3;
     background-color: #7ec0ee;
     opacity: 0;
     text-align: center;
