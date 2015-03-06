@@ -37,8 +37,12 @@ var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
 var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
 var slothAnimationSrc	= src + "/animation/sloth" + randomnumber + ".gif";
 var underwaterAniSrc	= src + "/animation/underwater.gif";
+var audioSrc 			= src + "/audio/";
+var successSrc			= "scenes/success_screen/";
+var successSentenceSrc	= successSrc + "sentence" + randomsentence + ".svg";
+var successSlothSrc		= successSrc + "sloth.svg";
 
-// Preload all the files
+// Preload all the files for the game
 queue.loadFile({id:"sceneryOutside", src:sceneryOutsideSrc});
 queue.loadFile({id:"sceneryInside", src:sceneryInsideSrc});
 queue.loadFile({id:"animation", src:animationSrc});
@@ -48,6 +52,14 @@ queue.loadFile("javascripts/waapisim.js");
 queue.loadFile("javascripts/flashcanvas.js");
 queue.loadFile("javascripts/home.js");
 queue.loadFile("javascripts/script.js");
+// Preload the files for the success screen
+queue.loadFile({id:"successSentence", src:successSentenceSrc});
+queue.loadFile({id:"successSloth", src:successSlothSrc});
+
+// Load the sounds
+for (var i in audioFilenames) {
+	queue.loadFile({ id: audioFilenames[i].name, src: audioSrc + audioFilenames[i].name, type:createjs.AbstractLoader.BINARY });
+}
 
 // Show percentage on loading indicator
 function handleProgress(evt) {
@@ -88,6 +100,19 @@ function handleComplete(evt) {
 	var underwaterimgelem = $("#underwaterimg");
 	underwaterimgelem.css("left", window.innerWidth / 2 - underwaterimgelem.width() / 2);
 
+	// Decode sounds
+	for (var i in audioFilenames) {
+		audioFilenames[i].result = queue.getResult(audioFilenames[i].name);
+		decodeSound(audioFilenames[i]);
+	}
+
+	// Put together success screen
+	var successDiv = document.getElementById("successwrapper");
+	var successSentence = queue.getResult("successSentence");
+	successDiv.insertBefore(successSentence, successDiv.firstChild).setAttribute("id", "successSentence");
+	var successSloth = queue.getResult("successSloth");
+	successDiv.insertBefore(successSloth, successDiv.firstChild).setAttribute("id", "successSloth");
+
 	// If play was already clicked, initialize the game
 	if (playClicked) {
 		setTimeout(function() {
@@ -123,4 +148,36 @@ function initGame() {
 	}, 250);
 	// Call the init() function of the script.js file
 	init();
+}
+
+function playAgain() {
+	location.reload();
+}
+
+// Decode a sound
+function decodeSound(obj) {
+	obj.source = audioContext.createBufferSource();
+	audioContext.decodeAudioData(obj.result, function(buffer) {
+		// Save the buffer to the corresponding sound
+		obj.buffer = buffer;
+		// Add a gain node
+		obj.gainNode = audioContext.createGain();
+		// Connect the node to the source
+		obj.source.connect(obj.gainNode);
+		// Connect the nodes to the destination
+		obj.gainNode.connect(audioContext.destination);
+		// Set Volume to zero
+        obj.gainNode.gain.value = 0;
+		// Set loaded to true and play the audio
+		obj.loaded = true;
+        // Get position of origin of audio
+        if (obj.dirAudio) {
+            obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
+            obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
+            obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
+        } else {
+        	// Set volume of non directional Audio files on load
+        	obj.gainNode.gain.value = obj.vol;
+        }
+	});
 }

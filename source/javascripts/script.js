@@ -19,30 +19,10 @@ function init() {
 	// Setup
 	//
 	//
-
-	var audioFilenames;
 	// Set scene specific variables
 	if (sceneName === "test") {
-		audioFilenames = [
-		    { name: "rain", vol: 1, loaded: false, dirAudio: false },
-			{ name: "chatter", elem: "sloth", vol: 0.5, loaded: false, dirAudio: true }
-		];
 	} else if (sceneName === "skyline") {
-		audioFilenames = [
-			{ name: "street.wav", vol: 1, loaded: false, dirAudio: false },
-			{ name: "xmas.mp3", elem: "xmas", vol: 0.5, loaded: false, dirAudio: true },
-			{ name: "shower.wav", elem: "shower", vol: 0.5, loaded: false, dirAudio: true},
-			{ name: "duck.wav", elem: "duck", vol: 0.5, loaded: false, dirAudio: true },
-			{ name: "tv.wav", elem: "tv", vol: 0.5, loaded: false, dirAudio: true},
-			{ name: "R2D2.wav", elem: "r2d2", vol: 1, loaded: false, dirAudio: true},
-			{ name: "fridge.wav", elem: "fridge", vol: 1, loaded: false, dirAudio: true },
-			{ name: "brazil.wav", elem: "brazil", vol: 0.5, loaded: false, dirAudio: true },
-			{ name: "fire.wav", elem: "fire", vol: 1, loaded: false, dirAudio: true },
-			{ name: "neve.wav", elem: "neve", vol: 0.25, loaded: false, dirAudio: true},
-			{ name: "underwater.wav", elem: "underwater", vol: 0.5, loaded: false, dirAudio: true },
-			{ name: "vvvvvv.m4a", elem: "vvv", vol: 0.1, loaded: false, dirAudio: true },
-			{ name: "pingpong.wav", elem: "ping_pong", vol: 0.5, loaded: false, dirAudio: true }
-		];
+
 		var outsideBackgroundColor = "#b8fbdd";
 		var insideBackgroundColor = "#b8fbdd";
 		var magGlassOuterRingColor = "#86d1bc";
@@ -79,11 +59,6 @@ function init() {
 	// Initialize canvas
 	var foreground = document.getElementById("outside");
 	var ctx = foreground.getContext("2d");
-    // Create an audio context
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    audioContext = new AudioContext();
-    // Load the sounds
-    loadSounds(audioFilenames);
 
 	// ------------------------------------------
 	//
@@ -96,6 +71,10 @@ function init() {
 	var slothString = "sloth" + randomnumber;
 	var sceneryOutside = queue.getResult("sceneryOutside");
 	sloth = document.getElementById(slothString).getBoundingClientRect();
+	// Play the sounds
+	for (var i in audioFilenames) {
+		playSoundObj(audioFilenames[i]);
+	}
 	draw();
 
 	// ------------------------------------------
@@ -123,7 +102,7 @@ function init() {
 			if ((clickX > sloth.left - circleRadius && clickX < sloth.left + sloth.width + (circleRadius - sloth.width)) && (clickY > sloth.top - circleRadius && clickY < sloth.top + sloth.height + (circleRadius - sloth.height))) {
 				success = true;
 				audio = false;
-				$(".success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
+				$("#success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
 			}
 		});
 		// Responsiveness
@@ -282,7 +261,6 @@ function init() {
 	function loadSound(obj) {
 		var request = new XMLHttpRequest();
 	    // Create a source from the audio context
-	    obj.source = audioContext.createBufferSource();
 		request.open('GET', audioSrc + obj.name, true);
 		request.responseType = 'arraybuffer';
 		request.onload = function() {

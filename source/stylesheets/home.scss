@@ -159,14 +159,14 @@ body:hover {
 	z-index: 1;
 }
 
-.success {
+#success {
     width: 0;
     height: 0;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 3;
-    background-color: #7ec0ee;
+    background-color: #d95c7d;
     opacity: 0;
     text-align: center;
     transition: opacity 200ms ease-in-out;
@@ -174,6 +174,34 @@ body:hover {
     -webkit-transition: opacity 200ms ease-in-out;
 }
 
-.success:hover {
+#success:hover {
 	cursor: default;
+}
+
+#successwrapper {
+	display: inline-block;
+	margin: 0 auto;
+	margin-top: 30vh;
+}
+
+#success svg {
+	display:block;
+	margin: 1em auto;
+}
+
+#successSloth {
+	margin-bottom: 0!important;
+}
+
+#successSentence {
+	margin-top: 0!important;
+}
+
+#playagain {
+	fill: #AD3863;
+}
+
+#playagain:hover {
+	fill: #752151;
+	cursor: pointer;
 }
