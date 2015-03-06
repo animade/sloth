@@ -41,7 +41,7 @@ var underwaterAniSrc	= src + "/animation/underwater.gif";
 var audioSrc 			= src + "/audio/";
 var successSrc			= "scenes/success_screen/";
 var successSentenceSrc	= successSrc + "sentence" + randomsentence + ".svg";
-var successSlothSrc		= successSrc + "sloth.svg";
+var successSlothSrc		= successSrc + "shine.gif";
 
 // Preload all the files for the game
 queue.loadFile({id:"sceneryOutside", src:sceneryOutsideSrc});
@@ -75,7 +75,6 @@ function handleProgress(evt) {
 }
 // Handle the completion of the preloading
 function handleComplete(evt) {
-	complete = true;
 	var animationwrapper = document.getElementById("animationwrapper");
 
 	// Inject inside scenery
@@ -105,12 +104,6 @@ function handleComplete(evt) {
 	var underwaterimgelem = $("#underwaterimg");
 	underwaterimgelem.css("left", window.innerWidth / 2 - underwaterimgelem.width() / 2);
 
-	// Decode sounds
-	for (var i in audioFilenames) {
-		audioFilenames[i].result = queue.getResult(audioFilenames[i].name);
-		decodeSound(audioFilenames[i]);
-	}
-
 	// Inject success screen
 	var successDiv = document.getElementById("successwrapper");
 	var successSentence = queue.getResult("successSentence");
@@ -118,6 +111,12 @@ function handleComplete(evt) {
 	var successSloth = queue.getResult("successSloth");
 	successDiv.insertBefore(successSloth, successDiv.firstChild).setAttribute("id", "successSloth");
 
+	// Decode sounds
+	for (var i in audioFilenames) {
+		audioFilenames[i].result = queue.getResult(audioFilenames[i].name);
+		decodeSound(audioFilenames[i]);
+	}
+	complete = true;
 	// If play was already clicked, initialize the game
 	if (playClicked) {
 		setTimeout(function() {

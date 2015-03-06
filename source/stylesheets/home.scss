@@ -199,6 +199,9 @@ body:hover {
 
 #playagain {
 	fill: #AD3863;
+	transition: fill 100ms ease-in-out;
+	   -moz-transition: fill 100ms ease-in-out;
+	   -webkit-transition: fill 100ms ease-in-out;
 }
 
 #playagain:hover {
