@@ -1,23 +1,24 @@
 // ------------------------------------------
 //
-// Preload the game
+// Preloading and Setup
 //
 //
 
-// Initialize all the Variables
+// Initialize variables
 var queue = new createjs.LoadQueue();
 var complete = false;
 var playClicked = false;
 sceneName = "skyline";
 
 // Position main div of the loading screen
-var div = $("#loadingwrapper");
-div.css("top", $(document).height() / 2 - div.height() / 2);
-div.css("left", $(document).width() / 2 - div.width() / 2);
+var loadingwrapper = $("#loadingwrapper");
+loadingwrapper.css("top", $(document).height() / 2 - loadingwrapper.height() / 2);
+loadingwrapper.css("left", $(document).width() / 2 - loadingwrapper.width() / 2);
 
+// Resize elements on window.resize
 $(window).resize(function(){
-	div.css("top", $(document).height() / 2 - div.height() / 2);
-	div.css("left", $(document).width() / 2 - div.width() / 2);
+	loadingwrapper.css("top", $(document).height() / 2 - loadingwrapper.height() / 2);
+	loadingwrapper.css("left", $(document).width() / 2 - loadingwrapper.width() / 2);
 	var animationimgelem = $("#animationimg");
 	animationimgelem.css("left", window.innerWidth / 2 - animationimgelem.width() / 2);
 	var slothimgelem = $("#slothimg");
@@ -26,11 +27,11 @@ $(window).resize(function(){
 	underwaterimgelem.css("left", window.innerWidth / 2 - underwaterimgelem.width() / 2);
 });
 
-// Event handlers
+// Event handlers for the loading queue
 queue.on("progress", handleProgress, this);
 queue.on("complete", handleComplete, this);
 
-// Put together filenames
+// Put together filenames for easier extensibility
 var src 				= "scenes/" + sceneName;
 var animationSrc 		= src + "/animation/animation.gif";
 var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
@@ -52,49 +53,53 @@ queue.loadFile("javascripts/waapisim.js");
 queue.loadFile("javascripts/flashcanvas.js");
 queue.loadFile("javascripts/home.js");
 queue.loadFile("javascripts/script.js");
-// Preload the files for the success screen
-queue.loadFile({id:"successSentence", src:successSentenceSrc});
-queue.loadFile({id:"successSloth", src:successSlothSrc});
-
 // Load the sounds
 for (var i in audioFilenames) {
 	queue.loadFile({ id: audioFilenames[i].name, src: audioSrc + audioFilenames[i].name, type:createjs.AbstractLoader.BINARY });
 }
+// Preload the files for the success screen
+queue.loadFile({id:"successSentence", src:successSentenceSrc});
+queue.loadFile({id:"successSloth", src:successSlothSrc});
 
-// Show percentage on loading indicator
+// ------------------------------------------
+//
+// Functions
+//
+//
+
+// Calculate percentage of loading bar
 function handleProgress(evt) {
 	var percent = evt.loaded.toFixed(2) * 100;
-	// Set the text of the loading indicator to the percentage that has been loaded
+	// Set width of loading bar to percentage
 	document.getElementById('loadingbar').style.width = percent + "%";
 }
-
 // Handle the completion of the preloading
 function handleComplete(evt) {
 	complete = true;
 	var animationwrapper = document.getElementById("animationwrapper");
 
-	// Add inside scenery
+	// Inject inside scenery
 	var inside = queue.getResult("sceneryInside");
 	document.getElementById("inside").appendChild(inside);
 
-	// Add outside scenery
+	// Inject outside scenery
 	var outside = queue.getResult("sceneryOutside");
 	document.getElementById("outside").appendChild(outside).setAttribute("id", "outsideImg");
 	document.getElementById("outsideImg").style.visibility = "hidden";
 
-	// Add whole page animations
+	// Inject whole page animations
 	var img = queue.getResult("animation");
 	animationwrapper.appendChild(img).setAttribute("id", "animationimg");
 	var animationimgelem = $("#animationimg");
 	animationimgelem.css("left", window.innerWidth / 2 - animationimgelem.width() / 2);
 
-	// Add sloth animation
+	// Inject sloth animation
 	var slothimg = queue.getResult("slothAnimation");
 	animationwrapper.appendChild(slothimg).setAttribute("id", "slothimg");
 	var slothimgelem = $("#slothimg");
 	slothimgelem.css("left", window.innerWidth / 2 - slothimgelem.width() / 2);
 
-	// Add underwater animation
+	// Inject underwater animation
 	var underwaterimg = queue.getResult("underwaterAnimation");
 	animationwrapper.appendChild(underwaterimg).setAttribute("id", "underwaterimg");
 	var underwaterimgelem = $("#underwaterimg");
@@ -106,7 +111,7 @@ function handleComplete(evt) {
 		decodeSound(audioFilenames[i]);
 	}
 
-	// Put together success screen
+	// Inject success screen
 	var successDiv = document.getElementById("successwrapper");
 	var successSentence = queue.getResult("successSentence");
 	successDiv.insertBefore(successSentence, successDiv.firstChild).setAttribute("id", "successSentence");
@@ -120,7 +125,6 @@ function handleComplete(evt) {
 		}, 500);
 	}
 }
-
 // Called when the play button is clicked
 function playButtonClick() {
 	playClicked = true;
@@ -137,7 +141,6 @@ function playButtonClick() {
 		loadingindicator.style.opacity = "1";
 	}
 }
-
 // Initializes the game
 function initGame() {
 	// Fade out loading screen
@@ -149,16 +152,18 @@ function initGame() {
 	// Call the init() function of the script.js file
 	init();
 }
-
+// Called when the button on the success screen is clicked
+// TODO: Proper play again implementation and not just a page reload
 function playAgain() {
 	location.reload();
 }
-
 // Decode a sound
 function decodeSound(obj) {
+	// Add a source
 	obj.source = audioContext.createBufferSource();
+	// Decode the audiobuffer
 	audioContext.decodeAudioData(obj.result, function(buffer) {
-		// Save the buffer to the corresponding sound
+		// Save the decoded sound and buffer it
 		obj.buffer = buffer;
 		// Add a gain node
 		obj.gainNode = audioContext.createGain();

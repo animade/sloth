@@ -13,23 +13,19 @@ function init() {
 	var magGlassScale = 20; // The bigger the number the smaller the magnifying glass
 	// Audio
 	var dirAudioScale = 500; // The bigger the number the smaller the radius in which you hear the directional Audio
+	// Colors
+	var outsideBackgroundColor = "#b8fbdd";
+	var insideBackgroundColor = "#b8fbdd";
+	var magGlassOuterRingColor = "#86d1bc";
+	var magGlassOuterRingWidth = 5;
 
 	// ------------------------------------------
 	//
 	// Setup
 	//
 	//
-	// Set scene specific variables
-	if (sceneName === "test") {
-	} else if (sceneName === "skyline") {
 
-		var outsideBackgroundColor = "#b8fbdd";
-		var insideBackgroundColor = "#b8fbdd";
-		var magGlassOuterRingColor = "#86d1bc";
-		var magGlassOuterRingWidth = 5;
-	}
-
-	// Put together src urls for easy scene swapping
+	// Put together src urls for extensibility
 	var src 				= "scenes/" + sceneName;
 	var animationSrc 		= src + "/animation/animation.gif";
 	var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
@@ -59,22 +55,21 @@ function init() {
 	// Initialize canvas
 	var foreground = document.getElementById("outside");
 	var ctx = foreground.getContext("2d");
-
-	// ------------------------------------------
-	//
-	// Draw all the stuff
-	//
-	//
-	// Draw outside
+	// Set body background color
 	$("body").css("background-color", insideBackgroundColor);
+	// Calculate diagonal of the inside for the directional Audio
 	pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
+	// Put together sloth
 	var slothString = "sloth" + randomnumber;
+	// Get scenery outside image from DOM
 	var sceneryOutside = queue.getResult("sceneryOutside");
+	// Get target client rectangle
 	sloth = document.getElementById(slothString).getBoundingClientRect();
 	// Play the sounds
 	for (var i in audioFilenames) {
 		playSoundObj(audioFilenames[i]);
 	}
+	// Start drawing
 	draw();
 
 	// ------------------------------------------
@@ -105,14 +100,14 @@ function init() {
 				$("#success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
 			}
 		});
-		// Responsiveness
+		// Redraw everything on resize
 		$(window).resize(function(){
 			width 	= window.innerWidth;
 			height 	= window.innerHeight;
 			foreground.width = width;
 			foreground.height = height;
 			draw();
-	    	sloth = document.getElementById("sloth").getBoundingClientRect();
+	    	sloth = document.getElementById(slothString).getBoundingClientRect();
 	    	pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
 		});
 	}
@@ -124,12 +119,11 @@ function init() {
 	//
 	// Main function, called whenever the mouse is moved
 	function draw() {
-		// draw.preventDefault();
 		// Redraw area where circle was before
-		// ctx.clearRect(0, 0, width, height);
 		ctx.clearRect(prevCircleX - circleRadius * 3, prevCircleY - circleRadius * 3, circleRadius * 6, circleRadius * 6);
+		// Calculate circle Radius based on inside height
 	    circleRadius = $("#inside svg").height() / magGlassScale;
-		// Draw magnifying glass
+		// Draw magnifying glass ring
 		ctx.beginPath();
 			ctx.arc(circleX,circleY,circleRadius,0,Math.PI*2,true);
 			ctx.rect(0,0,width,height);
@@ -143,6 +137,7 @@ function init() {
 			ctx.lineWidth = magGlassOuterRingWidth;
 			ctx.strokeStyle = magGlassOuterRingColor;
 		ctx.closePath();
+		// Save previous circleX/Ys for redrawing
 		prevCircleX = circleX;
 		prevCircleY = circleY;
 	}
