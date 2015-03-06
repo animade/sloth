@@ -44,12 +44,14 @@ title: Find the sloth
   %div#animationwrapper
 
 %canvas#outside
-  %div
-  
+
 %div.success
   %h1 SUCCESS
 
 %script{:src => "javascripts/preloadjs.min.js"}
 :javascript
   var sceneName;
+  // Take one of 4 sloth positions
+  var randomnumber = Math.floor(Math.random()*4) + 1;
+  var queue;
 %script{:src => "javascripts/initial.js"}

@@ -29,9 +29,19 @@ function init() {
 		];
 	} else if (sceneName === "skyline") {
 		audioFilenames = [
-			{ name: "street", vol: 1, loaded: false, dirAudio: false },
-			{ name: "bells", elem: "xmas", vol: 0.5, loaded: false, dirAudio: true },
-			{ name: "shower", elem: "shower", vol: 0.5, loaded: false, dirAudio: true}
+			{ name: "street.wav", vol: 1, loaded: false, dirAudio: false },
+			{ name: "xmas.mp3", elem: "xmas", vol: 0.5, loaded: false, dirAudio: true },
+			{ name: "shower.wav", elem: "shower", vol: 0.5, loaded: false, dirAudio: true},
+			{ name: "duck.wav", elem: "duck", vol: 0.5, loaded: false, dirAudio: true },
+			{ name: "tv.wav", elem: "tv", vol: 0.5, loaded: false, dirAudio: true},
+			{ name: "R2D2.wav", elem: "r2d2", vol: 1, loaded: false, dirAudio: true},
+			{ name: "fridge.wav", elem: "fridge", vol: 1, loaded: false, dirAudio: true },
+			{ name: "brazil.wav", elem: "brazil", vol: 0.5, loaded: false, dirAudio: true },
+			{ name: "fire.wav", elem: "fire", vol: 1, loaded: false, dirAudio: true },
+			{ name: "neve.wav", elem: "neve", vol: 0.25, loaded: false, dirAudio: true},
+			{ name: "underwater.wav", elem: "underwater", vol: 0.5, loaded: false, dirAudio: true },
+			{ name: "vvvvvv.m4a", elem: "vvv", vol: 0.1, loaded: false, dirAudio: true },
+			{ name: "pingpong.wav", elem: "ping_pong", vol: 0.5, loaded: false, dirAudio: true }
 		];
 		var outsideBackgroundColor = "#b8fbdd";
 		var insideBackgroundColor = "#b8fbdd";
@@ -39,8 +49,6 @@ function init() {
 		var magGlassOuterRingWidth = 5;
 	}
 
-	// Take one of 4 sloth positions
-	var randomnumber = Math.floor(Math.random()*2) + 1;
 	// Put together src urls for easy scene swapping
 	var src 				= "scenes/" + sceneName;
 	var animationSrc 		= src + "/animation/animation.gif";
@@ -83,37 +91,12 @@ function init() {
 	//
 	//
 	// Draw outside
-	sceneryOutside = new Image();
-	sceneryOutside.onload = function() {
-		// When the image of the outside is loaded load the inside,
-		// inject it into the HTML and then specify target
-		$("#inside").load(sceneryInsideSrc, function() {
-			$("body").css("background-color", insideBackgroundColor);
-			pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
-			var slothString = "sloth" + randomnumber;
-			sloth = document.getElementById(slothString).getBoundingClientRect();
-		});
-		// Begin drawing
-		draw();
-	}
-	sceneryOutside.src = sceneryOutsideSrc;
-	// Add animation
-	var img = new Image();
-	var animationwrapper = document.getElementById('animationwrapper');
-	img.onload = function() {
-	  animationwrapper.appendChild(img).setAttribute("id", "animationimg");
-	  	var animationimgelem = $("#animationimg");
-		animationimgelem.css("left", width / 2 - animationimgelem.width() / 2);
-	};
-	img.src = animationSrc;
-	// Add sloth
-	var slothimg = new Image();
-	slothimg.onload = function() {
-		animationwrapper.appendChild(slothimg).setAttribute("id", "slothimg");
-		var slothimgelem = $("#slothimg");
-		slothimgelem.css("left", width / 2 - slothimgelem.width() / 2);
-	};
-	slothimg.src = slothSrc;
+	$("body").css("background-color", insideBackgroundColor);
+	pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
+	var slothString = "sloth" + randomnumber;
+	var sceneryOutside = queue.getResult("sceneryOutside");
+	sloth = document.getElementById(slothString).getBoundingClientRect();
+	draw();
 
 	// ------------------------------------------
 	//
@@ -164,8 +147,8 @@ function init() {
 	function draw() {
 		// draw.preventDefault();
 		// Redraw area where circle was before
-		ctx.clearRect(0, 0, width, height);
-		// ctx.clearRect(prevCircleX - circleRadius * 1.5, prevCircleY - circleRadius * 1.5, circleRadius * 3, circleRadius * 3);
+		// ctx.clearRect(0, 0, width, height);
+		ctx.clearRect(prevCircleX - circleRadius * 3, prevCircleY - circleRadius * 3, circleRadius * 6, circleRadius * 6);
 	    circleRadius = $("#inside svg").height() / magGlassScale;
 		// Draw magnifying glass
 		ctx.beginPath();
@@ -300,7 +283,7 @@ function init() {
 		var request = new XMLHttpRequest();
 	    // Create a source from the audio context
 	    obj.source = audioContext.createBufferSource();
-		request.open('GET', audioSrc + obj.name + ".wav", true);
+		request.open('GET', audioSrc + obj.name, true);
 		request.responseType = 'arraybuffer';
 		request.onload = function() {
 			// request.response is encode so decode it now

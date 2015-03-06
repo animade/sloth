@@ -18,6 +18,12 @@ div.css("left", $(document).width() / 2 - div.width() / 2);
 $(window).resize(function(){
 	div.css("top", $(document).height() / 2 - div.height() / 2);
 	div.css("left", $(document).width() / 2 - div.width() / 2);
+	var animationimgelem = $("#animationimg");
+	animationimgelem.css("left", window.innerWidth / 2 - animationimgelem.width() / 2);
+	var slothimgelem = $("#slothimg");
+	slothimgelem.css("left", window.innerWidth / 2 - slothimgelem.width() / 2);
+	var underwaterimgelem = $("#underwaterimg");
+	underwaterimgelem.css("left", window.innerWidth / 2 - underwaterimgelem.width() / 2);
 });
 
 // Event handlers
@@ -29,11 +35,15 @@ var src 				= "scenes/" + sceneName;
 var animationSrc 		= src + "/animation/animation.gif";
 var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
 var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
+var slothAnimationSrc	= src + "/animation/sloth" + randomnumber + ".gif";
+var underwaterAniSrc	= src + "/animation/underwater.gif";
 
 // Preload all the files
-queue.loadFile(animationSrc);
-queue.loadFile(sceneryOutsideSrc);
-queue.loadFile(sceneryInsideSrc);
+queue.loadFile({id:"sceneryOutside", src:sceneryOutsideSrc});
+queue.loadFile({id:"sceneryInside", src:sceneryInsideSrc});
+queue.loadFile({id:"animation", src:animationSrc});
+queue.loadFile({id:"slothAnimation", src:slothAnimationSrc});
+queue.loadFile({id:"underwaterAnimation", src:underwaterAniSrc});
 queue.loadFile("javascripts/waapisim.js");
 queue.loadFile("javascripts/flashcanvas.js");
 queue.loadFile("javascripts/home.js");
@@ -49,6 +59,35 @@ function handleProgress(evt) {
 // Handle the completion of the preloading
 function handleComplete(evt) {
 	complete = true;
+	var animationwrapper = document.getElementById("animationwrapper");
+
+	// Add inside scenery
+	var inside = queue.getResult("sceneryInside");
+	document.getElementById("inside").appendChild(inside);
+
+	// Add outside scenery
+	var outside = queue.getResult("sceneryOutside");
+	document.getElementById("outside").appendChild(outside).setAttribute("id", "outsideImg");
+	document.getElementById("outsideImg").style.visibility = "hidden";
+
+	// Add whole page animations
+	var img = queue.getResult("animation");
+	animationwrapper.appendChild(img).setAttribute("id", "animationimg");
+	var animationimgelem = $("#animationimg");
+	animationimgelem.css("left", window.innerWidth / 2 - animationimgelem.width() / 2);
+
+	// Add sloth animation
+	var slothimg = queue.getResult("slothAnimation");
+	animationwrapper.appendChild(slothimg).setAttribute("id", "slothimg");
+	var slothimgelem = $("#slothimg");
+	slothimgelem.css("left", window.innerWidth / 2 - slothimgelem.width() / 2);
+
+	// Add underwater animation
+	var underwaterimg = queue.getResult("underwaterAnimation");
+	animationwrapper.appendChild(underwaterimg).setAttribute("id", "underwaterimg");
+	var underwaterimgelem = $("#underwaterimg");
+	underwaterimgelem.css("left", window.innerWidth / 2 - underwaterimgelem.width() / 2);
+
 	// If play was already clicked, initialize the game
 	if (playClicked) {
 		setTimeout(function() {
