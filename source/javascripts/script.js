@@ -244,50 +244,6 @@ function init() {
 			obj.gainNode.gain.value = vol;
 		}
 	}
-	// Load several sounds from a JSON list
-	function loadSounds(list) {
-		for (var i in list) {
-			if (list.hasOwnProperty(i)) {
-				loadSound(list[i]);
-			}
-		}
-	}
-	// Load a single sound
-	function loadSound(obj) {
-		var request = new XMLHttpRequest();
-	    // Create a source from the audio context
-		request.open('GET', audioSrc + obj.name, true);
-		request.responseType = 'arraybuffer';
-		request.onload = function() {
-			// request.response is encode so decode it now
-			audioContext.decodeAudioData(request.response, function(buffer) {
-	    		// Save the buffer to the corresponding sound
-	    		obj.buffer = buffer;
-	    		// Add a gain node
-	    		obj.gainNode = audioContext.createGain();
-				// Connect the node to the source
-				obj.source.connect(obj.gainNode);
-				// Connect the nodes to the destination
-				obj.gainNode.connect(audioContext.destination);
-				// Set Volume to zero
-	            obj.gainNode.gain.value = 0;
-	    		// Set loaded to true and play the audio
-	    		obj.loaded = true;
-	            // Get position of origin of audio
-	            if (obj.dirAudio) {
-	                obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
-	                obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
-	                obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
-	            } else {
-	            	// Set volume of non directional Audio files on load
-	            	obj.gainNode.gain.value = obj.vol;
-	            }
-	            // Start playing the sound
-	    		playSoundObj(obj);
-			});
-		}
-		request.send();
-	}
 	// Play a sound
 	function playSoundObj(obj) {
 		obj.source.buffer = obj.buffer;

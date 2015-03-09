@@ -24,7 +24,7 @@ configure :build do
   activate :minify_javascript
 
   # Enable cache buster
-  activate :asset_hash, ignore: "scenes"
+  # activate :asset_hash, ignore: "scenes", ignore: "javascripts"
 
   # Use relative URLs
   activate :relative_assets
@@ -45,10 +45,6 @@ end
 
 # Deploy site to github pages
 activate :deploy do |deploy|
-  deploy.method = :sftp
-  deploy.host = "mstoiber.com"
-  deploy.port = 2222
-  deploy.path = "public_html/find-the-sloth"
-  deploy.user = ENV['DEPLOY_USER']
-  deploy.password = ENV['DEPLOY_PWD']
+  deploy.build_before = true
+  deploy.method = :git
 end
