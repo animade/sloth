@@ -149,16 +149,12 @@ function initGame() {
 
 // Decode a sound
 function decodeSound(obj) {
-	// Add a source
-	obj.source = audioContext.createBufferSource();
 	// Decode the audiobuffer
 	audioContext.decodeAudioData(obj.result, function(buffer) {
 		// Save the decoded sound and buffer it
 		obj.buffer = buffer;
 		// Add a gain node
 		obj.gainNode = audioContext.createGain();
-		// Connect the node to the source
-		obj.source.connect(obj.gainNode);
 		// Connect the nodes to the destination
 		obj.gainNode.connect(audioContext.destination);
 		// Set Volume to zero
@@ -177,7 +173,7 @@ function decodeSound(obj) {
 	});
 }
 
-// Center the loadingwrapper on the page
+// Center the loading screen elements on the page
 function centerLoadingwrapper() {
 	loadingwrapper.css("top", $(document).height() / 2 - loadingwrapper.height() / 2);
 	loadingwrapper.css("left", $(document).width() / 2 - loadingwrapper.width() / 2);

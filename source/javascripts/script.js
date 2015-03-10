@@ -76,7 +76,9 @@ function init() {
 	sloth = document.getElementById(slothString).getBoundingClientRect();
 	// Play the sounds
 	for (var i in audioFilenames) {
-		playSoundObj(audioFilenames[i]);
+		if (!audioFilenames[i].playing || audioFilenames[i].playing === undefined) {
+			playSoundObj(audioFilenames[i]);
+		}
 	}
 	// Start drawing
 	draw();
@@ -250,14 +252,18 @@ function directionalAudio(evt, obj) {
 
 // Play a sound
 function playSoundObj(obj) {
-	console.log(obj.name, typeof obj.buffer);
+	// Add a source
+	obj.source = audioContext.createBufferSource();
+	// Connect the node to the source
+	obj.source.connect(obj.gainNode);
 	if (obj.buffer !== undefined) {
 		obj.source.buffer = obj.buffer;
 	}
 	// Sets playing to true
 	obj.playing = true;
-	// Loops and starts the sound
+	// Loops the sound
 	obj.source.loop = true;
+	// Start the source
 	obj.source.start(0);
 }
 
@@ -277,4 +283,7 @@ function playAgain() {
 	};
 	slothAnimation.src = slothAnimationSrc;
 	init();
+	for (var i in audioFilenames) {
+		playSoundObj(audioFilenames[i]);
+	}
 }
