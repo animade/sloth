@@ -155,8 +155,6 @@ function decodeSound(obj) {
 		obj.buffer = buffer;
 		// Add a gain node
 		obj.gainNode = audioContext.createGain();
-		// Connect the nodes to the destination
-		obj.gainNode.connect(audioContext.destination);
 		// Set Volume to zero
         obj.gainNode.gain.value = 0;
 		// Set loaded to true and play the audio

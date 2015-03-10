@@ -254,6 +254,8 @@ function directionalAudio(evt, obj) {
 function playSoundObj(obj) {
 	// Add a source
 	obj.source = audioContext.createBufferSource();
+	// Connect the nodes to the destination
+	obj.gainNode.connect(audioContext.destination);
 	// Connect the node to the source
 	obj.source.connect(obj.gainNode);
 	if (obj.buffer !== undefined) {
