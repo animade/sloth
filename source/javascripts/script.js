@@ -260,3 +260,9 @@ function playSoundObj(obj) {
 	obj.source.loop = true;
 	obj.source.start(0);
 }
+
+// Called when the button on the success screen is clicked
+// TODO: Proper play again implementation and not just a page reload
+function playAgain() {
+	location.reload();
+}

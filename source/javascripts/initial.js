@@ -147,12 +147,6 @@ function initGame() {
 	init();
 }
 
-// Called when the button on the success screen is clicked
-// TODO: Proper play again implementation and not just a page reload
-function playAgain() {
-	location.reload();
-}
-
 // Decode a sound
 function decodeSound(obj) {
 	// Add a source
