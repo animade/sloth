@@ -262,7 +262,19 @@ function playSoundObj(obj) {
 }
 
 // Called when the button on the success screen is clicked
-// TODO: Proper play again implementation and not just a page reload
 function playAgain() {
-	location.reload();
+	success = false;
+	audio = true;
+	$("#success").css("opacity", "0");
+	randomnumber = Math.floor(Math.random()*4) + 1;
+	randomsentence = Math.floor(Math.random() * 3) + 1;
+	slothString = "sloth" + randomnumber;
+	var slothAnimationSrc = src + "/animation/sloth" + randomnumber + ".gif";
+	var slothAnimation = new Image();
+	slothAnimation.onload = function() {
+	    var slothimgelem = $("#slothimg");
+	    slothimgelem.attr("src", slothAnimationSrc);
+	};
+	slothAnimation.src = slothAnimationSrc;
+	init();
 }
