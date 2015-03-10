@@ -12,19 +12,11 @@ sceneName = "skyline";
 
 // Position main div of the loading screen
 var loadingwrapper = $("#loadingwrapper");
-loadingwrapper.css("top", $(document).height() / 2 - loadingwrapper.height() / 2);
-loadingwrapper.css("left", $(document).width() / 2 - loadingwrapper.width() / 2);
+centerLoadingwrapper();
 
 // Resize elements on window.resize
 $(window).resize(function(){
-	loadingwrapper.css("top", $(document).height() / 2 - loadingwrapper.height() / 2);
-	loadingwrapper.css("left", $(document).width() / 2 - loadingwrapper.width() / 2);
-	var animationimgelem = $("#animationimg");
-	animationimgelem.css("left", window.innerWidth / 2 - animationimgelem.width() / 2);
-	var slothimgelem = $("#slothimg");
-	slothimgelem.css("left", window.innerWidth / 2 - slothimgelem.width() / 2);
-	var underwaterimgelem = $("#underwaterimg");
-	underwaterimgelem.css("left", window.innerWidth / 2 - underwaterimgelem.width() / 2);
+	centerLoadingwrapper();
 });
 
 // Event handlers for the loading queue
@@ -73,6 +65,7 @@ function handleProgress(evt) {
 	// Set width of loading bar to percentage
 	document.getElementById('loadingbar').style.width = percent + "%";
 }
+
 // Handle the completion of the preloading
 function handleComplete(evt) {
 	var animationwrapper = document.getElementById("animationwrapper");
@@ -124,6 +117,7 @@ function handleComplete(evt) {
 		}, 500);
 	}
 }
+
 // Called when the play button is clicked
 function playButtonClick() {
 	playClicked = true;
@@ -140,6 +134,7 @@ function playButtonClick() {
 		loadingindicator.style.opacity = "1";
 	}
 }
+
 // Initializes the game
 function initGame() {
 	// Fade out loading screen
@@ -151,11 +146,13 @@ function initGame() {
 	// Call the init() function of the script.js file
 	init();
 }
+
 // Called when the button on the success screen is clicked
 // TODO: Proper play again implementation and not just a page reload
 function playAgain() {
 	location.reload();
 }
+
 // Decode a sound
 function decodeSound(obj) {
 	// Add a source
@@ -184,4 +181,16 @@ function decodeSound(obj) {
         	obj.gainNode.gain.value = obj.vol;
         }
 	});
+}
+
+// Center the loadingwrapper on the page
+function centerLoadingwrapper() {
+	loadingwrapper.css("top", $(document).height() / 2 - loadingwrapper.height() / 2);
+	loadingwrapper.css("left", $(document).width() / 2 - loadingwrapper.width() / 2);
+	var animationimgelem = $("#animationimg");
+	animationimgelem.css("left", window.innerWidth / 2 - animationimgelem.width() / 2);
+	var slothimgelem = $("#slothimg");
+	slothimgelem.css("left", window.innerWidth / 2 - slothimgelem.width() / 2);
+	var underwaterimgelem = $("#underwaterimg");
+	underwaterimgelem.css("left", window.innerWidth / 2 - underwaterimgelem.width() / 2);
 }

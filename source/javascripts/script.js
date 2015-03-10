@@ -1,68 +1,77 @@
+// Console log with link to GitHub repo
+console.log("%cInstead of wading through all this minified and obfuscated slush, why not have a look at the full, commented source? You can find it here:", "color: #F05050");
+console.log("%chttps://github.com/mstoiber/find-the-sloth", "color: #2C85BD; text-decoration: underline");
+
+// ------------------------------------------
+//
+// Settings
+//
+//
+
+// Magnifying glass
+var magGlassScale = 20; // The bigger the number the smaller the magnifying glass
+// Audio
+var dirAudioScale = 500; // The bigger the number the smaller the radius in which you hear the directional Audio
+// Colors
+var outsideBackgroundColor = "#b8fbdd";
+var insideBackgroundColor = "#b8fbdd";
+var magGlassOuterRingColor = "#86d1bc";
+var magGlassOuterRingWidth = 5;
+
+// Put together src urls for extensibility
+var src 				= "scenes/" + sceneName;
+var animationSrc 		= src + "/animation/animation.gif";
+var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
+var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
+var audioSrc 			= src + "/audio/";
+var slothSrc			= src + "/animation/sloth" + randomnumber + ".gif";
+
+// ------------------------------------------
+//
+// Defining global variables
+//
+//
+
+// Just to save a few characters
+var width 	= window.innerWidth,
+	height 	= window.innerHeight;
+// Intialize globally needed variables and position
+// magnifying glass in the middle of the page
+var audioContext;
+var sloth;
+var vol;
+var circleRadius;
+var circleX = width / 2;
+var circleY = height / 2;
+var prevCircleX;
+var prevCircleY;
+var pageDiagonal;
+var sceneryOutside;
+// Various booleans for settings
+var success = false;
+var audio 	= true;
+// Set canvas width and height
+$("#outside").attr("width", width).attr("height", height);
+// Initialize canvas
+var foreground = document.getElementById("outside");
+var ctx = foreground.getContext("2d");
+// Randomize sloth placement
+var slothString = "sloth" + randomnumber;
+
+// ------------------------------------------
+//
+// Functions
+//
+//
+
+// Setup
 function init() {
-	// Console log with link to GitHub repo
-	console.log("%cInstead of wading through all this minified and obfuscated slush, why not have a look at the full, commented source? You can find it here:", "color: #F05050");
-	console.log("%chttps://github.com/mstoiber/find-the-sloth", "color: #2C85BD; text-decoration: underline");
-
-	// ------------------------------------------
-	//
-	// Settings
-	//
-	//
-
-	// Magnifying glass
-	var magGlassScale = 20; // The bigger the number the smaller the magnifying glass
-	// Audio
-	var dirAudioScale = 500; // The bigger the number the smaller the radius in which you hear the directional Audio
-	// Colors
-	var outsideBackgroundColor = "#b8fbdd";
-	var insideBackgroundColor = "#b8fbdd";
-	var magGlassOuterRingColor = "#86d1bc";
-	var magGlassOuterRingWidth = 5;
-
-	// ------------------------------------------
-	//
-	// Setup
-	//
-	//
-
-	// Put together src urls for extensibility
-	var src 				= "scenes/" + sceneName;
-	var animationSrc 		= src + "/animation/animation.gif";
-	var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
-	var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
-	var audioSrc 			= src + "/audio/";
-	var slothSrc			= src + "/animation/sloth" + randomnumber + ".gif";
-	// Just to save a few characters
-	var width 	= window.innerWidth,
-		height 	= window.innerHeight;
-	// Intialize globally needed variables and position
-	// magnifying glass in the middle of the page
-	var audioContext;
-	var sloth;
-	var vol;
-	var circleRadius;
-	var circleX = width / 2;
-	var circleY = height / 2;
-	var prevCircleX;
-	var prevCircleY;
-	var pageDiagonal;
-	// Various booleans for settings
-	var success = false;
-	var audio 	= true;
-
-	// Set canvas width and height
-	$("#outside").attr("width", width).attr("height", height);
-	// Initialize canvas
-	var foreground = document.getElementById("outside");
-	var ctx = foreground.getContext("2d");
 	// Set body background color
 	$("body").css("background-color", insideBackgroundColor);
 	// Calculate diagonal of the inside for the directional Audio
 	pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
-	// Put together sloth
-	var slothString = "sloth" + randomnumber;
 	// Get scenery outside image from DOM
-	var sceneryOutside = queue.getResult("sceneryOutside");
+	sceneryOutside = queue.getResult("sceneryOutside");
 	// Get target client rectangle
 	sloth = document.getElementById(slothString).getBoundingClientRect();
 	// Play the sounds
@@ -72,12 +81,7 @@ function init() {
 	// Start drawing
 	draw();
 
-	// ------------------------------------------
-	//
-	// Add interactivity and responsiveness
-	//
-	//
-
+	// Add interactivity
 	if (success === false) {
 		// Mouse/Finger move
 		$(document).mousemove(onMouseMove);
@@ -100,157 +104,159 @@ function init() {
 				$("#success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
 			}
 		});
-		// Redraw everything on resize
-		$(window).resize(function(){
-			width 	= window.innerWidth;
-			height 	= window.innerHeight;
-			foreground.width = width;
-			foreground.height = height;
-			draw();
-	    	sloth = document.getElementById(slothString).getBoundingClientRect();
-	    	pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
-		});
 	}
-
-	// ------------------------------------------
-	//
-	// Functions
-	//
-	//
-	// Main function, called whenever the mouse is moved
-	function draw() {
-		// Redraw area where circle was before
-		ctx.clearRect(prevCircleX - circleRadius * 3, prevCircleY - circleRadius * 3, circleRadius * 6, circleRadius * 6);
-		// Calculate circle Radius based on inside height
-	    circleRadius = $("#inside svg").height() / magGlassScale;
-		// Draw magnifying glass ring
-		ctx.beginPath();
-			ctx.arc(circleX,circleY,circleRadius,0,Math.PI*2,true);
-			ctx.rect(0,0,width,height);
-		ctx.closePath();
-		// Clip the image
-		clippedImage(sceneryOutside);
-		// Draw outer ring of magnifying glass
-		ctx.beginPath();
-			ctx.arc(circleX,circleY,circleRadius,0,Math.PI*2,true);
-			ctx.stroke();
-			ctx.lineWidth = magGlassOuterRingWidth;
-			ctx.strokeStyle = magGlassOuterRingColor;
-		ctx.closePath();
-		// Save previous circleX/Ys for redrawing
-		prevCircleX = circleX;
-		prevCircleY = circleY;
-	}
-	// Called to clip the image
-	function clippedImage(img) {
-		// Save whole canvas
-		ctx.save();
-			// Clip everything
-			ctx.clip();
-			// Calculate height for correct aspect ratio
-			var imgHeight = width * (img.height / img.width);
-			var imgWidth = width;
-			var imgX = 0;
-			if (imgHeight > height) {
-				imgHeight = height;
-				imgWidth = imgHeight * (img.width / img.height);
-				imgX = (width - imgWidth) / 2;
-			}
-			// Draw background
-	    	ctx.fillStyle = outsideBackgroundColor;
-	    	ctx.fill();
-		  	// Draw the image
-		  	ctx.drawImage(img,imgX,height - imgHeight,imgWidth,imgHeight);
-		  	var animationwrapper = document.getElementById('animationwrapper');
-		  	animationwrapper.style.width = imgWidth;
-		// Restore everything that hasn't changed
-	  	ctx.restore();
-	}
-	// Called on mouse move and touch move
-	function onMouseMove(evt) {
-		// Move the circle around
-		circleX = evt.pageX;
-		circleY = evt.pageY;
-		// If touch, set circleX and circleY to touch origin
-		if (circleX === undefined || circleY === undefined) {
-			evt.preventDefault();
-			var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
-			circleX = touch.pageX;
-			// Move circle up the Y axis by height/15,
-			// Otherwise the finger would cover up the hole
-			circleY = touch.pageY - height / 15;
-		}
-		// Then redraw the canvas
+	// Fluid responsiveness to make cheating harder
+	$(window).resize(function(){
+		width 	= window.innerWidth;
+		height 	= window.innerHeight;
+		foreground.width = width;
+		foreground.height = height;
 		draw();
-		// If audio is on, check if we need to
-		// change volume based on position.
-		if (audio) {
-			for (var i in audioFilenames) {
-	            if (audioFilenames[i].loaded && audioFilenames[i].dirAudio) {
-	                directionalAudio(evt, audioFilenames[i]);
-	            }
+		sloth = document.getElementById(slothString).getBoundingClientRect();
+		pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
+	});
+}
+
+// Main function, called whenever the mouse is moved
+function draw() {
+	// Redraw area where circle was before
+	ctx.clearRect(prevCircleX - circleRadius * 3, prevCircleY - circleRadius * 3, circleRadius * 6, circleRadius * 6);
+	// Calculate circle Radius based on inside height
+    circleRadius = $("#inside svg").height() / magGlassScale;
+	// Draw magnifying glass ring
+	ctx.beginPath();
+		ctx.arc(circleX,circleY,circleRadius,0,Math.PI*2,true);
+		ctx.rect(0,0,width,height);
+	ctx.closePath();
+	// Clip the image
+	clippedImage(sceneryOutside);
+	// Draw outer ring of magnifying glass
+	ctx.beginPath();
+		ctx.arc(circleX,circleY,circleRadius,0,Math.PI*2,true);
+		ctx.stroke();
+		ctx.lineWidth = magGlassOuterRingWidth;
+		ctx.strokeStyle = magGlassOuterRingColor;
+	ctx.closePath();
+	// Save previous circleX/Ys for redrawing
+	prevCircleX = circleX;
+	prevCircleY = circleY;
+}
+
+// Called to clip the image
+function clippedImage(img) {
+	// Save whole canvas
+	ctx.save();
+		// Clip everything
+		ctx.clip();
+		// Calculate height for correct aspect ratio
+		var imgHeight = width * (img.height / img.width);
+		var imgWidth = width;
+		var imgX = 0;
+		if (imgHeight > height) {
+			imgHeight = height;
+			imgWidth = imgHeight * (img.width / img.height);
+			imgX = (width - imgWidth) / 2;
+		}
+		// Draw background
+    	ctx.fillStyle = outsideBackgroundColor;
+    	ctx.fill();
+	  	// Draw the image
+	  	ctx.drawImage(img,imgX,height - imgHeight,imgWidth,imgHeight);
+	  	var animationwrapper = document.getElementById('animationwrapper');
+	  	animationwrapper.style.width = imgWidth;
+	// Restore everything that hasn't changed
+  	ctx.restore();
+}
+
+// Called on mouse move and touch move
+function onMouseMove(evt) {
+	// Move the circle around
+	circleX = evt.pageX;
+	circleY = evt.pageY;
+	// If touch, set circleX and circleY to touch origin
+	if (circleX === undefined || circleY === undefined) {
+		evt.preventDefault();
+		var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
+		circleX = touch.pageX;
+		// Move circle up the Y axis by height/15,
+		// Otherwise the finger would cover up the hole
+		circleY = touch.pageY - height / 15;
+	}
+	// Then redraw the canvas
+	draw();
+	// If audio is on, check if we need to
+	// change volume based on position.
+	if (audio) {
+		for (var i in audioFilenames) {
+            if (audioFilenames[i].loaded && audioFilenames[i].dirAudio) {
+                directionalAudio(evt, audioFilenames[i]);
+            }
+        }
+	} else {
+		for (var i in audioFilenames) {
+	        if (audioFilenames[i].loaded && audioFilenames[i].playing) {
+	            audioFilenames[i].source.stop(0);
 	        }
-		} else {
-			for (var i in audioFilenames) {
-		        if (audioFilenames[i].loaded && audioFilenames[i].playing) {
-		            audioFilenames[i].source.stop(0);
-		        }
-		    }
-		}
+	    }
 	}
-	// Adjusts volume of sound based on how far away the mouse is from the source point
-	function directionalAudio(evt, obj) {
-		// Variables used throughout this function only
-		var cursorX = evt.pageX;
-		var cursorY = evt.pageY;
+}
 
-		// If touch event
-		if (cursorX === undefined || cursorY === undefined) {
-			var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
-			cursorX = touch.pageX;
-			cursorY = touch.pageY;
-		}
+// Adjusts volume of sound based on how far away the mouse is from the source point
+function directionalAudio(evt, obj) {
+	// Variables used throughout this function only
+	var cursorX = evt.pageX;
+	var cursorY = evt.pageY;
 
-		// cX/Y = cursorX/Y, aX/Y = audioX/Y
-		//
-		// cX < aX	|	cX > aX
-		//   &&		|	  &&
-		// cY < aY	|	cY < aY
-		//			|
-		// -------- + --------> x
-		//			|
-		// cX < aX	|	cX > aX
-		//   &&		|	  &&
-		// cY > aY	|	cY > aY
-		//			v
-		//			y
-
-		// Top left quadrant
-		if (cursorX < obj.audioX && cursorY < obj.audioY) {
-	        vol = (Math.pow((obj.audioX - cursorX), 2) + Math.pow((obj.audioY - cursorY), 2)) / pageDiagonal;
-		// Top right quadrant
-		} else if (cursorX > obj.audioX && cursorY < obj.audioY){
-	        vol = (Math.pow((cursorX - obj.audioX), 2) + Math.pow((obj.audioY - cursorY), 2)) / pageDiagonal;
-		// Bottom right quadrant
-		} else if (cursorX > obj.audioX && cursorY > obj.audioY) {
-			vol = (Math.pow((cursorX - obj.audioX), 2) + Math.pow((cursorY - obj.audioY), 2)) / pageDiagonal;
-		// Bottom left quadrant
-		} else if (cursorX < obj.audioX && cursorY > obj.audioY) {
-			vol = (Math.pow((obj.audioX - cursorX), 2) + Math.pow((cursorY - obj.audioY), 2)) / pageDiagonal;
-		}
-		if (vol < 1 && vol > 0 && obj.loaded === true) {
-			vol = Math.pow(1 - vol, dirAudioScale) * obj.vol;
-			// Set gain (volume)
-			obj.gainNode.gain.value = vol;
-		}
+	// If touch event
+	if (cursorX === undefined || cursorY === undefined) {
+		var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
+		cursorX = touch.pageX;
+		cursorY = touch.pageY;
 	}
-	// Play a sound
-	function playSoundObj(obj) {
+
+	// cX/Y = cursorX/Y, aX/Y = audioX/Y
+	//
+	// cX < aX	|	cX > aX
+	//   &&		|	  &&
+	// cY < aY	|	cY < aY
+	//			|
+	// -------- + --------> x
+	//			|
+	// cX < aX	|	cX > aX
+	//   &&		|	  &&
+	// cY > aY	|	cY > aY
+	//			v
+	//			y
+
+	// Top left quadrant
+	if (cursorX < obj.audioX && cursorY < obj.audioY) {
+        vol = (Math.pow((obj.audioX - cursorX), 2) + Math.pow((obj.audioY - cursorY), 2)) / pageDiagonal;
+	// Top right quadrant
+	} else if (cursorX > obj.audioX && cursorY < obj.audioY){
+        vol = (Math.pow((cursorX - obj.audioX), 2) + Math.pow((obj.audioY - cursorY), 2)) / pageDiagonal;
+	// Bottom right quadrant
+	} else if (cursorX > obj.audioX && cursorY > obj.audioY) {
+		vol = (Math.pow((cursorX - obj.audioX), 2) + Math.pow((cursorY - obj.audioY), 2)) / pageDiagonal;
+	// Bottom left quadrant
+	} else if (cursorX < obj.audioX && cursorY > obj.audioY) {
+		vol = (Math.pow((obj.audioX - cursorX), 2) + Math.pow((cursorY - obj.audioY), 2)) / pageDiagonal;
+	}
+	if (vol < 1 && vol > 0 && obj.loaded === true) {
+		vol = Math.pow(1 - vol, dirAudioScale) * obj.vol;
+		// Set gain (volume)
+		obj.gainNode.gain.value = vol;
+	}
+}
+
+// Play a sound
+function playSoundObj(obj) {
+	console.log(obj.name, typeof obj.buffer);
+	if (obj.buffer !== undefined) {
 		obj.source.buffer = obj.buffer;
-		// Sets playing to true
-		obj.playing = true;
-		// Loops and starts the sound
-		obj.source.loop = true;
-		obj.source.start(0);
 	}
+	// Sets playing to true
+	obj.playing = true;
+	// Loops and starts the sound
+	obj.source.loop = true;
+	obj.source.start(0);
 }
