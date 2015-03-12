@@ -8,6 +8,7 @@
 var queue = new createjs.LoadQueue();
 var complete = false;
 var playClicked = false;
+var audioDecoded = false;
 sceneName = "skyline";
 
 // Position main div of the loading screen
@@ -109,9 +110,10 @@ function handleComplete(evt) {
 		audioFilenames[i].result = queue.getResult(audioFilenames[i].name);
 		decodeSound(audioFilenames[i]);
 	}
+	audioDecoded = true;
 	complete = true;
 	// If play was already clicked, initialize the game
-	if (playClicked) {
+	if (playClicked && audioDecoded) {
 		setTimeout(function() {
 			initGame();
 		}, 500);
@@ -122,7 +124,7 @@ function handleComplete(evt) {
 function playButtonClick() {
 	playClicked = true;
 	// If the game is loaded, initialize the game
-	if (complete) {
+	if (complete && audioDecoded) {
 		initGame();
 	// otherwise show the loading indicator
 	} else {
