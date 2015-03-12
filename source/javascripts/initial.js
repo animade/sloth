@@ -13,10 +13,14 @@ sceneName = "skyline";
 
 // Position main div of the loading screen
 var loadingwrapper = $("#loadingwrapper");
-centerLoadingwrapper();
 
 // Resize elements on window.resize
 $(window).resize(function(){
+	centerLoadingwrapper();
+});
+
+// On document ready center loadingwrapper
+$(function() {
 	centerLoadingwrapper();
 });
 
