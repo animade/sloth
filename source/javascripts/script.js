@@ -50,6 +50,8 @@ var sceneryOutside;
 // Various booleans for settings
 var success = false;
 var audio 	= true;
+var audioButton = false;
+var info 	= false;
 // Set canvas width and height
 $("#outside").attr("width", width).attr("height", height);
 // Initialize canvas
@@ -84,7 +86,7 @@ function init() {
 	draw();
 
 	// Add interactivity
-	if (success === false) {
+	if (success === false && info == false && title == false) {
 		// Mouse/Finger move
 		$(document).mousemove(onMouseMove);
 		$(document).bind('touchmove', onMouseMove);
@@ -102,8 +104,34 @@ function init() {
 			// If the sloth is clicked show success message
 			if ((clickX > sloth.left - circleRadius && clickX < sloth.left + sloth.width + (circleRadius - sloth.width)) && (clickY > sloth.top - circleRadius && clickY < sloth.top + sloth.height + (circleRadius - sloth.height))) {
 				success = true;
-				audio = false;
+				turnOffAudio();
 				$("#success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
+			}
+		});
+		// On click on the infobutton
+		$("#infobutton").click(function(evt) {
+			if (info) {
+				// Hide info screen
+				$("#info").css("width", "0").css("height", "0").css("opacity", "0");
+				info = false;
+				if (!audioButton) {
+					turnOnAudio();
+				}
+			} else {
+				// Show info screen
+				$("#info").css("width", "100vw").css("height", "100vh").css("opacity", "1");
+				// Turn audio off
+				info = true;
+				turnOffAudio();
+			}
+		});
+		// On click on the audio button
+		$("#audiobutton").click(function() {
+			audioButton = !audioButton;
+			if (!audioButton) {
+            	turnOnAudio();
+			} else {
+				turnOffAudio();
 			}
 		});
 	}
@@ -188,18 +216,14 @@ function onMouseMove(evt) {
 	draw();
 	// If audio is on, check if we need to
 	// change volume based on position.
-	if (audio) {
+	if (audio && !audioButton) {
 		for (var i in audioFilenames) {
             if (audioFilenames[i].loaded && audioFilenames[i].dirAudio) {
                 directionalAudio(evt, audioFilenames[i]);
             }
         }
 	} else {
-		for (var i in audioFilenames) {
-	        if (audioFilenames[i].loaded && audioFilenames[i].playing) {
-	            audioFilenames[i].source.stop(0);
-	        }
-	    }
+	    turnOffAudio()
 	}
 }
 
@@ -252,31 +276,72 @@ function directionalAudio(evt, obj) {
 
 // Play a sound
 function playSoundObj(obj) {
-	// Add a source
-	obj.source = audioContext.createBufferSource();
-	// Connect the nodes to the destination
-	obj.gainNode.connect(audioContext.destination);
-	// Connect the node to the source
-	obj.source.connect(obj.gainNode);
-	if (obj.buffer !== undefined) {
-		obj.source.buffer = obj.buffer;
+	// If the audioButton is not switched on and the source
+	// has not been defined yet
+	if (!audioButton && obj.source === undefined) {
+		// Add a source
+		obj.source = audioContext.createBufferSource();
+		// Avoid obj.gainNode undefined error
+		if (obj.gainNode !== undefined) {
+			// Connect the nodes to the destination
+			obj.gainNode.connect(audioContext.destination);
+			// Connect the node to the source
+			obj.source.connect(obj.gainNode);
+		} else {
+			obj.gainNode = audioContext.createGain();
+			playSoundObj(obj);
+			return;
+		}
+		// Avoid obj.buffer undefined
+		if (obj.buffer !== undefined) {
+			obj.source.buffer = obj.buffer;
+		}
+		// Sets playing to true
+		obj.playing = true;
+		// Loops the sound
+		obj.source.loop = true;
+		// Start the source
+		obj.source.start(0);
 	}
-	// Sets playing to true
-	obj.playing = true;
-	// Loops the sound
-	obj.source.loop = true;
-	// Start the source
-	obj.source.start(0);
+	// If the source has been defined and a global audio isn't playing, play it
+	if (obj.source !== undefined && obj.playing === false && obj.dirAudio === false && !audioButton) {
+		obj.gainNode.gain.value = obj.vol;
+	}
+}
+
+// Turns off audio
+function turnOffAudio() {
+	for (var i in audioFilenames) {
+        if (audioFilenames[i].loaded && audioFilenames[i].playing) {
+            audioFilenames[i].gainNode.gain.value = 0;
+            audioFilenames[i].playing = false;
+        }
+    }
+    audio = false;
+}
+
+// Turns on audio
+function turnOnAudio() {
+	if (!info) {
+		for (var i in audioFilenames) {
+	        if (audioFilenames[i].loaded && !audioFilenames[i].playing) {
+	            if (!audioFilenames[i].dirAudio) {
+	            	audioFilenames[i].gainNode.gain.value = audioFilenames[i].vol;
+	            }
+	            audioFilenames[i].playing = true;
+	        }
+	    }
+	    audio = true;
+	}
 }
 
 // Called when the button on the success screen is clicked
 function playAgain() {
 	success = false;
-	audio = true;
-	$("#success").css("opacity", "0");
+	// Hide success screen
+	$("#success").css("width", "0").css("height", "0").css("opacity", "0");
+	// Show a new random sloth
 	randomnumber = Math.floor(Math.random()*4) + 1;
-	randomsentence = Math.floor(Math.random() * 3) + 1;
-	slothString = "sloth" + randomnumber;
 	var slothAnimationSrc = src + "/animation/sloth" + randomnumber + ".gif";
 	var slothAnimation = new Image();
 	slothAnimation.onload = function() {
@@ -284,8 +349,10 @@ function playAgain() {
 	    slothimgelem.attr("src", slothAnimationSrc);
 	};
 	slothAnimation.src = slothAnimationSrc;
+	// Initialize again
 	init();
-	for (var i in audioFilenames) {
-		playSoundObj(audioFilenames[i]);
+	// Play Sounds
+	if (!audioButton) {
+		turnOnAudio();
 	}
 }

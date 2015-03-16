@@ -36,7 +36,11 @@ title: The lost sloth
     %div#loadingindicator
       %div#loadingbar
 
-%div#controls
+%div#info
+
+%button#infobutton Info
+
+%button#audiobutton Audio
 
 %div#inside
 
@@ -101,4 +105,5 @@ title: The lost sloth
   // Create an audio context
   window.AudioContext = window.AudioContext || window.webkitAudioContext;
   audioContext = new AudioContext();
+  var title = true;
 %script{:src => "javascripts/initial.js"}

@@ -149,6 +149,7 @@ function initGame() {
 	setTimeout(function() {
 		loading.css("visibility", "hidden");
 	}, 250);
+	title = false;
 	// Call the init() function of the script.js file
 	init();
 }
@@ -179,12 +180,10 @@ function decodeSound(obj) {
 
 // Center the loading screen elements on the page
 function centerLoadingwrapper() {
+	// Center wrapper
 	loadingwrapper.css("top", $(document).height() / 2 - loadingwrapper.height() / 2);
 	loadingwrapper.css("left", $(document).width() / 2 - loadingwrapper.width() / 2);
-	var animationimgelem = $("#animationimg");
-	animationimgelem.css("left", window.innerWidth / 2 - animationimgelem.width() / 2);
+	// Center "The lost sloth" swinging animation
 	var slothimgelem = $("#slothimg");
 	slothimgelem.css("left", window.innerWidth / 2 - slothimgelem.width() / 2);
-	var underwaterimgelem = $("#underwaterimg");
-	underwaterimgelem.css("left", window.innerWidth / 2 - underwaterimgelem.width() / 2);
 }
