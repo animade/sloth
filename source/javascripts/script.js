@@ -147,6 +147,35 @@ function init() {
 	});
 }
 
+// Called on mouse move and touch move
+function onMouseMove(evt) {
+	// Move the circle around
+	circleX = evt.pageX;
+	circleY = evt.pageY;
+	// If touch, set circleX and circleY to touch origin
+	if (circleX === undefined || circleY === undefined) {
+		evt.preventDefault();
+		var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
+		circleX = touch.pageX;
+		// Move circle up the Y axis by height/15,
+		// Otherwise the finger would cover up the hole
+		circleY = touch.pageY - height / 15;
+	}
+	// Then redraw the canvas
+	draw();
+	// If audio is on, check if we need to
+	// change volume based on position.
+	if (audio && !audioButton) {
+		for (var i in audioFilenames) {
+            if (audioFilenames[i].loaded && audioFilenames[i].dirAudio) {
+            	directionalAudio(evt, audioFilenames[i]);
+            }
+        }
+	} else {
+	    turnOffAudio()
+	}
+}
+
 // Main function, called whenever the mouse is moved
 function draw() {
 	// Redraw area where circle was before
@@ -174,7 +203,6 @@ function draw() {
 
 // Called to clip the image
 function clippedImage(img) {
-	// Save whole canvas
 	ctx.save();
 		// Clip everything
 		ctx.clip();
@@ -194,37 +222,7 @@ function clippedImage(img) {
 	  	ctx.drawImage(img,imgX,height - imgHeight,imgWidth,imgHeight);
 	  	var animationwrapper = document.getElementById('animationwrapper');
 	  	animationwrapper.style.width = imgWidth;
-	// Restore everything that hasn't changed
   	ctx.restore();
-}
-
-// Called on mouse move and touch move
-function onMouseMove(evt) {
-	// Move the circle around
-	circleX = evt.pageX;
-	circleY = evt.pageY;
-	// If touch, set circleX and circleY to touch origin
-	if (circleX === undefined || circleY === undefined) {
-		evt.preventDefault();
-		var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
-		circleX = touch.pageX;
-		// Move circle up the Y axis by height/15,
-		// Otherwise the finger would cover up the hole
-		circleY = touch.pageY - height / 15;
-	}
-	// Then redraw the canvas
-	draw();
-	// If audio is on, check if we need to
-	// change volume based on position.
-	if (audio && !audioButton) {
-		for (var i in audioFilenames) {
-            if (audioFilenames[i].loaded && audioFilenames[i].dirAudio) {
-                directionalAudio(evt, audioFilenames[i]);
-            }
-        }
-	} else {
-	    turnOffAudio()
-	}
 }
 
 // Adjusts volume of sound based on how far away the mouse is from the source point
