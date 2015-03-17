@@ -12,6 +12,7 @@ title: The lost sloth
 
 / Haml
 
+/ Loading screen
 %div#loading
   %div#loadingwrapper
     %img#logo{:src => "scenes/start_screen/start.gif"}
@@ -36,19 +37,54 @@ title: The lost sloth
     %div#loadingindicator
       %div#loadingbar
 
+/ Info screen
 %div#info
+  %div#infowrapper
+    %img{:src => "scenes/info_screen/logo.png"}
+    %h3 DO SLOTHS HANG OUT IN ORNATE BUILDINGS?
+    %h3 WE’RE PRETTY SURE THEY DO.
+    %p
+      Scan your cursor across the facade to find out where our hairy friend is hiding - and what on earth she’s up to.
+      %br/
+      You might just spot some familiar characters lurking inside too.
+    %p
+      The Lost Sloth is an in-house Animade project.
+      %br/
+      We like to merge animation and interaction at every opportunity, so we came up with this characterful web-toy just for fun.
+    %a.button.fb-follow{:href => "https://facebook.com/animadetv"}
+      %svg#Layer_1{"enable-background" => "new 0 0 266.893 266.895", :height => "9px", :space => "preserve", :version => "1.1", :viewbox => "0 0 266.893 266.895", :width => "9px", :x => "0px", :xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink", :y => "0px"}
+        %path#Blue_1_{:d => "M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812\r\n\tc0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225\r\n\tH248.082z", :fill => "#FFFFFF"}
+        %path#f{:d => "M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935\r\n\tl20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585\r\n\tv99.803H182.409z", :fill => "#3C5A99"}
+      Follow
+    %p#infocredits
+      Animation and design by
+      = link_to "Bee Grandinetti", "https://www.behance.net/grandinetti"
+      %br/
+      Development by
+      = link_to "Max Stoiber", "http://mxs.is/@"
 
-%button#infobutton Info
+/ Overlay
+%div#infobutton
 
-%button#audiobutton Audio
+%div#audiobutton
 
+%div#textoverlay
+  %img{:src => "scenes/buttons/logo.svg"}
+  From
+  = succeed ", with sloth" do
+    = link_to "Animade", "https://facebook.com/animadetv"
+
+/ Inside
 %div#inside
 
+/ Animations
 %div#animations
   %div#animationwrapper
 
+/ Outside
 %canvas#outside
 
+/ Success screen
 %div#success
   %div#successwrapper
     %svg#playagain{"enable-background" => "new 0 0 369 56.9", :height => "56.9px", :space => "preserve", :version => "1.1", :viewbox => "0 0 369 56.9", :width => "369px", :x => "0px", :xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink", :y => "0px", :onclick => "playAgain()"}
@@ -79,6 +115,18 @@ title: The lost sloth
         %path{:d => "M333.2,24c-0.1-1.9-3.1-1.9-3,0l0.6,9.4c0.1,1.9,3.1,1.9,3,0L333.2,24z", :fill => "#FFFFFF"}
         %path{:d => "M330.8,17.8c-1.9,0-1.9,3,0,3C332.8,20.8,332.8,17.8,330.8,17.8z", :fill => "#FFFFFF"}
         %path{:d => "M349.8,32.1c-1-3.6-1.9-7.2-2.9-10.8c-0.5-1.9-3.4-1.1-2.9,0.8c0.5,1.9,1,3.9,1.6,5.8\r\n\t\tc-1.7-1.7-3.4-3.4-5-5.2c0.1-0.8-0.4-1.6-1.4-1.5c-1.9,0.2-2.2,1.6-2.2,3.3c0,2.9,0.1,5.7,0.1,8.6c0,2,2.9,1.9,3,0\r\n\t\tc0.2-2,0.2-4,0.3-6.1c2.2,2.3,4.5,4.5,6.9,6.6C348.4,34.5,350.2,33.6,349.8,32.1z", :fill => "#FFFFFF"}
+    %a{:href => "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fthe-lost-sloth.animade.tv%2F", :target => "_blank", :class => "button fb-share"}
+      %svg.button_svg{"enable-background" => "new 0 0 266.893 266.895", :height => "9px", :space => "preserve", :version => "1.1", :viewbox => "0 0 266.893 266.895", :width => "9px", :x => "0px", :xmlns => "http://www.w3.org/2000/svg", "xmlns:xlink" => "http://www.w3.org/1999/xlink", :y => "0px"}
+        %path#Blue_1_{:d => "M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812\r\n\tc0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225\r\n\tH248.082z", :fill => "#FFFFFF"}
+        %path#f{:d => "M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935\r\n\tl20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585\r\n\tv99.803H182.409z", :fill => "#3C5A99"}
+      Share
+    %a{:href => "https://twitter.com/intent/tweet/?text=Check%20out%20this%20awesome%20game%20by%20@mstoiber05%20and%20@beezilda!&url=https%3A%2F%2Ffind-the-sloth.animade.tv", :target => "_blank", :class => "button twitter-share"}
+      %img{:src => "scenes/buttons/twitter.png", :width => "9px", :height => "9px"}
+      Tweet
+
+%audio{"autoplay" => "true", "loop" => "true", :id => "thememusic"}
+  %source{:src => "scenes/skyline/audio/mp3/theme.mp3", :type => "audio/mpeg"}
+}
 
 %script{:src => "javascripts/preloadjs.min.js"}
 :javascript
@@ -97,7 +145,7 @@ title: The lost sloth
     { name: "mp3/fridge.mp3", elem: "fridge", vol: 1, loaded: false, dirAudio: true },
     { name: "mp3/brazil.mp3", elem: "brazil", vol: 0.5, loaded: false, dirAudio: true },
     { name: "mp3/fire.mp3", elem: "fire", vol: 1, loaded: false, dirAudio: true },
-    { name: "mp3/neve.mp3", elem: "neve", vol: 0.25, loaded: false, dirAudio: true},
+    { name: "mp3/neve.mp3", elem: "neve", vol: 0.15, loaded: false, dirAudio: true},
     { name: "mp3/underwater.mp3", elem: "underwater", vol: 0.25, loaded: false, dirAudio: true },
     { name: "vvvvvv.m4a", elem: "vvv", vol: 0.1, loaded: false, dirAudio: true },
     { name: "mp3/pingpong.mp3", elem: "ping_pong", vol: 0.5, loaded: false, dirAudio: true }

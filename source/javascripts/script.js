@@ -60,6 +60,44 @@ var ctx = foreground.getContext("2d");
 // Randomize sloth placement
 var slothString = "sloth" + randomnumber;
 
+// On click on the infobutton
+$("#infobutton").click(function(evt) {
+	if (info) {
+		// Hide info screen
+		$("#info").css("opacity", "0");
+		$("#infobutton").css("background-image", "url('../scenes/buttons/info/info.svg')");
+		setTimeout(function() {
+			$("#info").css("width", "0").css("height", "0")
+		}, 250);
+		info = false;
+		if (!audioButton) {
+			turnOnAudio();
+		}
+	} else {
+		// Show info screen
+		$("#info").css("width", "100vw").css("height", "100vh").css("opacity", "1");
+		$("#infobutton").css("background-image", "url('../scenes/buttons/info/exit.svg')");
+		info = true;
+		for (var i in audioFilenames) {
+	        if (audioFilenames[i].loaded && audioFilenames[i].playing && audioFilenames[i].dirAudio) {
+	            audioFilenames[i].gainNode.gain.value = 0;
+	            audioFilenames[i].playing = false;
+	        }
+	    }
+	}
+});
+// On click on the audio button
+$("#audiobutton").click(function() {
+	audioButton = !audioButton;
+	if (!audioButton) {
+    	turnOnAudio();
+		$("#audiobutton").css("background-image", "url('../scenes/buttons/audio/on.svg')")
+	} else {
+		turnOffAudio();
+		$("#audiobutton").css("background-image", "url('../scenes/buttons/audio/off.svg')")
+	}
+});
+
 // ------------------------------------------
 //
 // Functions
@@ -106,43 +144,23 @@ function init() {
 				success = true;
 				turnOffAudio();
 				$("#success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
-			}
-		});
-		// On click on the infobutton
-		$("#infobutton").click(function(evt) {
-			if (info) {
-				// Hide info screen
-				$("#info").css("width", "0").css("height", "0").css("opacity", "0");
-				info = false;
-				if (!audioButton) {
-					turnOnAudio();
-				}
-			} else {
-				// Show info screen
-				$("#info").css("width", "100vw").css("height", "100vh").css("opacity", "1");
-				// Turn audio off
-				info = true;
-				turnOffAudio();
-			}
-		});
-		// On click on the audio button
-		$("#audiobutton").click(function() {
-			audioButton = !audioButton;
-			if (!audioButton) {
-            	turnOnAudio();
-			} else {
-				turnOffAudio();
+				$("#thememusic").animate({volume: 1.0}, 500);
 			}
 		});
 	}
-	// Fluid responsiveness to make cheating harder
+	// Fluid responsiveness
 	$(window).resize(function(){
+		// Set new width and height
 		width 	= window.innerWidth;
 		height 	= window.innerHeight;
+		// Set Canvas width and height
 		foreground.width = width;
 		foreground.height = height;
+		// Redraw
 		draw();
+		// Get new target
 		sloth = document.getElementById(slothString).getBoundingClientRect();
+		// Get new pageDiagonal
 		pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
 	});
 }
@@ -167,7 +185,7 @@ function onMouseMove(evt) {
 	// change volume based on position.
 	if (audio && !audioButton) {
 		for (var i in audioFilenames) {
-            if (audioFilenames[i].loaded && audioFilenames[i].dirAudio) {
+            if (audioFilenames[i].loaded && audioFilenames[i].dirAudio && audioFilenames[i].playing) {
             	directionalAudio(evt, audioFilenames[i]);
             }
         }
@@ -353,4 +371,6 @@ function playAgain() {
 	if (!audioButton) {
 		turnOnAudio();
 	}
+	// Turn off theme music
+	$("#thememusic").animate({volume: 0.0}, 500);
 }

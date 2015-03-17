@@ -143,11 +143,13 @@ function playButtonClick() {
 
 // Initializes the game
 function initGame() {
+	// Turn off theme music
+	$("#thememusic").animate({volume: 0.0}, 500);
 	// Fade out loading screen
 	var loading = $("#loading");
 	loading.css("opacity", "0");
 	setTimeout(function() {
-		loading.css("visibility", "hidden");
+		loading.css("display", "none");
 	}, 250);
 	title = false;
 	// Call the init() function of the script.js file
@@ -181,8 +183,8 @@ function decodeSound(obj) {
 // Center the loading screen elements on the page
 function centerLoadingwrapper() {
 	// Center wrapper
-	loadingwrapper.css("top", $(document).height() / 2 - loadingwrapper.height() / 2);
-	loadingwrapper.css("left", $(document).width() / 2 - loadingwrapper.width() / 2);
+	loadingwrapper.css("top", $(window).height() / 2 - loadingwrapper.height() / 2);
+	loadingwrapper.css("left", $(window).width() / 2 - loadingwrapper.width() / 2);
 	// Center "The lost sloth" swinging animation
 	var slothimgelem = $("#slothimg");
 	slothimgelem.css("left", window.innerWidth / 2 - slothimgelem.width() / 2);
