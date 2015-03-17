@@ -62,6 +62,7 @@ var slothString = "sloth" + randomnumber;
 
 // On click on the infobutton
 $("#infobutton").click(function(evt) {
+	_gaq.push(['_trackEvent', 'overlay', 'infoButtonClicked']);
 	if (info) {
 		// Hide info screen
 		$("#info").css("opacity", "0");
@@ -92,6 +93,7 @@ $("#infobutton").click(function(evt) {
 });
 // On click on the audio button
 $("#audiobutton").click(function() {
+	_gaq.push(['_trackEvent', 'overlay', 'audioButtonClicked']);
 	audioButton = !audioButton;
 	if (!audioButton) {
     	turnOnAudio();
@@ -145,6 +147,7 @@ function init() {
 			}
 			// If the sloth is clicked show success message
 			if ((clickX > sloth.left - circleRadius && clickX < sloth.left + sloth.width + (circleRadius - sloth.width)) && (clickY > sloth.top - circleRadius && clickY < sloth.top + sloth.height + (circleRadius - sloth.height))) {
+				_gaq.push(['_trackEvent', 'sloth', 'clicked']);
 				success = true;
 				turnOffAudio();
 				$("#success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
@@ -357,6 +360,7 @@ function turnOnAudio() {
 
 // Called when the button on the success screen is clicked
 function playAgain() {
+	_gaq.push(['_trackEvent', 'playAgain', 'clicked']);
 	success = false;
 	// Hide success screen
 	$("#success").css("width", "0").css("height", "0").css("opacity", "0");

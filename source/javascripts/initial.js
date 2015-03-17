@@ -127,6 +127,7 @@ function handleComplete(evt) {
 // Called when the play button is clicked
 function playButtonClick() {
 	playClicked = true;
+	_gaq.push(['_trackEvent', 'playButton', 'clicked']);
 	// If the game is loaded, initialize the game
 	if (complete && audioDecoded) {
 		initGame();
@@ -152,6 +153,7 @@ function initGame() {
 		loading.css("display", "none");
 	}, 250);
 	title = false;
+	_gaq.push(['_trackPageview']);
 	// Call the init() function of the script.js file
 	init();
 }
