@@ -42,6 +42,7 @@ $font-stack: 'BrandonText', sans-serif;
 
 // Colors
 $mintgreen: #b8fbdd;
+$darkmintgreen: #66a99d;
 
 $pink: #d95c7d;
 $darkpink: #AD3863;
@@ -50,9 +51,6 @@ $bluepink: #652651;
 
 $white: #f1cec8;
 $overlaycolor:  #65BEB1;
-
-$facebookblue: #3b5998;
-$twitterblue: #55ACEE;
 
 // Spacing
 
@@ -283,14 +281,14 @@ p {
 }
 
 .fb-share {
-	border: 1px solid $facebookblue;
-	background-color: $facebookblue;
+	border: 1px solid $bluepink;
+	background-color: $bluepink;
 	color: white!important;
 }
 
 .twitter-share {
-	border: 1px solid $twitterblue;
-	background-color: $twitterblue;
+	border: 1px solid $darkmintgreen;
+	background-color: $darkmintgreen;
 	color: white!important;
 }
 
@@ -319,9 +317,16 @@ p {
 	bottom: $controls-margin;
 	right: $controls-margin;
 	z-index: 4;
-	background-image: url("../scenes/buttons/info/info.svg");
 	width: 33px;
 	height: 33px;
+}
+
+#i {
+	display: block;
+}
+
+#e {
+	display: none;
 }
 
 #audiobutton {
@@ -329,9 +334,16 @@ p {
 	top: $controls-margin;
 	right: $controls-margin;
 	z-index: 4;
-	background-image: url("../scenes/buttons/audio/on.svg");
 	width: 28px;
 	height: 23px;
+}
+
+#on {
+	display: block;
+}
+
+#off {
+	display: none;
 }
 
 #audiobutton:hover,

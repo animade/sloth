@@ -66,7 +66,8 @@ $("#infobutton").click(function(evt) {
 	if (info) {
 		// Hide info screen
 		$("#info").css("opacity", "0");
-		$("#infobutton").css("background-image", "url('../scenes/buttons/info/info.svg')");
+		$("#i").css("display", "block");
+		$("#e").css("display", "none");
 		setTimeout(function() {
 			$("#info").css("width", "0").css("height", "0")
 		}, 250);
@@ -77,7 +78,8 @@ $("#infobutton").click(function(evt) {
 	} else {
 		// Show info screen
 		$("#info").css("width", "100vw").css("height", "100vh").css("opacity", "1");
-		$("#infobutton").css("background-image", "url('../scenes/buttons/info/exit.svg')");
+		$("#i").css("display", "none");
+		$("#e").css("display", "block");
 		info = true;
 		if (success) {
 			turnOffAudio();
@@ -97,10 +99,12 @@ $("#audiobutton").click(function() {
 	audioButton = !audioButton;
 	if (!audioButton) {
     	turnOnAudio();
-		$("#audiobutton").css("background-image", "url('../scenes/buttons/audio/on.svg')")
+		$("#on").css("display", "block");
+		$("#off").css("display", "none");
 	} else {
 		turnOffAudio();
-		$("#audiobutton").css("background-image", "url('../scenes/buttons/audio/off.svg')")
+		$("#on").css("display", "none");
+		$("#off").css("display", "block");
 	}
 });
 
