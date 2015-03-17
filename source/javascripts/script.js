@@ -376,10 +376,21 @@ function playAgain() {
 	slothAnimation.onload = function() {
 	    var slothimgelem = $("#slothimg");
 	    slothimgelem.attr("src", slothAnimationSrc);
+	    // Get new target
+		slothString = "sloth" + randomnumber;
+		sloth = document.getElementById(slothString).getBoundingClientRect();
 	};
 	slothAnimation.src = slothAnimationSrc;
-	slothString = "sloth" + randomnumber;
-	sloth = document.getElementById(slothString).getBoundingClientRect();
+	// Show a new random sentence
+	randomsentence = Math.floor(Math.random() * 3) + 1;
+	successSentenceSrc = "scenes/success_screen/sentence" + randomsentence + ".svg";
+	var successDiv = document.getElementById("successwrapper");
+	var successSentence = new Image();
+	successSentence.onload = function() {
+		$("#successSentence").remove();
+		$("#successSloth")[0].parentNode.insertBefore(successSentence, $("#successSloth")[0].nextSibling).setAttribute("id", "successSentence");
+	};
+	successSentence.src = successSentenceSrc;
 	// Initialize again
 	init();
 	// Play Sounds
