@@ -72,7 +72,7 @@ title: The lost sloth
   %img{:src => "scenes/buttons/logo.svg"}
   From
   = succeed ", with sloth" do
-    = link_to "Animade", "https://facebook.com/animadetv"
+    = link_to "Animade", "http://animade.tv/"
 
 / Inside
 %div#inside
@@ -121,11 +121,11 @@ title: The lost sloth
         %path#f{:d => "M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935\r\n\tl20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585\r\n\tv99.803H182.409z", :fill => "#3C5A99"}
       Share
     %a{:href => "https://twitter.com/intent/tweet/?text=Check%20out%20this%20awesome%20game%20by%20@mstoiber05%20and%20@beezilda!&url=https%3A%2F%2Ffind-the-sloth.animade.tv", :target => "_blank", :class => "button twitter-share"}
-      %img{:src => "scenes/buttons/twitter.png", :width => "9px", :height => "9px"}
+      %img{:src => "scenes/buttons/twitter.png", :width => "11px", :height => "9px"}
       Tweet
 
 %audio{"autoplay" => "true", "loop" => "true", :id => "thememusic"}
-  %source{:src => "scenes/skyline/audio/mp3/theme.mp3", :type => "audio/mpeg"}
+  %source{:src => "scenes/skyline/audio/theme.wav", :type => "audio/wav"}
 }
 
 %script{:src => "javascripts/preloadjs.min.js"}
@@ -155,3 +155,10 @@ title: The lost sloth
   audioContext = new AudioContext();
   var title = true;
 %script{:src => "javascripts/initial.js"}
+:javascript
+  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+  function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+  e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+  e.src='https://www.google-analytics.com/analytics.js';
+  r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+  ga('create','UA-49258834-3','auto');ga('send','pageview');
