@@ -151,7 +151,9 @@ function init() {
 				success = true;
 				turnOffAudio();
 				$("#success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
-				$("#thememusic").animate({volume: 1.0}, 500);
+				if (!audioButton) {
+					$("#thememusic").animate({volume: 1.0}, 500);
+				}
 			}
 		});
 	}
@@ -196,8 +198,6 @@ function onMouseMove(evt) {
             	directionalAudio(evt, audioFilenames[i]);
             }
         }
-	} else {
-	    turnOffAudio()
 	}
 }
 
@@ -299,9 +299,8 @@ function directionalAudio(evt, obj) {
 
 // Play a sound
 function playSoundObj(obj) {
-	// If the audioButton is not switched on and the source
-	// has not been defined yet
-	if (!audioButton && obj.source === undefined) {
+	// If the source has not been defined yet
+	if (obj.source === undefined) {
 		// Add a source
 		obj.source = audioContext.createBufferSource();
 		// Avoid obj.gainNode undefined error
@@ -327,25 +326,28 @@ function playSoundObj(obj) {
 		obj.source.start(0);
 	}
 	// If the source has been defined and a global audio isn't playing, play it
-	if (obj.source !== undefined && obj.playing === false && obj.dirAudio === false && !audioButton) {
+	if (obj.source !== undefined && obj.playing === false && obj.dirAudio === false && audioButton) {
 		obj.gainNode.gain.value = obj.vol;
 	}
 }
 
 // Turns off audio
 function turnOffAudio() {
+	console.log("TURN OFF");
 	for (var i in audioFilenames) {
         if (audioFilenames[i].loaded && audioFilenames[i].playing) {
             audioFilenames[i].gainNode.gain.value = 0;
             audioFilenames[i].playing = false;
         }
     }
+	$("#thememusic").animate({volume: 0.0}, 500);
     audio = false;
 }
 
 // Turns on audio
 function turnOnAudio() {
-	if (!info) {
+	console.log("TURN ON");
+	if (!info && !success) {
 		for (var i in audioFilenames) {
 	        if (audioFilenames[i].loaded && !audioFilenames[i].playing) {
 	            if (!audioFilenames[i].dirAudio) {
@@ -355,6 +357,9 @@ function turnOnAudio() {
 	        }
 	    }
 	    audio = true;
+	}
+	if (title || success) {
+		$("#thememusic").animate({volume: 1.0}, 500);
 	}
 }
 
