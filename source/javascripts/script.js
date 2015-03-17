@@ -70,7 +70,7 @@ $("#infobutton").click(function(evt) {
 			$("#info").css("width", "0").css("height", "0")
 		}, 250);
 		info = false;
-		if (!audioButton) {
+		if (!audioButton && !success) {
 			turnOnAudio();
 		}
 	} else {
@@ -78,12 +78,16 @@ $("#infobutton").click(function(evt) {
 		$("#info").css("width", "100vw").css("height", "100vh").css("opacity", "1");
 		$("#infobutton").css("background-image", "url('../scenes/buttons/info/exit.svg')");
 		info = true;
-		for (var i in audioFilenames) {
-	        if (audioFilenames[i].loaded && audioFilenames[i].playing && audioFilenames[i].dirAudio) {
-	            audioFilenames[i].gainNode.gain.value = 0;
-	            audioFilenames[i].playing = false;
-	        }
-	    }
+		if (success) {
+			turnOffAudio();
+		} else {
+			for (var i in audioFilenames) {
+		        if (audioFilenames[i].loaded && audioFilenames[i].playing && audioFilenames[i].dirAudio) {
+		            audioFilenames[i].gainNode.gain.value = 0;
+		            audioFilenames[i].playing = false;
+		        }
+		    }
+		}
 	}
 });
 // On click on the audio button
