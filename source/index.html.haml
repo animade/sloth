@@ -82,8 +82,8 @@ title: The lost sloth
 %div#textoverlay
   %img{:src => "scenes/buttons/logo.svg"}
   From
-  %a{:href => "http://animade.tv", :onclick => "_gaq.push(['_trackEvent', 'overlay', 'animadeClicked']);"}Animade
-  , with sloth
+  =succeed ', with sloth' do
+    %a{:href => "http://animade.tv", :onclick => "_gaq.push(['_trackEvent', 'overlay', 'animadeClicked']);"}Animade
 
 / Inside
 %div#inside
