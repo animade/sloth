@@ -373,6 +373,8 @@ function playAgain() {
 	    slothimgelem.attr("src", slothAnimationSrc);
 	};
 	slothAnimation.src = slothAnimationSrc;
+	slothString = "sloth" + randomnumber;
+	sloth = document.getElementById(slothString).getBoundingClientRect();
 	// Initialize again
 	init();
 	// Play Sounds
