@@ -1,19 +1,20 @@
-// ------------------------------------------
-//
-// Preloading and Setup
-//
-//
+//= require "modernizr/modernizr.js"
+//= require "jquery"
 
 // Initialize variables
-var queue = new createjs.LoadQueue();
 var complete = false;
 var playClicked = false;
 var audioDecoded = false;
-sceneName = "skyline";
 var counter = 0;
-
-// Position main div of the loading screen
 var loadingwrapper = $("#loadingwrapper");
+queue = new createjs.LoadQueue();
+sceneName = "skyline";
+
+// ------------------------------------------
+//
+// Event handlers
+//
+//
 
 // Resize elements on window.resize
 $(window).resize(function(){
@@ -30,6 +31,12 @@ queue.on("progress", handleProgress, this);
 queue.on("complete", handleComplete, this);
 queue.on("fileload", handleFileLoad, this);
 
+// ------------------------------------------
+//
+// Preloading
+//
+//
+
 // Put together filenames for easier extensibility
 var src 				= "scenes/" + sceneName;
 var animationSrc 		= src + "/animation/animation.gif";
@@ -42,21 +49,23 @@ var successSrc			= "scenes/success_screen/";
 var successSentenceSrc	= successSrc + "sentence" + randomsentence + ".svg";
 var successSlothSrc		= successSrc + "shine.gif";
 
-// Preload all the files for the game
+// Scenery
 queue.loadFile({id:"sceneryOutside", src:sceneryOutsideSrc});
 queue.loadFile({id:"sceneryInside", src:sceneryInsideSrc});
+// Animations
 queue.loadFile({id:"animation", src:animationSrc});
 queue.loadFile({id:"slothAnimation", src:slothAnimationSrc});
 queue.loadFile({id:"underwaterAnimation", src:underwaterAniSrc});
+// Scripts
 queue.loadFile("javascripts/waapisim.js");
 queue.loadFile("javascripts/flashcanvas.js");
 queue.loadFile("javascripts/home.js");
 queue.loadFile("javascripts/script.js");
-// Load the sounds
+// Sounds
 for (var i in audioFilenames) {
 	queue.loadFile({ id: audioFilenames[i].name, src: audioSrc + audioFilenames[i].name, type:createjs.AbstractLoader.BINARY, audio: true, number: i });
 }
-// Preload the files for the success screen
+// Success Screen
 queue.loadFile({id:"successSentence", src:successSentenceSrc});
 queue.loadFile({id:"successSloth", src:successSlothSrc});
 
