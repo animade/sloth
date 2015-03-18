@@ -150,21 +150,21 @@ title: The lost sloth
   var randomsentence = Math.floor(Math.random() * 3) + 1;
   var queue;
   var audioFilenames = [
-    { name: "mp3/street.mp3", vol: 1, loaded: false, dirAudio: false },
-    { name: "xmas.mp3", elem: "xmas", vol: 0.5, loaded: false, dirAudio: true },
-    { name: "shower.mp3", elem: "shower", vol: 0.5, loaded: false, dirAudio: true},
-    { name: "mp3/duck.mp3", elem: "duck", vol: 0.25, loaded: false, dirAudio: true },
-    { name: "mp3/tv.mp3", elem: "tv", vol: 0.5, loaded: false, dirAudio: true},
-    { name: "mp3/R2D2.mp3", elem: "r2d2", vol: 0.5, loaded: false, dirAudio: true},
+    { name: "mp3/street.mp3", vol: 0.75, loaded: false, dirAudio: false },
+    { name: "mp3/xmas.mp3", elem: "xmas", vol: 1, loaded: false, dirAudio: true },
+    { name: "mp3/shower.mp3", elem: "shower", vol: 1, loaded: false, dirAudio: true},
+    { name: "mp3/duck.mp3", elem: "duck", vol: 1, loaded: false, dirAudio: true },
+    { name: "mp3/tv.mp3", elem: "tv", vol: 1, loaded: false, dirAudio: true},
+    { name: "mp3/R2D2.mp3", elem: "r2d2", vol: 1, loaded: false, dirAudio: true},
     { name: "mp3/fridge.mp3", elem: "fridge", vol: 1, loaded: false, dirAudio: true },
-    { name: "mp3/brazil.mp3", elem: "brazil", vol: 0.5, loaded: false, dirAudio: true },
+    { name: "mp3/brazil.mp3", elem: "brazil", vol: 1, loaded: false, dirAudio: true },
     { name: "mp3/fire.mp3", elem: "fire", vol: 1, loaded: false, dirAudio: true },
-    { name: "mp3/neve.mp3", elem: "neve", vol: 0.15, loaded: false, dirAudio: true},
-    { name: "mp3/underwater.mp3", elem: "underwater", vol: 0.25, loaded: false, dirAudio: true },
-    { name: "vvvvvv.m4a", elem: "vvv", vol: 0.1, loaded: false, dirAudio: true },
-    { name: "mp3/pingpong.mp3", elem: "ping_pong", vol: 0.5, loaded: false, dirAudio: true },
-    { name: "mp3/ukulele.mp3", elem: "ukulele", vol: 0.25, loaded: false, dirAudio: true},
-    { name: "mp3/cowboy.mp3", elem: "cowboy", vol: 0.25, loaded: false, dirAudio: true }
+    { name: "mp3/neve.mp3", elem: "neve", vol: 1, loaded: false, dirAudio: true},
+    { name: "mp3/underwater.mp3", elem: "underwater", vol: 1, loaded: false, dirAudio: true },
+    { name: "mp3/vvvvvv.mp3", elem: "vvv", vol: 0.5, loaded: false, dirAudio: true },
+    { name: "mp3/pingpong.mp3", elem: "ping_pong", vol: 1, loaded: false, dirAudio: true },
+    { name: "mp3/ukulele.mp3", elem: "ukulele", vol: 1, loaded: false, dirAudio: true},
+    { name: "mp3/cowboy.mp3", elem: "cowboy", vol: 0.5, loaded: false, dirAudio: true }
   ];
   // Create an audio context
   window.AudioContext = window.AudioContext || window.webkitAudioContext;

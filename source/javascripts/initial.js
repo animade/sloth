@@ -28,6 +28,7 @@ $(function() {
 // Event handlers for the loading queue
 queue.on("progress", handleProgress, this);
 queue.on("complete", handleComplete, this);
+queue.on("fileload", handleFileLoad, this);
 
 // Put together filenames for easier extensibility
 var src 				= "scenes/" + sceneName;
@@ -53,7 +54,7 @@ queue.loadFile("javascripts/home.js");
 queue.loadFile("javascripts/script.js");
 // Load the sounds
 for (var i in audioFilenames) {
-	queue.loadFile({ id: audioFilenames[i].name, src: audioSrc + audioFilenames[i].name, type:createjs.AbstractLoader.BINARY });
+	queue.loadFile({ id: audioFilenames[i].name, src: audioSrc + audioFilenames[i].name, type:createjs.AbstractLoader.BINARY, audio: true, number: i });
 }
 // Preload the files for the success screen
 queue.loadFile({id:"successSentence", src:successSentenceSrc});
@@ -64,6 +65,13 @@ queue.loadFile({id:"successSloth", src:successSlothSrc});
 // Functions
 //
 //
+
+function handleFileLoad(evt) {
+	if (evt.item.audio === true) {
+		audioFilenames[evt.item.number].result = queue.getResult(audioFilenames[evt.item.number].name);
+		decodeSound(audioFilenames[evt.item.number]);
+	}
+}
 
 // Calculate percentage of loading bar
 function handleProgress(evt) {
@@ -110,11 +118,6 @@ function handleComplete(evt) {
 	var successSloth = queue.getResult("successSloth");
 	successDiv.insertBefore(successSloth, successDiv.firstChild).setAttribute("id", "successSloth");
 
-	// Decode sounds
-	for (var i in audioFilenames) {
-		audioFilenames[i].result = queue.getResult(audioFilenames[i].name);
-		decodeSound(audioFilenames[i]);
-	}
 	complete = true;
 	// If play was already clicked, initialize the game
 	if (playClicked && audioDecoded) {
@@ -167,13 +170,6 @@ function decodeSound(obj) {
 		obj.buffer = buffer;
 		// Set loaded to true and play the audio
 		obj.loaded = true;
-		console.log("Name:", obj.name, ", loaded:", obj.loaded);
-        // Get position of origin of audio
-        if (obj.dirAudio) {
-            obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
-            obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
-            obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
-        }
         counter++;
         if (counter === audioFilenames.length) {
         	audioDecoded = true;

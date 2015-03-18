@@ -328,6 +328,12 @@ function playSoundObj(obj) {
         } else {
         	obj.gainNode.gain.value = 0;
         }
+        // Get position of origin of audio
+        if (obj.dirAudio) {
+            obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
+            obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
+            obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
+        }
 		// Start the source
 		obj.source.start(0);
 	}
