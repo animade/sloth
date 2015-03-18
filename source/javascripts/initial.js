@@ -59,7 +59,6 @@ queue.loadFile({id:"underwaterAnimation", src:underwaterAniSrc});
 // Scripts
 queue.loadFile("javascripts/waapisim.js");
 queue.loadFile("javascripts/flashcanvas.js");
-queue.loadFile("javascripts/home.js");
 queue.loadFile("javascripts/script.js");
 // Sounds
 for (var i in audioFilenames) {
@@ -75,10 +74,13 @@ queue.loadFile({id:"successSloth", src:successSlothSrc});
 //
 //
 
+// Called when a file has finished loading
 function handleFileLoad(evt) {
+	// If the file is an audio file, decode it
 	if (evt.item.audio === true) {
-		audioFilenames[evt.item.number].result = queue.getResult(audioFilenames[evt.item.number].name);
-		decodeSound(audioFilenames[evt.item.number]);
+		var audioFile = audioFilenames[evt.item.number];
+		audioFile.result = queue.getResult(audioFile.name);
+		decodeSound(audioFile);
 	}
 }
 
