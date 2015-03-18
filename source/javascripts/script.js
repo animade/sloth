@@ -69,7 +69,7 @@ $("#infobutton").click(function(evt) {
 		$("#i").css("display", "block");
 		$("#e").css("display", "none");
 		setTimeout(function() {
-			$("#info").css("width", "0").css("height", "0")
+			$("#info").css("width", "0").css("height", "0");
 		}, 250);
 		info = false;
 		if (!audioButton && !success) {
@@ -81,9 +81,7 @@ $("#infobutton").click(function(evt) {
 		$("#i").css("display", "none");
 		$("#e").css("display", "block");
 		info = true;
-		if (success) {
-			turnOffAudio();
-		} else {
+		if (!success) {
 			for (var i in audioFilenames) {
 		        if (audioFilenames[i].loaded && audioFilenames[i].playing && audioFilenames[i].dirAudio) {
 		            audioFilenames[i].gainNode.gain.value = 0;
@@ -139,7 +137,7 @@ function init() {
 		$(document).mousemove(onMouseMove);
 		$(document).bind('touchmove', onMouseMove);
 		// Click/touch
-		$(document).click(function(evt) {
+		$(document).unbind("click").bind("click", function(evt) {
 			var clickX = evt.clientX;
 			var clickY = evt.clientY;
 			// If touch event
