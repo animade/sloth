@@ -28,7 +28,7 @@ var slothSrc			= src + "/animation/sloth" + randomnumber + ".gif";
 
 // ------------------------------------------
 //
-// Defining global variables
+// Global variables
 //
 //
 
@@ -60,29 +60,38 @@ var ctx = foreground.getContext("2d");
 // Randomize sloth placement
 var slothString = "sloth" + randomnumber;
 
-// On click on the infobutton
+// ------------------------------------------
+//
+// Button event handlers
+//
+//
+
+// Click on infobutton
 $("#infobutton").click(function(evt) {
+	// If the info screen is currently being shown
 	if (info) {
-		_gaq.push(['_trackEvent', 'overlay', 'click', 'hideInfo']);
 		// Hide info screen
 		$("#info").css("opacity", "0");
+    	// Change the icon
 		$("#i").css("display", "block");
 		$("#e").css("display", "none");
 		setTimeout(function() {
 			$("#info").css("width", "0").css("height", "0");
 		}, 250);
 		info = false;
+		// Turn on audio
 		if (!audioButton && !success) {
 			turnOnAudio();
 		}
+		_gaq.push(['_trackEvent', 'overlay', 'click', 'hideInfo']);
 	} else {
-		_gaq.push(['_trackPageview']);
-		_gaq.push(['_trackEvent', 'overlay', 'click', 'showInfo']);
 		// Show info screen
 		$("#info").css("width", "100vw").css("height", "100vh").css("opacity", "1");
+    	// Change the icon
 		$("#i").css("display", "none");
 		$("#e").css("display", "block");
 		info = true;
+		// Mute all sounds except for the global sound
 		if (!success) {
 			for (var i in audioFilenames) {
 		        if (audioFilenames[i].loaded && audioFilenames[i].playing && audioFilenames[i].dirAudio) {
@@ -91,6 +100,8 @@ $("#infobutton").click(function(evt) {
 		        }
 		    }
 		}
+		_gaq.push(['_trackPageview']);
+		_gaq.push(['_trackEvent', 'overlay', 'click', 'showInfo']);
 	}
 });
 // On click on the audio button
@@ -98,11 +109,13 @@ $("#audiobutton").click(function() {
 	audioButton = !audioButton;
 	if (!audioButton) {
     	turnOnAudio();
+    	// Change the icon
 		$("#on").css("display", "block");
 		$("#off").css("display", "none");
 		_gaq.push(['_trackEvent', 'overlay', 'click', 'audioButtonOn']);
 	} else {
 		turnOffAudio();
+    	// Change the icon
 		$("#on").css("display", "none");
 		$("#off").css("display", "block");
 		_gaq.push(['_trackEvent', 'overlay', 'click', 'audioButtonOff']);
@@ -142,7 +155,6 @@ function init() {
 		$(document).bind('touchmove', onMouseMove);
 		// Click/touch
 		$(document).unbind("click").bind("click", function(evt) {
-			_gaq.push(['_trackEvent', 'game', 'click', 'playingField']);
 			var clickX = evt.clientX;
 			var clickY = evt.clientY;
 			// If touch event
@@ -152,16 +164,18 @@ function init() {
 				clickX = touch.pageX;
 				clickY = touch.pageY;
 			}
-			// If the sloth is clicked show success message
+			_gaq.push(['_trackEvent', 'game', 'click', 'playingField']);
+			// If the sloth is clicked, show success message
 			if ((clickX > sloth.left - circleRadius && clickX < sloth.left + sloth.width + (circleRadius - sloth.width)) && (clickY > sloth.top - circleRadius && clickY < sloth.top + sloth.height + (circleRadius - sloth.height))) {
-				_gaq.push(['_trackEvent', 'game', 'click', 'sloth']);
-				_gaq.push(['_trackPageview']);
 				success = true;
 				turnOffAudio();
 				$("#success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
+				// Turn on the theme music
 				if (!audioButton) {
 					$("#thememusic").animate({volume: 1.0}, 500);
 				}
+				_gaq.push(['_trackEvent', 'game', 'click', slothString]);
+				_gaq.push(['_trackPageview']);
 			}
 		});
 	}
@@ -343,7 +357,7 @@ function playSoundObj(obj) {
 	}
 }
 
-// Turns off audio
+// Turn off audio
 function turnOffAudio() {
 	for (var i in audioFilenames) {
         if (audioFilenames[i].loaded && audioFilenames[i].playing) {
@@ -355,7 +369,7 @@ function turnOffAudio() {
     audio = false;
 }
 
-// Turns on audio
+// Turn on audio
 function turnOnAudio() {
 	if (!info && !success) {
 		for (var i in audioFilenames) {
@@ -375,11 +389,10 @@ function turnOnAudio() {
 
 // Called when the button on the success screen is clicked
 function playAgain() {
-	_gaq.push(['_trackEvent', 'game', 'click', 'playAgain']);
 	success = false;
 	// Hide success screen
 	$("#success").css("width", "0").css("height", "0").css("opacity", "0");
-	// Show a new random sloth
+	// New sloth
 	randomnumber = Math.floor(Math.random()*4) + 1;
 	var slothAnimationSrc = src + "/animation/sloth" + randomnumber + ".gif";
 	var slothAnimation = new Image();
@@ -409,4 +422,5 @@ function playAgain() {
 	}
 	// Turn off theme music
 	$("#thememusic").animate({volume: 0.0}, 500);
+	_gaq.push(['_trackEvent', 'game', 'click', 'playAgain']);
 }

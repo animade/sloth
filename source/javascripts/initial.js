@@ -130,7 +130,7 @@ function handleComplete(evt) {
 	successDiv.insertBefore(successSloth, successDiv.firstChild).setAttribute("id", "successSloth");
 
 	complete = true;
-	// If play was already clicked, initialize the game
+	// If play was already clicked and the audio files already decoded, initialize the game
 	if (playClicked && audioDecoded) {
 		setTimeout(function() {
 			initGame();
@@ -142,7 +142,7 @@ function handleComplete(evt) {
 function playButtonClick() {
 	playClicked = true;
 	_gaq.push(['_trackEvent', 'game', 'click', 'play']);
-	// If the game is loaded, initialize the game
+	// If the game is loaded and the audio files decoded, initialize the game
 	if (complete && audioDecoded) {
 		initGame();
 	// otherwise show the loading indicator
@@ -167,10 +167,10 @@ function initGame() {
 		loading.css("display", "none");
 	}, 250);
 	title = false;
-	_gaq.push(['_trackPageview']);
-	_gaq.push(['_trackEvent', 'game', 'start']);
 	// Call the init() function of the script.js file
 	init();
+	_gaq.push(['_trackPageview']);
+	_gaq.push(['_trackEvent', 'game', 'start']);
 }
 
 // Decode a sound
@@ -182,8 +182,10 @@ function decodeSound(obj) {
 		// Set loaded to true and play the audio
 		obj.loaded = true;
         counter++;
+        // When all the audio files are decoded, set audioDecoded to true
         if (counter === audioFilenames.length) {
         	audioDecoded = true;
+        	// If all files are loaded and the play button was clicked, initialize the game
         	if (complete && playClicked) {
         		initGame();
         	}

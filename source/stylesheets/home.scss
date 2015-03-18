@@ -1,42 +1,9 @@
 @import "base/base";
+@import "modules/_brandontext.scss";
 
-@import "modules/toy";
-
-// Font
-
-@font-face {
-    font-family: 'BrandonText';
-    src: font-url('BrandonTextLight.eot');
-    src: font-url('BrandonTextLight.eot') format('embedded-opentype'),
-         font-url('BrandonTextLight.woff2') format('woff2'),
-         font-url('BrandonTextLight.woff') format('woff'),
-         font-url('BrandonTextLight.ttf') format('truetype'),
-         font-url('BrandonTextLight.svg#BrandonTextLight') format('svg');
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: 'BrandonText';
-    src: font-url('BrandonTextLightItalic.eot');
-    src: font-url('BrandonTextLightItalic.eot') format('embedded-opentype'),
-         font-url('BrandonTextLightItalic.woff2') format('woff2'),
-         font-url('BrandonTextLightItalic.woff') format('woff'),
-         font-url('BrandonTextLightItalic.ttf') format('truetype'),
-         font-url('BrandonTextLightItalic.svg#BrandonTextLightItalic') format('svg');
-    font-weight: 400;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'BrandonText';
-    src: font-url('BrandonTextMedium.eot');
-    src: font-url('BrandonTextMedium.eot') format('embedded-opentype'),
-         font-url('BrandonTextMedium.woff2') format('woff2'),
-         font-url('BrandonTextMedium.woff') format('woff'),
-         font-url('BrandonTextMedium.ttf') format('truetype'),
-         font-url('BrandonTextMedium.svg#BrandonTextMedium') format('svg');
-    font-weight: 700;
-}
+//
+// Variables
+//
 
 $font-stack: 'BrandonText', sans-serif;
 
@@ -65,8 +32,10 @@ $controls-margin: 1.2em;
 // Big Animation (0)
 // Background (-1)
 
-// Hide all scrollbars to avoid inconsistencies
-// in width & height between CSS and JS
+//
+// Global
+//
+
 body {
 	margin: 0;
 	overflow: hidden;
@@ -94,179 +63,7 @@ p {
 	color: $white;
 }
 
-#logo {
-	width: 75%;
-	max-width: 800px;
-	display: block;
-	margin: 0 auto;
-}
-
-#loading {
-	width: 100vw;
-	height: 100vh;
-	background-color: $mintgreen;
-	z-index: 4;
-	position: absolute;
-	top: 0;
-	left: 0;
-	transition: opacity .25s ease-in-out;
-	   -moz-transition: opacity .25s ease-in-out;
-	   -webkit-transition: opacity .25s ease-in-out;
-}
-
-#loading:hover {
-	cursor: default;
-}
-
-#loadingwrapper {
-	display: inline-block;
-	position: absolute;
-}
-
-#loadingindicator {
-	visibility: hidden;
-	opacity: 0;
-	width: 9em;
-	height: 0.8em;
-	background-color: #66a99d;
-	margin: 0em auto;
-	transition: opacity .25s ease-in-out;
-	   -moz-transition: opacity .25s ease-in-out;
-	   -webkit-transition: opacity .25s ease-in-out;
-	border-radius: 3px;
-}
-
-#loadingbar {
-	visibility: hidden;
-	opacity: 0;
-	height: 0.8em;
-	background-color: #1d302f;
-	transition: opacity .25s ease-in-out;
-	   -moz-transition: opacity .25s ease-in-out;
-	   -webkit-transition: opacity .25s ease-in-out;
-	transition: width 500ms linear;
-	   -moz-transition: width 500ms linear;
-	   -webkit-transition: width 500ms linear;
-	border-radius: 3px;
-}
-
-#buttonwrapper {
-	text-align: center;
-}
-
-#play {
-	display:inline-block;
-	margin: 2em auto;
-	margin-bottom: 0.4em;
-	height: 80%;
-	width: 80%;
-}
-
-#play:hover {
-	cursor: pointer;
-}
-
-#play svg {
-	fill: $darkpink;
-	transition: fill 100ms ease-in-out;
-	   -moz-transition: fill 100ms ease-in-out;
-	   -webkit-transition: fill 100ms ease-in-out;
-}
-
-#play svg:hover {
-	fill: $ultradarkpink;
-}
-
-#inside {
-	z-index: -1;
-	position: relative;
-	width: 100vw;
-	height: 100vh;
-}
-
-// Make the inside of the scenery the same size as the outside
-#inside svg {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: calc(100vw * (1080 / 1920));
-	max-height: 100vh;
-}
-
-#animationwrapper img {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	height: calc(100vw * (1080 / 1920));
-	max-height: 100vh;
-	max-width: 100%;
-	display: block;
-	margin: 0 auto;
-}
-
-#animations {
-	z-index: 0;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: auto;
-}
-
-#animationwrapper {
-	position: relative;
-	margin: 0 auto;
-	height: calc(100vw * (1080 / 1920));
-	max-height: 100vh;
-}
-
-#slothimg {
-	z-index: 1;
-}
-
-#outside {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	z-index: 1;
-}
-
-#info {
-    width: 0;
-    height: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 4;
-    opacity: 0;
-    text-align: center;
-    background-color: $bluepink;
-    transition: opacity 200ms ease-in-out;
-    -moz-transition: opacity 200ms ease-in-out;
-    -webkit-transition: opacity 200ms ease-in-out;
-	-webkit-touch-callout: text;
-    -webkit-user-select: text;
-    -khtml-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
-}
-
-#infowrapper {
-	max-width:31em;
-	margin: 0 auto;
-	margin-top: 15vh;
-}
-
-#infowrapper h3 {
-	margin: 0;
-}
-
-#infowrapper img {
-	max-width: 313px;
-	width: 20vw;
-}
+// Social media buttons
 
 .button {
 	padding: 0.5em;
@@ -302,9 +99,122 @@ p {
 	display: inline-block!important;
 }
 
-#infocredits {
-	color:  #86d1bc;
-	margin-top: 8vh;
+//
+// Loading screen
+//
+
+#loading {
+	width: 100vw;
+	height: 100vh;
+	background-color: $mintgreen;
+	z-index: 4;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transition: opacity .25s ease-in-out;
+	   -moz-transition: opacity .25s ease-in-out;
+	   -webkit-transition: opacity .25s ease-in-out;
+}
+
+#loading:hover {
+	cursor: default;
+}
+
+#loadingwrapper {
+	display: inline-block;
+	position: absolute;
+}
+
+#logo {
+	width: 75%;
+	max-width: 800px;
+	display: block;
+	margin: 0 auto;
+}
+
+// Play button
+#buttonwrapper {
+	text-align: center;
+}
+
+#play {
+	display:inline-block;
+	margin: 2em auto;
+	margin-bottom: 0.4em;
+	height: 80%;
+	width: 80%;
+}
+
+#play:hover {
+	cursor: pointer;
+}
+
+#play svg {
+	fill: $darkpink;
+	transition: fill 100ms ease-in-out;
+	   -moz-transition: fill 100ms ease-in-out;
+	   -webkit-transition: fill 100ms ease-in-out;
+}
+
+#play svg:hover {
+	fill: $ultradarkpink;
+}
+
+// Loading indicator
+#loadingindicator {
+	visibility: hidden;
+	opacity: 0;
+	width: 9em;
+	height: 0.8em;
+	background-color: #66a99d;
+	margin: 0em auto;
+	transition: opacity .25s ease-in-out;
+	   -moz-transition: opacity .25s ease-in-out;
+	   -webkit-transition: opacity .25s ease-in-out;
+	border-radius: 3px;
+}
+
+#loadingbar {
+	visibility: hidden;
+	opacity: 0;
+	height: 0.8em;
+	background-color: #1d302f;
+	transition: opacity .25s ease-in-out;
+	   -moz-transition: opacity .25s ease-in-out;
+	   -webkit-transition: opacity .25s ease-in-out;
+	transition: width 500ms linear;
+	   -moz-transition: width 500ms linear;
+	   -webkit-transition: width 500ms linear;
+	border-radius: 3px;
+}
+
+//
+// Info screen
+//
+
+#info {
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    opacity: 0;
+    text-align: center;
+    background-color: $bluepink;
+    transition: opacity 200ms ease-in-out;
+    -moz-transition: opacity 200ms ease-in-out;
+    -webkit-transition: opacity 200ms ease-in-out;
+	-webkit-touch-callout: text;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+#info:hover {
+	cursor: default;
 }
 
 #info a {
@@ -313,10 +223,38 @@ p {
   	text-decoration: none;
 }
 
-#info:hover {
-	cursor: default;
+#infowrapper {
+	max-width:31em;
+	margin: 0 auto;
+	margin-top: 15vh;
 }
 
+#infowrapper h3 {
+	margin: 0;
+}
+
+#infowrapper img {
+	max-width: 313px;
+	width: 20vw;
+}
+
+#infocredits {
+	color:  #86d1bc;
+	margin-top: 8vh;
+}
+
+#inside {
+	z-index: -1;
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+}
+
+//
+// Overlay
+//
+
+// Infobutton
 #infobutton {
 	position: absolute;
 	bottom: $controls-margin;
@@ -326,14 +264,17 @@ p {
 	height: 33px;
 }
 
+// Info icon
 #i {
 	display: block;
 }
 
+// Exit icon
 #e {
 	display: none;
 }
 
+// Audio button
 #audiobutton {
 	position: absolute;
 	top: $controls-margin;
@@ -343,10 +284,12 @@ p {
 	height: 23px;
 }
 
+// Audio on icon
 #on {
 	display: block;
 }
 
+// Audio off icon
 #off {
 	display: none;
 }
@@ -356,6 +299,7 @@ p {
 	cursor: pointer;
 }
 
+// Text
 #textoverlay {
 	position: absolute;
 	bottom: $controls-margin;
@@ -368,6 +312,70 @@ p {
 	font-weight: 700;
 	color: inherit;
 }
+
+//
+// Inside
+//
+
+#inside svg {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: calc(100vw * (1080 / 1920));
+	max-height: 100vh;
+}
+
+//
+// Animations
+//
+
+#animations {
+	z-index: 0;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: auto;
+}
+
+// Sloth animation
+#slothimg {
+	z-index: 1;
+}
+
+#animationwrapper {
+	position: relative;
+	margin: 0 auto;
+	height: calc(100vw * (1080 / 1920));
+	max-height: 100vh;
+}
+
+#animationwrapper img {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: calc(100vw * (1080 / 1920));
+	max-height: 100vh;
+	max-width: 100%;
+	display: block;
+	margin: 0 auto;
+}
+
+//
+// Canvas
+//
+
+#outside {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+}
+
+//
+// Success screen
+//
 
 #success {
     width: 0;
@@ -409,6 +417,7 @@ p {
 	margin: 1.5em auto;
 }
 
+// Play again button
 #playagain {
 	margin-top: 2em!important;
 	fill: $darkpink;
