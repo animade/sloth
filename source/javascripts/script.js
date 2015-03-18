@@ -62,8 +62,8 @@ var slothString = "sloth" + randomnumber;
 
 // On click on the infobutton
 $("#infobutton").click(function(evt) {
-	_gaq.push(['_trackEvent', 'overlay', 'infoButtonClicked']);
 	if (info) {
+		_gaq.push(['_trackEvent', 'overlay', 'click', 'hideInfo']);
 		// Hide info screen
 		$("#info").css("opacity", "0");
 		$("#i").css("display", "block");
@@ -76,6 +76,8 @@ $("#infobutton").click(function(evt) {
 			turnOnAudio();
 		}
 	} else {
+		_gaq.push(['_trackPageview']);
+		_gaq.push(['_trackEvent', 'overlay', 'click', 'showInfo']);
 		// Show info screen
 		$("#info").css("width", "100vw").css("height", "100vh").css("opacity", "1");
 		$("#i").css("display", "none");
@@ -93,16 +95,17 @@ $("#infobutton").click(function(evt) {
 });
 // On click on the audio button
 $("#audiobutton").click(function() {
-	_gaq.push(['_trackEvent', 'overlay', 'audioButtonClicked']);
 	audioButton = !audioButton;
 	if (!audioButton) {
     	turnOnAudio();
 		$("#on").css("display", "block");
 		$("#off").css("display", "none");
+		_gaq.push(['_trackEvent', 'overlay', 'click', 'audioButtonOn']);
 	} else {
 		turnOffAudio();
 		$("#on").css("display", "none");
 		$("#off").css("display", "block");
+		_gaq.push(['_trackEvent', 'overlay', 'click', 'audioButtonOff']);
 	}
 });
 
@@ -138,6 +141,7 @@ function init() {
 		$(document).bind('touchmove', onMouseMove);
 		// Click/touch
 		$(document).unbind("click").bind("click", function(evt) {
+			_gaq.push(['_trackEvent', 'game', 'click', 'playingField']);
 			var clickX = evt.clientX;
 			var clickY = evt.clientY;
 			// If touch event
@@ -149,7 +153,8 @@ function init() {
 			}
 			// If the sloth is clicked show success message
 			if ((clickX > sloth.left - circleRadius && clickX < sloth.left + sloth.width + (circleRadius - sloth.width)) && (clickY > sloth.top - circleRadius && clickY < sloth.top + sloth.height + (circleRadius - sloth.height))) {
-				_gaq.push(['_trackEvent', 'sloth', 'clicked']);
+				_gaq.push(['_trackEvent', 'game', 'click', 'sloth']);
+				_gaq.push(['_trackPageview']);
 				success = true;
 				turnOffAudio();
 				$("#success").css("width", "100vw").css("height", "100vh").css("opacity", "1");
@@ -367,7 +372,7 @@ function turnOnAudio() {
 
 // Called when the button on the success screen is clicked
 function playAgain() {
-	_gaq.push(['_trackEvent', 'playAgain', 'clicked']);
+	_gaq.push(['_trackEvent', 'success', 'click', 'playAgainButton']);
 	success = false;
 	// Hide success screen
 	$("#success").css("width", "0").css("height", "0").css("opacity", "0");
