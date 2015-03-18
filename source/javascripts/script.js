@@ -109,6 +109,7 @@ $("#audiobutton").click(function() {
 	}
 });
 
+
 // ------------------------------------------
 //
 // Functions
@@ -308,32 +309,30 @@ function directionalAudio(evt, obj) {
 function playSoundObj(obj) {
 	// If the source has not been defined yet
 	if (obj.source === undefined) {
+		// Add a gain node
+		obj.gainNode = audioContext.createGain();
 		// Add a source
 		obj.source = audioContext.createBufferSource();
-		// Avoid obj.gainNode undefined error
-		if (obj.gainNode !== undefined) {
-			// Connect the nodes to the destination
-			obj.gainNode.connect(audioContext.destination);
-			// Connect the node to the source
-			obj.source.connect(obj.gainNode);
-		} else {
-			obj.gainNode = audioContext.createGain();
-			playSoundObj(obj);
-			return;
-		}
-		// Avoid obj.buffer undefined
-		if (obj.buffer !== undefined) {
-			obj.source.buffer = obj.buffer;
-		}
+		// Connect the node to the source
+		obj.source.connect(obj.gainNode);
+		// Connect the nodes to the destination
+		obj.gainNode.connect(audioContext.destination);
+		// Connect the audio to the source
+		obj.source.buffer = obj.buffer;
 		// Sets playing to true
 		obj.playing = true;
 		// Loops the sound
 		obj.source.loop = true;
+		if (!obj.dirAudio) {
+        	obj.gainNode.gain.value = obj.vol;
+        } else {
+        	obj.gainNode.gain.value = 0;
+        }
 		// Start the source
 		obj.source.start(0);
 	}
 	// If the source has been defined and a global audio isn't playing, play it
-	if (obj.source !== undefined && obj.playing === false && obj.dirAudio === false && audioButton) {
+	if (obj.source !== undefined && obj.playing === false && !obj.dirAudio && audioButton) {
 		obj.gainNode.gain.value = obj.vol;
 	}
 }

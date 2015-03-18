@@ -10,6 +10,7 @@ var complete = false;
 var playClicked = false;
 var audioDecoded = false;
 sceneName = "skyline";
+var counter = 0;
 
 // Position main div of the loading screen
 var loadingwrapper = $("#loadingwrapper");
@@ -114,7 +115,6 @@ function handleComplete(evt) {
 		audioFilenames[i].result = queue.getResult(audioFilenames[i].name);
 		decodeSound(audioFilenames[i]);
 	}
-	audioDecoded = true;
 	complete = true;
 	// If play was already clicked, initialize the game
 	if (playClicked && audioDecoded) {
@@ -165,20 +165,21 @@ function decodeSound(obj) {
 	audioContext.decodeAudioData(obj.result, function(buffer) {
 		// Save the decoded sound and buffer it
 		obj.buffer = buffer;
-		// Add a gain node
-		obj.gainNode = audioContext.createGain();
-		// Set Volume to zero
-        obj.gainNode.gain.value = 0;
 		// Set loaded to true and play the audio
 		obj.loaded = true;
+		console.log("Name:", obj.name, ", loaded:", obj.loaded);
         // Get position of origin of audio
         if (obj.dirAudio) {
             obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
             obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
             obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
-        } else {
-        	// Set volume of non directional Audio files on load
-        	obj.gainNode.gain.value = obj.vol;
+        }
+        counter++;
+        if (counter === audioFilenames.length) {
+        	audioDecoded = true;
+        	if (complete && playClicked) {
+        		initGame();
+        	}
         }
 	});
 }
