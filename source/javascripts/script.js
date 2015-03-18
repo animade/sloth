@@ -340,7 +340,6 @@ function playSoundObj(obj) {
 
 // Turns off audio
 function turnOffAudio() {
-	console.log("TURN OFF");
 	for (var i in audioFilenames) {
         if (audioFilenames[i].loaded && audioFilenames[i].playing) {
             audioFilenames[i].gainNode.gain.value = 0;
@@ -353,7 +352,6 @@ function turnOffAudio() {
 
 // Turns on audio
 function turnOnAudio() {
-	console.log("TURN ON");
 	if (!info && !success) {
 		for (var i in audioFilenames) {
 	        if (audioFilenames[i].loaded && !audioFilenames[i].playing) {
@@ -372,7 +370,7 @@ function turnOnAudio() {
 
 // Called when the button on the success screen is clicked
 function playAgain() {
-	_gaq.push(['_trackEvent', 'success', 'click', 'playAgainButton']);
+	_gaq.push(['_trackEvent', 'game', 'click', 'playAgain']);
 	success = false;
 	// Hide success screen
 	$("#success").css("width", "0").css("height", "0").css("opacity", "0");
