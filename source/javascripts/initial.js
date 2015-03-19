@@ -98,6 +98,7 @@ function preload() {
 	// Scripts
 	queue.loadFile("javascripts/waapisim.js");
 	queue.loadFile("javascripts/flashcanvas.js");
+	queue.loadFile("javascripts/throttle.min.js");
 	queue.loadFile("javascripts/script.js");
 	// Sounds
 	for (var i in audioFilenames) {

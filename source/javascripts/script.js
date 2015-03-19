@@ -151,8 +151,8 @@ function init() {
 	// Add interactivity
 	if (success === false && info == false && title == false) {
 		// Mouse/Finger move
-		$(document).mousemove(onMouseMove);
-		$(document).bind('touchmove', onMouseMove);
+		$(document).mousemove( $.throttle( 35, onMouseMove) );
+		$(document).bind('touchmove', $.throttle( 35, onMouseMove));
 		// Click/touch
 		$(document).unbind("click").bind("click", function(evt) {
 			var clickX = evt.clientX;

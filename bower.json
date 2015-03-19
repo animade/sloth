@@ -4,7 +4,8 @@
   "dependencies": {
     "jquery.transit": "",
     "modernizr": "",
-    "normalize-css": ""
+    "normalize-css": "",
+    "jquery-throttle-debounce": ""
   },
   "authors": [
     "James Chambers <james@animade.tv>"
