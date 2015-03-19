@@ -8,13 +8,13 @@ On page load `initial.js` gets downloaded, which preloads all the necessary game
 
 The main game is composed of four different layers
 
-Outside (`<canvas/>`)
-----
-Sloth animation (`.gif`)
-----
-Other animations (`.gif`)
-----
-Inside (`.svg`)
+1) Outside (`<canvas/>`)
+
+2) Sloth animation (`.gif`)
+
+3) Other animations (`.gif`)
+
+4) Inside (`.svg`)
 
 with the loading screen, the game overlay (the audiobutton, the infobutton and the text), the success screen and the info screen being above those four layers.
 
