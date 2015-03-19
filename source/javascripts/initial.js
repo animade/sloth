@@ -229,7 +229,6 @@ function decodeSound(obj) {
 
 // Center the loading screen elements on the page
 function centerLoadingwrapper() {
-	console.log("CENTER IT");
 	// // Center wrapper
 	loadingwrapper.css("margin-top", (loadingwrapper.height() / 2) * -1);
 	loadingwrapper.css("margin-left", (loadingwrapper.width() / 2) * -1);

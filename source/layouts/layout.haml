@@ -15,6 +15,6 @@
     = yield_content(:javascripts)
     = yield_content(:stylesheets)
 
-  %body{class: page_classes}
+  %body{class: page_classes, :onload => "centerLoadingwrapper();"}
 
     = yield

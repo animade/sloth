@@ -425,4 +425,5 @@ function playAgain() {
 	// Turn off theme music
 	$("#thememusic").animate({volume: 0.0}, 500);
 	_gaq.push(['_trackEvent', 'game', 'click', 'playAgain']);
+	_gaq.push(['_trackPageview']);
 }

@@ -153,9 +153,6 @@ p {
 
 #play svg {
 	fill: $darkpink;
-	transition: fill 100ms ease-in-out;
-	   -moz-transition: fill 100ms ease-in-out;
-	   -webkit-transition: fill 100ms ease-in-out;
 }
 
 #play svg:hover {
@@ -423,9 +420,6 @@ p {
 #playagain {
 	margin-top: 2em!important;
 	fill: $darkpink;
-	transition: fill 100ms ease-in-out;
-	   -moz-transition: fill 100ms ease-in-out;
-	   -webkit-transition: fill 100ms ease-in-out;
 }
 
 #playagain:hover {
