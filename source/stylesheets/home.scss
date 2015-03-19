@@ -37,6 +37,7 @@ $controls-margin: 1.2em;
 //
 
 body {
+	position: fixed;
 	margin: 0;
 	overflow: hidden;
 	background-color: $mintgreen;
@@ -155,10 +156,13 @@ p {
 }
 
 #loadingwrapper {
-	display: inline-block;
 	position: relative;
 	top: 50%;
 	left: 50%;
+	position: relative;
+	top: 50%;
+	left: 50%;
+	width: inherit;
 }
 
 #logo {
@@ -178,7 +182,7 @@ p {
 	margin: 2em auto;
 	margin-bottom: 0.4em;
 	height: 80%;
-	width: 80%;
+	width: 50%;
 }
 
 #play:hover {
@@ -187,6 +191,7 @@ p {
 
 #play svg {
 	fill: $darkpink;
+	width: 50%;
 }
 
 #play svg:hover {
@@ -244,6 +249,7 @@ p {
     -moz-user-select: text;
     -ms-user-select: text;
     user-select: text;
+    overflow-x: scroll;
 }
 
 #info:hover {
@@ -271,7 +277,7 @@ p {
 
 #infowrapper img {
 	max-width: 313px;
-	width: 75%;
+	width: 65%;
 }
 
 #infocredits {
