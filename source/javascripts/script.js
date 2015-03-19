@@ -359,19 +359,21 @@ function playSoundObj(obj) {
 
 // Turn off audio
 function turnOffAudio() {
-	for (var i in audioFilenames) {
-        if (audioFilenames[i].loaded && audioFilenames[i].playing) {
-            audioFilenames[i].gainNode.gain.value = 0;
-            audioFilenames[i].playing = false;
-        }
-    }
+	if (!title) {
+		for (var i in audioFilenames) {
+	        if (audioFilenames[i].loaded && audioFilenames[i].playing) {
+	            audioFilenames[i].gainNode.gain.value = 0;
+	            audioFilenames[i].playing = false;
+	        }
+	    }
+	}
 	$("#thememusic").animate({volume: 0.0}, 500);
     audio = false;
 }
 
 // Turn on audio
 function turnOnAudio() {
-	if (!info && !success) {
+	if (!info && !success && !title) {
 		for (var i in audioFilenames) {
 	        if (audioFilenames[i].loaded && !audioFilenames[i].playing) {
 	            if (!audioFilenames[i].dirAudio) {
