@@ -16,7 +16,7 @@ var dirAudioScale = 500; // The bigger the number the smaller the radius in whic
 var outsideBackgroundColor = "#b8fbdd";
 var insideBackgroundColor = "#b8fbdd";
 var magGlassOuterRingColor = "#86d1bc";
-var magGlassOuterRingWidth = 5;
+var magGlassOuterRingWidth = 8;
 
 // Put together src urls for extensibility
 var src 				= "scenes/" + sceneName;
@@ -151,8 +151,8 @@ function init() {
 	// Add interactivity
 	if (success === false && info == false && title == false) {
 		// Mouse/Finger move
-		$(document).mousemove( $.throttle( 35, onMouseMove) );
-		$(document).bind('touchmove', $.throttle( 35, onMouseMove));
+		$(document).mousemove( $.throttle( 41, onMouseMove) );
+		$(document).bind('touchmove', $.throttle( 41, onMouseMove));
 		// Click/touch
 		$(document).unbind("click").bind("click", function(evt) {
 			var clickX = evt.clientX;
@@ -211,7 +211,7 @@ function onMouseMove(evt) {
 		circleY = touch.pageY - height / 15;
 	}
 	// Then redraw the canvas
-	draw();
+	window.requestAnimationFrame(draw);
 	// If audio is on, check if we need to
 	// change volume based on position.
 	if (audio && !audioButton) {
@@ -240,7 +240,7 @@ function draw() {
 	ctx.beginPath();
 		ctx.arc(circleX,circleY,circleRadius,0,Math.PI*2,true);
 		ctx.stroke();
-		ctx.lineWidth = magGlassOuterRingWidth;
+		ctx.lineWidth = circleRadius / 7;
 		ctx.strokeStyle = magGlassOuterRingColor;
 	ctx.closePath();
 	// Save previous circleX/Ys for redrawing
