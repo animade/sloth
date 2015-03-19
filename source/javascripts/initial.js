@@ -10,6 +10,18 @@ var loadingwrapper = $("#loadingwrapper");
 queue = new createjs.LoadQueue();
 sceneName = "skyline";
 
+// Put together filenames for easier extensibility
+var src 				= "scenes/" + sceneName;
+var animationSrc 		= src + "/animation/animation.gif";
+var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
+var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
+var slothAnimationSrc	= src + "/animation/sloth" + randomnumber + ".gif";
+var underwaterAniSrc	= src + "/animation/underwater.gif";
+var audioSrc 			= src + "/audio/";
+var successSrc			= "scenes/success_screen/";
+var successSentenceSrc	= successSrc + "sentence" + randomsentence + ".svg";
+var successSlothSrc		= successSrc + "shine.gif";
+
 // ------------------------------------------
 //
 // Event handlers
@@ -22,17 +34,16 @@ $(window).resize(function(){
 });
 
 $(function() {
-	centerLoadingwrapper();
-
 	// Make social sharing pop up in a small window
 	var social_config = {
 	    link: "a.popup",
 	    width: 500,
 	    height: 500
 	};
-	// Get all social links and add an event handler
+	// Get all social links
 	var slink = document.querySelectorAll(social_config.link);
 	for (var a = 0; a < slink.length; a++) {
+		// On click open the targets in a popup
 	    slink[a].onclick = PopupHandler;
 	}
 	// Popup
@@ -61,49 +72,41 @@ queue.on("progress", handleProgress, this);
 queue.on("complete", handleComplete, this);
 queue.on("fileload", handleFileLoad, this);
 
-
-// ------------------------------------------
-//
-// Preloading
-//
-//
-
-// Put together filenames for easier extensibility
-var src 				= "scenes/" + sceneName;
-var animationSrc 		= src + "/animation/animation.gif";
-var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
-var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
-var slothAnimationSrc	= src + "/animation/sloth" + randomnumber + ".gif";
-var underwaterAniSrc	= src + "/animation/underwater.gif";
-var audioSrc 			= src + "/audio/";
-var successSrc			= "scenes/success_screen/";
-var successSentenceSrc	= successSrc + "sentence" + randomsentence + ".svg";
-var successSlothSrc		= successSrc + "shine.gif";
-
-// Scenery
-queue.loadFile({id:"sceneryOutside", src:sceneryOutsideSrc});
-queue.loadFile({id:"sceneryInside", src:sceneryInsideSrc});
-// Animations
-queue.loadFile({id:"animation", src:animationSrc});
-queue.loadFile({id:"slothAnimation", src:slothAnimationSrc});
-queue.loadFile({id:"underwaterAnimation", src:underwaterAniSrc});
-// Scripts
-queue.loadFile("javascripts/waapisim.js");
-queue.loadFile("javascripts/flashcanvas.js");
-queue.loadFile("javascripts/script.js");
-// Sounds
-for (var i in audioFilenames) {
-	queue.loadFile({ id: audioFilenames[i].name, src: audioSrc + audioFilenames[i].name, type:createjs.AbstractLoader.BINARY, audio: true, number: i });
+if (!Modernizr.touch) {
+	// Start preloading, which initializes the whole thing
+	preload();
+} else {
+	// Otherwise show the mobile warning
+	$("#mobilewarning").css("width", "100vw").css("height", "100vh").css("opacity", "1");
 }
-// Success Screen
-queue.loadFile({id:"successSentence", src:successSentenceSrc});
-queue.loadFile({id:"successSloth", src:successSlothSrc});
 
 // ------------------------------------------
 //
 // Functions
 //
 //
+
+// Starts the preloading
+function preload() {
+	// Scenery
+	queue.loadFile({id:"sceneryOutside", src:sceneryOutsideSrc});
+	queue.loadFile({id:"sceneryInside", src:sceneryInsideSrc});
+	// Animations
+	queue.loadFile({id:"animation", src:animationSrc});
+	queue.loadFile({id:"slothAnimation", src:slothAnimationSrc});
+	queue.loadFile({id:"underwaterAnimation", src:underwaterAniSrc});
+	// Scripts
+	queue.loadFile("javascripts/waapisim.js");
+	queue.loadFile("javascripts/flashcanvas.js");
+	queue.loadFile("javascripts/script.js");
+	// Sounds
+	for (var i in audioFilenames) {
+		queue.loadFile({ id: audioFilenames[i].name, src: audioSrc + audioFilenames[i].name, type:createjs.AbstractLoader.BINARY, audio: true, number: i });
+	}
+	// Success Screen
+	queue.loadFile({id:"successSentence", src:successSentenceSrc});
+	queue.loadFile({id:"successSloth", src:successSlothSrc});
+}
 
 // Called when a file has finished loading
 function handleFileLoad(evt) {
@@ -226,10 +229,8 @@ function decodeSound(obj) {
 
 // Center the loading screen elements on the page
 function centerLoadingwrapper() {
-	// Center wrapper
-	loadingwrapper.css("top", $(window).height() / 2 - loadingwrapper.height() / 2);
-	loadingwrapper.css("left", $(window).width() / 2 - loadingwrapper.width() / 2);
-	// Center "The lost sloth" swinging animation
-	var slothimgelem = $("#slothimg");
-	slothimgelem.css("left", window.innerWidth / 2 - slothimgelem.width() / 2);
+	console.log("CENTER IT");
+	// // Center wrapper
+	loadingwrapper.css("margin-top", (loadingwrapper.height() / 2) * -1);
+	loadingwrapper.css("margin-left", (loadingwrapper.width() / 2) * -1);
 }
