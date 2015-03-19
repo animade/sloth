@@ -244,5 +244,6 @@ function centerLoadingwrapper() {
 function playMobile() {
 	preload();
 	showLoadingBar();
+	_gaq.push(['_trackEvent', 'mobile', 'click', 'playAnyway']);
 	$("#warning").css("width", "0").css("height", "0").css("opacity", "0");
 }
