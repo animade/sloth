@@ -115,6 +115,7 @@ p {
 	left: 0;
 	text-align: center;
 	color: $white;
+	overflow-x: scroll;
 }
 
 #warning:hover {
@@ -124,14 +125,29 @@ p {
 #warningwrapper {
 	max-width:33em;
 	margin: 0 auto;
-	margin-top: 15vh;
+	margin-top: 9vh;
 	padding: 0 2em;
 }
 
-#playanyway {
+.mobile-button {
 	border-radius: 5px;
+	display: inline-block;
+	padding: 0.7em 1em;
+	margin-top: 3vh;
+}
+
+#sendemail {
+  	float: left;
 	border: 1px solid $mintgreen;
 	background-color: $mintgreen;
+	color: black;
+}
+
+#playanyway {
+	border: 1px solid $pink;
+	background-color: $pink;
+  	float: right;
+  	opacity: 0.75;
 }
 
 //
