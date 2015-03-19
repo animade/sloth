@@ -21,15 +21,46 @@ $(window).resize(function(){
 	centerLoadingwrapper();
 });
 
-// On document ready center loadingwrapper
 $(function() {
 	centerLoadingwrapper();
+
+	// Make social sharing pop up in a small window
+	var social_config = {
+	    link: "a.popup",
+	    width: 500,
+	    height: 500
+	};
+	// Get all social links and add an event handler
+	var slink = document.querySelectorAll(social_config.link);
+	for (var a = 0; a < slink.length; a++) {
+	    slink[a].onclick = PopupHandler;
+	}
+	// Popup
+	function PopupHandler(evt) {
+	    evt = (evt ? evt : window.event);
+	    var t = (evt.target ? evt.target : evt.srcElement);
+	    // Position popup
+	    var px = Math.floor(((screen.availWidth || 1024) - social_config.width) / 2);
+	    var py = Math.floor(((screen.availHeight || 700) - social_config.height) / 2);
+	    // Open popup
+	    var popup = window.open(t.href, "social",
+	        "width="+social_config.width+",height="+social_config.height+
+	        ",left="+px+",top="+py+
+	        ",location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1");
+	    if (popup) {
+	        popup.focus();
+	        if (evt.preventDefault) evt.preventDefault();
+	        evt.returnValue = false;
+	    }
+	    return !!popup;
+	}
 });
 
 // Event handlers for the loading queue
 queue.on("progress", handleProgress, this);
 queue.on("complete", handleComplete, this);
 queue.on("fileload", handleFileLoad, this);
+
 
 // ------------------------------------------
 //
