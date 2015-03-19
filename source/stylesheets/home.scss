@@ -100,6 +100,39 @@ p {
 }
 
 //
+// Mobile warning
+//
+
+#warning {
+	background-color: $ultradarkpink;
+	height: 0;
+	width: 0;
+	opacity: 0;
+	z-index: 5;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+}
+
+#warning:hover {
+	cursor: default;
+}
+
+#warningwrapper {
+	max-width:33em;
+	margin: 0 auto;
+	margin-top: 15vh;
+	padding: 0 2em;
+}
+
+#playanyway {
+	border-radius: 5px;
+	border: 1px solid $mintgreen;
+	background-color: $mintgreen;
+}
+
+//
 // Loading screen
 //
 

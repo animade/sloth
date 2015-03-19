@@ -77,7 +77,7 @@ if (!Modernizr.touch) {
 	preload();
 } else {
 	// Otherwise show the mobile warning
-	$("#mobilewarning").css("width", "100vw").css("height", "100vh").css("opacity", "1");
+	$("#warning").css("width", "100vw").css("height", "100vh").css("opacity", "1");
 }
 
 // ------------------------------------------
@@ -232,4 +232,10 @@ function centerLoadingwrapper() {
 	// // Center wrapper
 	loadingwrapper.css("margin-top", (loadingwrapper.height() / 2) * -1);
 	loadingwrapper.css("margin-left", (loadingwrapper.width() / 2) * -1);
+}
+
+// Mobile users who want to play
+function playMobile() {
+	preload();
+	$("#warning").css("width", "0").css("height", "0").css("opacity", "0");
 }
