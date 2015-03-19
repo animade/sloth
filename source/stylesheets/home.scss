@@ -223,9 +223,10 @@ p {
 }
 
 #infowrapper {
-	max-width:31em;
+	max-width:33em;
 	margin: 0 auto;
 	margin-top: 15vh;
+	padding: 0 2em;
 }
 
 #infowrapper h3 {
@@ -234,7 +235,7 @@ p {
 
 #infowrapper img {
 	max-width: 313px;
-	width: 20vw;
+	width: 75%;
 }
 
 #infocredits {
@@ -396,7 +397,7 @@ p {
 }
 
 #successwrapper {
-	display: inline-block;
+	display: block;
 	margin: 0 auto;
 	margin-top: 20vh;
 }
@@ -408,18 +409,22 @@ p {
 
 #successSloth {
 	max-width: 172px;
-	width: 10vw;
+	width: 75%;
 }
 
 #successSentence {
 	display:block;
 	margin: 1.5em auto;
+	width: 75%;
+ 	max-width: 335px;
 }
 
 // Play again button
 #playagain {
 	margin-top: 2em!important;
 	fill: $darkpink;
+	max-width: 369px;
+  	width: 75%;
 }
 
 #playagain:hover {
