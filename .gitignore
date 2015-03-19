@@ -25,6 +25,10 @@
 # Middleman build folder
 /build/
 
+# Ignore original sounds, only upload compressed ones
+source/scenes/skyline/audio/*
+!source/scenes/skyline/audio/mp3
+
 # Ignore all images except for test
 source/scenes/*
 !source/scenes/test
