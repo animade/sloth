@@ -181,12 +181,7 @@ function playButtonClick() {
 		initGame();
 	// otherwise show the loading indicator
 	} else {
-		var loadingbar = document.getElementById("loadingbar");
-		loadingbar.style.visibility = "visible";
-		loadingbar.style.opacity = "1";
-		var loadingindicator = document.getElementById("loadingindicator");
-		loadingindicator.style.visibility = "visible";
-		loadingindicator.style.opacity = "1";
+		showLoadingBar();
 	}
 }
 
@@ -227,6 +222,16 @@ function decodeSound(obj) {
 	});
 }
 
+// Reveals loading bar
+function showLoadingBar() {
+	var loadingbar = document.getElementById("loadingbar");
+	loadingbar.style.visibility = "visible";
+	loadingbar.style.opacity = "1";
+	var loadingindicator = document.getElementById("loadingindicator");
+	loadingindicator.style.visibility = "visible";
+	loadingindicator.style.opacity = "1";
+}
+
 // Center the loading screen elements on the page
 function centerLoadingwrapper() {
 	// // Center wrapper
@@ -237,5 +242,6 @@ function centerLoadingwrapper() {
 // Mobile users who want to play
 function playMobile() {
 	preload();
+	showLoadingBar();
 	$("#warning").css("width", "0").css("height", "0").css("opacity", "0");
 }
