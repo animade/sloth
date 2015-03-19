@@ -16,7 +16,6 @@ var dirAudioScale = 500; // The bigger the number the smaller the radius in whic
 var outsideBackgroundColor = "#b8fbdd";
 var insideBackgroundColor = "#b8fbdd";
 var magGlassOuterRingColor = "#86d1bc";
-var magGlassOuterRingWidth = 8;
 
 // Put together src urls for extensibility
 var src 				= "scenes/" + sceneName;
