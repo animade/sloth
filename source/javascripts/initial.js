@@ -1,5 +1,5 @@
+//= require "modernizr/modernizr.js"
 //= require "jquery"
-//= require "ua-parser-js"
 
 // Initialize variables
 var complete = false;
@@ -9,7 +9,6 @@ var counter = 0;
 var loadingwrapper = $("#loadingwrapper");
 queue = new createjs.LoadQueue();
 sceneName = "skyline";
-var parser = new UAParser();
 
 // Put together filenames for easier extensibility
 var src 				= "scenes/" + sceneName;
@@ -73,12 +72,12 @@ queue.on("progress", handleProgress, this);
 queue.on("complete", handleComplete, this);
 queue.on("fileload", handleFileLoad, this);
 
-if (parser.getDevice().type === "mobile") {
-	// Show the mobile warning
-	$("#warning").css("width", "100vw").css("height", "100vh").css("opacity", "1");
-} else {
+if (!Modernizr.touch) {
 	// Start preloading, which initializes the whole thing
 	preload();
+} else {
+	// Otherwise show the mobile warning
+	$("#warning").css("width", "100vw").css("height", "100vh").css("opacity", "1");
 }
 
 // ------------------------------------------

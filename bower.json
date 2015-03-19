@@ -1,16 +1,16 @@
 {
-  "name": "The lost sloth",
-  "version": "1.0.0",
+  "name": "Animade Middleman Boilerplate",
+  "version": "0.0.1",
   "dependencies": {
     "jquery.transit": "",
-    "normalize-css": "",
-    "ua-parser-js": ""
+    "modernizr": "",
+    "normalize-css": ""
   },
   "authors": [
-    "Max Stoiber"
+    "James Chambers <james@animade.tv>"
   ],
   "main": "?",
-  "license": "Apache 2.0",
+  "license": "MIT",
   "private": true,
   "ignore": [
     "**/.*",
