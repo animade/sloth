@@ -140,7 +140,7 @@ function init() {
 	sloth = document.getElementById(slothString).getBoundingClientRect();
 	// Play the sounds
 	for (var i in audioFilenames) {
-		if (!audioFilenames[i].playing || audioFilenames[i].playing === undefined) {
+		if (audioFilenames[i].playing === undefined) {
 			playSoundObj(audioFilenames[i]);
 		}
 	}
@@ -345,7 +345,7 @@ function playSoundObj(obj) {
 		obj.playing = true;
 		// Loops the sound
 		obj.source.loop = true;
-		if (!obj.dirAudio) {
+		if (!obj.dirAudio && !audioButton) {
         	obj.gainNode.gain.value = obj.vol;
         } else {
         	obj.gainNode.gain.value = 0;
@@ -381,19 +381,21 @@ function turnOffAudio() {
 
 // Turn on audio
 function turnOnAudio() {
-	if (!info && !success && !title) {
-		for (var i in audioFilenames) {
-	        if (audioFilenames[i].loaded && !audioFilenames[i].playing) {
-	            if (!audioFilenames[i].dirAudio) {
-	            	audioFilenames[i].gainNode.gain.value = audioFilenames[i].vol;
-	            }
-	            audioFilenames[i].playing = true;
-	        }
-	    }
-	}
-	audio = true;
-	if (title || success) {
-		$("#thememusic").animate({volume: 1.0}, 500);
+	if (!audioButton) {
+		if (!info && !success && !title) {
+			for (var i in audioFilenames) {
+		        if (audioFilenames[i].loaded && !audioFilenames[i].playing) {
+		            if (!audioFilenames[i].dirAudio) {
+		            	audioFilenames[i].gainNode.gain.value = audioFilenames[i].vol;
+		            }
+		            audioFilenames[i].playing = true;
+		        }
+		    }
+		}
+		audio = true;
+		if (title || success) {
+			$("#thememusic").animate({volume: 1.0}, 500);
+		}
 	}
 }
 
