@@ -416,7 +416,7 @@ function playAgain() {
 			$("#successSloth")[0].parentNode.insertBefore(successSentence, $("#successSloth")[0].nextSibling).setAttribute("id", "successSentence");
 		};
 		successSentence.src = successSentenceSrc;
-	}, 250);
+	}, 300);
 	// New sloth
 	randomnumber = Math.floor(Math.random()*4) + 1;
 	var slothAnimationSrc = src + "/animation/sloth" + randomnumber + ".gif";
