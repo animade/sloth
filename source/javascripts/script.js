@@ -46,6 +46,7 @@ var prevCircleX;
 var prevCircleY;
 var pageDiagonal;
 var sceneryOutside;
+var animationwrapper = document.getElementById('animationwrapper');
 // Various booleans for settings
 var success = false;
 var audio 	= true;
@@ -144,6 +145,8 @@ function init() {
 			playSoundObj(audioFilenames[i]);
 		}
 	}
+	// Calculate circle Radius based on inside height
+	circleRadius = $("#inside svg").height() / magGlassScale;
 	// Start drawing
 	draw();
 
@@ -201,6 +204,8 @@ function init() {
 	            obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
 	        }
 	    }
+		// Calculate circle Radius based on inside height
+    	circleRadius = $("#inside svg").height() / magGlassScale;
 	});
 }
 
@@ -235,8 +240,6 @@ function onMouseMove(evt) {
 function draw() {
 	// Redraw area where circle was before
 	ctx.clearRect(prevCircleX - circleRadius * 3, prevCircleY - circleRadius * 3, circleRadius * 6, circleRadius * 6);
-	// Calculate circle Radius based on inside height
-    circleRadius = $("#inside svg").height() / magGlassScale;
 	// Draw magnifying glass ring
 	ctx.beginPath();
 		ctx.arc(circleX,circleY,circleRadius,0,Math.PI*2,true);
@@ -275,7 +278,6 @@ function clippedImage(img) {
     	ctx.fill();
 	  	// Draw the image
 	  	ctx.drawImage(img,imgX,height - imgHeight,imgWidth,imgHeight);
-	  	var animationwrapper = document.getElementById('animationwrapper');
 	  	animationwrapper.style.width = imgWidth;
   	ctx.restore();
 }
