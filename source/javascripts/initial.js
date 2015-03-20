@@ -235,7 +235,8 @@ function showLoadingBar() {
 
 // Center the loading screen elements on the page
 function centerLoadingwrapper() {
-	// // Center wrapper
+	loadingwrapper.css("opacity", 1);
+	// Center wrapper
 	loadingwrapper.css("margin-top", (loadingwrapper.height() / 2) * -1);
 	loadingwrapper.css("margin-left", (loadingwrapper.width() / 2) * -1);
 }
