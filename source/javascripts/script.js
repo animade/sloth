@@ -149,7 +149,7 @@ function init() {
 
 	// Add interactivity
 	if (success === false && info == false && title == false) {
-		// Mouse/Finger move
+		// Mouse/Finger move, $.throttle limits the amount of times the function onMouseMove executes to 41 times per second
 		$(document).mousemove( $.throttle( 41, onMouseMove) );
 		$(document).bind('touchmove', $.throttle( 41, onMouseMove));
 		// Click/touch
@@ -390,8 +390,8 @@ function turnOnAudio() {
 	            audioFilenames[i].playing = true;
 	        }
 	    }
-	    audio = true;
 	}
+	audio = true;
 	if (title || success) {
 		$("#thememusic").animate({volume: 1.0}, 500);
 	}
@@ -401,7 +401,20 @@ function turnOnAudio() {
 function playAgain() {
 	success = false;
 	// Hide success screen
-	$("#success").css("width", "0").css("height", "0").css("opacity", "0");
+	$("#success").css("opacity", "0");
+	setTimeout(function() {
+		$("#success").css("width", "0").css("height", "0")
+		// Show a new random sentence
+		randomsentence = Math.floor(Math.random() * 3) + 1;
+		successSentenceSrc = "scenes/success_screen/sentence" + randomsentence + ".svg";
+		var successDiv = document.getElementById("successwrapper");
+		var successSentence = new Image();
+		successSentence.onload = function() {
+			$("#successSentence").remove();
+			$("#successSloth")[0].parentNode.insertBefore(successSentence, $("#successSloth")[0].nextSibling).setAttribute("id", "successSentence");
+		};
+		successSentence.src = successSentenceSrc;
+	}, 250);
 	// New sloth
 	randomnumber = Math.floor(Math.random()*4) + 1;
 	var slothAnimationSrc = src + "/animation/sloth" + randomnumber + ".gif";
@@ -414,16 +427,6 @@ function playAgain() {
 		sloth = document.getElementById(slothString).getBoundingClientRect();
 	};
 	slothAnimation.src = slothAnimationSrc;
-	// Show a new random sentence
-	randomsentence = Math.floor(Math.random() * 3) + 1;
-	successSentenceSrc = "scenes/success_screen/sentence" + randomsentence + ".svg";
-	var successDiv = document.getElementById("successwrapper");
-	var successSentence = new Image();
-	successSentence.onload = function() {
-		$("#successSentence").remove();
-		$("#successSloth")[0].parentNode.insertBefore(successSentence, $("#successSloth")[0].nextSibling).setAttribute("id", "successSentence");
-	};
-	successSentence.src = successSentenceSrc;
 	// Initialize again
 	init();
 	// Play Sounds
