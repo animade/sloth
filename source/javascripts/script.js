@@ -192,6 +192,15 @@ function init() {
 		sloth = document.getElementById(slothString).getBoundingClientRect();
 		// Get new pageDiagonal
 		pageDiagonal = Math.pow($("#inside svg").width(), 2) + Math.pow($("#inside svg").height(), 2);
+		// Get new bounding rectangles for the sound
+		for (var i = 0; i < audioFilenames.length; i++) {
+			obj = audioFilenames[i];
+	        if (obj.dirAudio) {
+	            obj.audioRect = document.getElementById(obj.elem).getBoundingClientRect();
+	            obj.audioX  = obj.audioRect.left + obj.audioRect.width / 2;
+	            obj.audioY  = obj.audioRect.top + obj.audioRect.height / 2;
+	        }
+	    }
 	});
 }
 
