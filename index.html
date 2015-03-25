@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>
+      The lost sloth
+    </title>
+    <meta content="Do sloths hang out in ornate buildings? We're pretty sure they do, so we came up with this characterful web-toy." name='description'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0' name='viewport'>
+    <meta href='favicons/apple-touch-icon.png' rel='apple-touch-icon'>
+    <link href='favicon.png' rel='icon'>
+    <!--[if lt IE 9 ]> <script type="text/javascript" src="javascripts/flashcanvas.js"></script> <![endif]-->
+    
+    <link href="stylesheets/home.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body class='index' onload='centerLoadingwrapper();'>
+    <!-- Assets -->
+    <script>
+      var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-49258834-3']);
+        _gaq.push(['_trackPageview']);
+      
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- Haml -->
+    <!-- Mobile warning screen -->
+    <div id='warning'>
+      <div id='warningwrapper'>
+        <h3>HELLO THERE!</h3>
+        <p>Due to the high-quality images and sounds, this game may run slowly on your mobile device and will use up quite a bit of data (~10MB).</p>
+        <p>
+          We suggest
+          <a href='mailto:YOUREMAILADRESS@HERE.com?subject=Find+the+sloth&amp;body=Here%20is%20a%20link%20to%20the%20awesome%20game%20you%20tried%20playing%20on%20your%20touch%20device%20earlier%3A%20http%3A%2F%2Fsloth.animade.tv%0A%0AWe%20hope%20you%20enjoy!' onclick="_gaq.push(['_trackEvent', 'mobile', 'click', 'emailLink']);">emailing yourself the link</a>
+          , popping on your headphones and enjoying the full amount of sloth love on a big screen.
+        </p>
+        <a href='mailto:YOUREMAILADRESS@HERE.com?subject=Find+the+sloth&amp;body=Here%20is%20a%20link%20to%20the%20awesome%20game%20you%20tried%20playing%20on%20your%20touch%20device%20earlier%3A%20http%3A%2F%2Fsloth.animade.tv%0A%0AWe%20hope%20you%20enjoy!'>
+          <div class='mobile-button' id='sendemail' onclick="_gaq.push(['_trackEvent', 'mobile', 'click', 'emailButton']);">Send me the link!</div>
+        </a>
+        <div class='mobile-button' id='playanyway' onclick='playMobile();'>Play anyway</div>
+      </div>
+    </div>
+    <!-- Loading screen -->
+    <div id='loading'>
+      <div id='loadingwrapper'>
+        <img id='logo' src='scenes/start_screen/start.gif'>
+        <div id='buttonwrapper'>
+          <div id='play' onclick='playButtonClick()'>
+            <svg enable-background='new 0 0 180.2 71.9' height='60px' space='preserve' version='1.1' viewbox='0 0 180.2 71.9' width='160px' x='0px' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
+              <g id='Layer_1'>
+                <g>
+                  <path d='M179.2,21c-0.2-1.2-0.4-2.5-0.6-3.8c-0.1-2-0.3-3.9-0.8-5.7c-0.6-2.3-1.8-4.1-3.5-5.6&#x000A;			c-0.5-0.7-1-1.4-1.6-2.1c-2-2-4.8-3.2-7.6-3.4C162.7,0,160,0,157.4,0c-15.9,0.1-31.8,0.3-47.7,0.5c-3.9,0-7.7,0.1-11.6,0.2&#x000A;			C87.9,0.6,77.6,0.5,67.3,0.5c-9.6-0.1-19.2-0.1-28.8-0.2c-7,0-13.9-0.4-20.5,1.3c-1,0.1-1.9,0.2-2.9,0.4c-4-0.1-7.8,1.7-10.6,4.8&#x000A;			C0.7,11.1,0,17.3,0,22.9C0,30.5,0.3,38,0.5,45.6C0.7,52.4,0.9,58.7,4,64.9c0.3,0.6,0.7,1.1,1.2,1.5c0.7,1,1.6,1.9,2.8,2.6&#x000A;			c2.8,1.8,6.3,1.5,9.5,1.5c4,0.1,8,0.2,12,0.3c5.1,0.1,10.2,0.2,15.3,0.3c17,0.7,34,1,51,0.8c18-0.2,35.9-0.9,53.8-2.2&#x000A;			c4.3-0.3,8.6-0.6,13-1c3.5-0.3,7.6-0.2,10.8-2.2c4.9-3.1,5.4-10.4,5.6-16.4c0,0,0-0.1,0-0.1C180.5,40.3,180.7,30.7,179.2,21z' id='button-background'></path>
+                  <g>
+                    <path d='M39.2,26.9c-3.3-0.1-6.6,0.3-9.9,1c-0.4,0.1-0.6,0.2-0.9,0.4c-0.8,0.2-1.6,0.8-1.6,1.9c0,2,0,4.1,0.1,6.1&#x000A;				c-0.5,0.8-0.5,1.9,0.2,2.6c0.1,1.6,0.2,3.3,0.4,4.9c0.3,2.5,4.3,2.6,4,0c-0.2-1.4-0.3-2.9-0.4-4.3h5c2.6,0,2.6-4,0-4h-5.2&#x000A;				c0-1.3-0.1-2.6-0.1-3.9c2.8-0.6,5.5-0.8,8.3-0.8C41.8,31,41.8,27,39.2,26.9z' fill='#FCCEC8'></path>
+                    <g>
+                      <path d='M48.6,25c-1.1,0-2,0.9-2,2v0.3c0,1,0.9,2,2,2c1.1,0,2-0.9,2-2V27C50.6,26,49.6,25,48.6,25z' fill='#FCCEC8'></path>
+                      <path d='M50,41.2c0.3,0.3,0.1-0.7,0.1-0.9c0-0.8,0-0.6,0-1.4c0-1.5,0-3,0-4.5c0-2.6-4-2.6-4,0c0,2.1,0,3.2,0,5.3&#x000A;					c0,1.7,0,3.1,1.1,4.4C48.8,46,51.7,43.1,50,41.2z' fill='#FCCEC8'></path>
+                    </g>
+                    <path d='M72.5,28.6c-0.1-2.6-4.1-2.6-4,0c0.1,3.5,0,7-0.4,10.5c-2.3-3.1-4.5-6.3-6.8-9.4&#x000A;				c-0.5-1.9-3.8-1.7-3.9,0.7c-0.2,4.2-0.1,8.3,0.4,12.5c0.3,2.5,4.3,2.6,4,0c-0.2-2.1-0.4-4.2-0.4-6.4c2.1,2.9,4.2,5.8,6.3,8.8&#x000A;				c0.9,1.2,3.3,1.4,3.7-0.5C72.3,39.4,72.8,34,72.5,28.6z' fill='#FCCEC8'></path>
+                    <path d='M94.5,36.5c-1.4-5.7-7.3-8.6-12.7-9c-1.7-0.1-2.2,1.5-1.8,2.7V43c0,0.1,0,0.2,0,0.2&#x000A;				c-0.7,1.2,0.3,3.4,2.3,3.1C87.2,45.5,96.1,42.9,94.5,36.5z M84.1,41.9V31.8c2.7,0.7,5.6,2.2,6.3,4.9&#x000A;				C91.2,39.5,87.2,41.1,84.1,41.9z' fill='#FCCEC8'></path>
+                    <path d='M120.9,34.8c-0.2-2.5-4.2-2.6-4,0c0.3,3.2,0.6,6.3,0.9,9.5c0.2,2.5,4.2,2.6,4,0&#x000A;				C121.5,41.1,121.2,38,120.9,34.8z' fill='#FCCEC8'></path>
+                    <path d='M118.6,25.5c-1.1,0-2,0.9-2,2V28c0,1,0.9,2,2,2c1.1,0,2-0.9,2-2v-0.5C120.6,26.5,119.7,25.5,118.6,25.5z' fill='#FCCEC8'></path>
+                    <path d='M139.5,29c-3.9,0.5-7.8,0.7-11.8,0.7c-2.6,0-2.6,4,0,4c1.5,0,2.9,0,4.4-0.1c0.4,3.4,0.7,6.8,1,10.3&#x000A;				c0.2,2.5,4.2,2.6,4,0c-0.3-3.5-0.6-7-1-10.5c1.1-0.1,2.3-0.2,3.4-0.4C142,32.6,142.1,28.6,139.5,29z' fill='#FCCEC8'></path>
+                    <path d='M153.1,25.8c-0.1-2.6-4.1-2.6-4,0c0.2,3.4,0.3,6.8,0.5,10.2c0.1,2.6,4.1,2.6,4,0&#x000A;				C153.5,32.6,153.3,29.2,153.1,25.8z' fill='#FCCEC8'></path>
+                    <path d='M151.6,42.5c-2.6,0-2.6,4,0,4C154.2,46.5,154.2,42.5,151.6,42.5z' fill='#FCCEC8'></path>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div id='loadingindicator'>
+          <div id='loadingbar'></div>
+        </div>
+      </div>
+    </div>
+    <!-- Info screen -->
+    <div id='info'>
+      <div id='infowrapper'>
+        <img src='scenes/info_screen/logo.png'>
+        <h3>DO SLOTHS HANG OUT IN ORNATE BUILDINGS?</h3>
+        <h3>WE’RE PRETTY SURE THEY DO.</h3>
+        <p>
+          Scan your cursor across the facade to find out where our hairy friend is hiding - and what on earth she’s up to.
+          <br>
+          You might just spot some familiar characters lurking inside too.
+        </p>
+        <p>
+          The Lost Sloth is an in-house Animade project.
+          <br>
+          We like to merge animation and interaction at every opportunity, so we came up with this characterful web-toy just for fun.
+        </p>
+        <a class='button fb-follow' href='https://facebook.com/animadetv' onclick="_gaq.push(['_trackEvent', 'social', 'click', 'followAnimade']);" target='_blank'>
+          <svg enable-background='new 0 0 266.893 266.895' height='9px' id='Layer_1' space='preserve' version='1.1' viewbox='0 0 266.893 266.895' width='9px' x='0px' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
+            <path d='M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812&#x000A;	c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225&#x000A;	H248.082z' fill='#FFFFFF' id='Blue_1_'></path>
+            <path d='M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935&#x000A;	l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585&#x000A;	v99.803H182.409z' fill='#d95c7d' id='f'></path>
+          </svg>
+          Follow
+        </a>
+        <p id='infocredits'>
+          Animation and design by
+          <a href='https://www.behance.net/grandinetti' onclick="_gaq.push(['_trackEvent', 'social', 'click', 'followBee']);" target='_blank'>Bee Grandinetti</a>
+          <br>
+          Development by
+          <a href='http://mxs.is/@' onclick="_gaq.push(['_trackEvent', 'social', 'click', 'followMax']);" target='_blank'>Max Stoiber</a>
+        </p>
+      </div>
+    </div>
+    <!-- Overlay -->
+    <div id='infobutton'>
+      <img id='i' src='scenes/buttons/info/info.svg'>
+      <img id='e' src='scenes/buttons/info/exit.svg'>
+    </div>
+    <div id='audiobutton'>
+      <img id='on' src='scenes/buttons/audio/on.svg'>
+      <img id='off' src='scenes/buttons/audio/off.svg'>
+    </div>
+    <div id='textoverlay'>
+      <img src='scenes/buttons/logo.svg'>
+      From
+      <a href='http://animade.tv' onclick="_gaq.push(['_trackEvent', 'social' 'click', 'animadeWebsiteLink']);" target='_blank'>Animade</a>, with sloth
+    </div>
+    <!-- Inside -->
+    <div id='inside'></div>
+    <!-- Animations -->
+    <div id='animations'>
+      <div id='animationwrapper'></div>
+    </div>
+    <!-- Outside -->
+    <canvas id='outside'></canvas>
+    <!-- Success screen -->
+    <div id='success'>
+      <div id='successwrapper'>
+        <svg enable-background='new 0 0 369 56.9' height='56.9px' id='playagain' onclick='playAgain()' space='preserve' version='1.1' viewbox='0 0 369 56.9' width='369px' x='0px' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
+          <g>
+            <path d='M368.2,33.3c0.2-1.7,0.4-3.5,0.5-5.2c0.2-3.6,0.1-7.2-0.2-10.8c0.2-3.2,0.2-6.3-0.5-9.1&#x000A;		c-0.9-3.7-3.8-5.5-7.2-6.2c-0.8-0.6-1.9-0.9-3.2-1c-2.3-0.2-4.7-0.2-7-0.1c-3.5-0.2-6.9-0.4-10.4-0.7c-0.5,0-0.9,0-1.3,0.2&#x000A;		c-0.9-0.1-1.7-0.1-2.6-0.2c-0.2,0-0.4,0-0.6,0c-4.6-0.2-9.3-0.2-14-0.2c-32.5,0.1-64.9,0.2-97.4,0.4c-7.9,0-15.8,0.1-23.7,0.1&#x000A;		c-21,0-42-0.1-63-0.1c-19.6,0-39.2-0.1-58.8-0.1c-14.2,0-28.3-0.4-41.9,1c-2,0.1-3.9,0.2-5.9,0.4c-3.4,0-6.8,0.2-10,0.7&#x000A;		c-2.3-0.1-4.5,0.5-7.2,0.7C11.5,3.2,9.1,2.9,7,3.6C1.5,4.4,1.3,7.5,0.6,13c-0.1,0.4-0.2,0.8-0.2,1.3c0,0,0,0.1,0,0.1&#x000A;		C0.1,15.6,0,16.9,0,18.1C0,22,0.3,26,0.6,29.9c-0.1,1.7-0.1,3.4-0.1,5C0.5,40.4,0,47,1.3,52.3C2,55,3.4,56,6.1,56.3&#x000A;		c5.9,0.7,12.3-0.1,18.2-0.4c0.5,0,0.9-0.1,1.3-0.3c3.4,0.1,6.9,0.1,10.2,0.1c8.1,0.1,16.3,0.2,24.4,0.2c10.4,0.1,20.9,0.2,31.3,0.2&#x000A;		c34.7,0.6,69.5,0.8,104.2,0.6c36.7-0.2,73.4-0.7,110-1.7c8.8-0.2,17.7-0.5,26.5-0.8c3-0.1,6.1-0.1,9.2-0.3c0.3,0,0.6,0,0.9,0&#x000A;		c1.1,0,2.1-0.1,3.2-0.2c0.2,0,0.5,0,0.7,0c0.6,0.3,1.2,0.4,2,0.3c0.3-0.1,0.7-0.1,1-0.2c4.7,0.1,9.4,0.2,14-0.3&#x000A;		c3.3-0.4,5-2,5.6-4.3c0.3-0.5,0.4-1,0.4-1.5C368.6,43,368.4,38.1,368.2,33.3z'></path>
+            <path d='M31.3,33.3c-1.4,0-2.8,0.1-4.2,0.1c0.1-2.1,0.1-4.3-0.1-6.4c0-0.4-0.2-0.8-0.5-1c1.4-0.2,2.8-0.4,4.3-0.7&#x000A;		c1.9-0.4,1.1-3.3-0.8-2.9c-3,0.7-5.9,1-9,1c-1.9,0-1.9,3,0,3c1.1,0,2.1,0,3.2-0.1c-0.1,0.2-0.2,0.5-0.2,0.8&#x000A;		c0.2,2.2,0.2,4.3,0.1,6.5c-1.3,0-2.8-0.2-3.7,0.7c-0.6,0.6-0.5,1.5,0,2.1c0,0,0.1,0.1,0.1,0.1c0.6,0.7,1.5,0.5,2.1,0c0,0,0,0,0,0&#x000A;		c0.5,0.1,1.6,0,1.5,0c0.8,0,1.6-0.1,2.3-0.1c1.6-0.1,3.1-0.1,4.7-0.2C33.2,36.3,33.2,33.3,31.3,33.3z' fill='#FFFFFF'></path>
+            <path d='M59,33.1c-1.8,0-3.2-1-4.7-1.9c-0.1,0-0.2-0.1-0.3-0.1c1.8-1.5,3.4-3.2,5-4.9c1.3-1.4-0.8-3.6-2.1-2.1&#x000A;		c-1.7,1.8-3.5,3.4-5.6,4.7c0-1.2,0.1-2.5,0.1-3.7c0.1-1.9-2.9-1.9-3,0c-0.3,4.2-0.1,8.3,0.4,12.4c0.3,1.9,3.2,1.1,2.9-0.8&#x000A;		c-0.2-1.2-0.3-2.3-0.3-3.5c0,0,0.1,0,0.1-0.1c2.5,0.8,4.6,2.9,7.4,2.9C60.9,36.1,60.9,33.1,59,33.1z' fill='#FFFFFF'></path>
+            <path d='M75.9,32.2c-0.3-2.3-1.1-4.4-1-6.8c0.1-1.9-2.9-1.9-3,0c0,1.6,0.1,3.2,0.4,4.7c0.2,0.7,0.6,1.7,0.7,2.5&#x000A;		c-2.4-2.3-4.7-4.7-6.8-7.4c-0.2-0.3-0.6-0.5-1-0.6c-0.6-1.2-2.8-1-2.8,0.7c0.1,3.4,0.1,6.7,0.2,10.1c0,1.7,2.5,2.1,2.9,0.4&#x000A;		c0.5-1.9,0.8-3.8,0.9-5.7c1.9,2.2,3.9,4.2,6.1,6.1c0.7,0.6,1.5,0.6,2.1,0C75.9,35.3,76.1,33.8,75.9,32.2z' fill='#FFFFFF'></path>
+            <path d='M84.9,23.6c-3.1-0.8-6.2,1.2-7.1,4.1c-0.1,0.4-0.1,0.8,0.1,1.1c-0.1,2.4,1.4,4.9,3.8,5.7&#x000A;		c2.9,1,6.4-0.8,7.3-3.8C89.7,27.8,87.9,24.4,84.9,23.6z M86,29.9c-0.4,1.3-2.1,2.2-3.4,1.7c-1.6-0.5-2.1-2.4-1.5-3.8&#x000A;		c0-0.1,0.1-0.2,0.1-0.3C82.9,25.4,87,26.9,86,29.9z' fill='#FFFFFF'></path>
+            <path d='M108.9,24.9c-1.1,2.8-2.2,5.6-3.4,8.5c-0.9-1.7-1.8-3.4-2.5-5.1c-0.5-1.1-2-0.8-2.6,0&#x000A;		c-1.1,1.6-2.1,3.2-3.2,4.7c-1-2.6-1.9-5.1-2.9-7.7c-0.7-1.8-3.6-1-2.9,0.8c1.3,3.5,2.7,7,4,10.6c0.5,1.2,2,1.5,2.7,0.4&#x000A;		c1.1-1.6,2.2-3.3,3.3-4.9c0.9,1.9,1.9,3.7,3,5.5c0.7,1.2,2.3,0.8,2.7-0.4c1.5-3.8,3.1-7.7,4.6-11.5&#x000A;		C112.5,23.9,109.6,23.2,108.9,24.9z' fill='#FFFFFF'></path>
+            <path d='M115.4,34.6c-0.9,0-1.4,0.7-1.5,1.5l-0.3,3.3c-0.1,0.8,0.7,1.5,1.5,1.5c0.9,0,1.4-0.7,1.5-1.5l0.3-3.3&#x000A;		C117,35.3,116.2,34.6,115.4,34.6z' fill='#FFFFFF'></path>
+            <path d='M137.5,34.4c-1.4,0.1-2.9,0.1-4.3,0.2c-0.6,0-1.4-0.1-2,0.1c-0.1,0-0.1,0-0.2,0c0,0,0-0.1,0-0.1&#x000A;		c0.3-1.3,0-2.9,0-4.2c0-1.7,0-3.3,0-5c0-1.9-3-1.9-3,0c0,0.3,0,0.6,0,0.9c0,0,0,0,0,0c0,1.9,0,3.8,0,5.7c0,1.4-0.4,3.4,0.3,4.6&#x000A;		c0.6,1.1,1.8,1.1,2.9,1c2.1-0.1,4.2-0.2,6.3-0.3C139.4,37.3,139.4,34.3,137.5,34.4z' fill='#FFFFFF'></path>
+            <path d='M150.8,34.4c-2,0.1-4.3,0.5-6.3,0.4c0-0.6,0-1.6,0.1-2.5c1.9-0.1,3.7-0.3,5.6-0.4c1.9-0.1,1.9-3.1,0-3&#x000A;		c-1.8,0.1-3.7,0.3-5.5,0.4c0-0.8,0-1.7,0-2.5c2.1,0,4.1,0.1,6.2,0.2c1.9,0.1,1.9-2.9,0-3c-2.7-0.1-5.3-0.2-8-0.2&#x000A;		c-1.3,0-1.7,1.3-1.3,2.2c-0.4,0.6-0.3,1.3,0.2,1.7c0,0.8,0,1.7,0,2.5c-0.4,0.6-0.4,1.3,0,1.8c0,0,0,0.1,0,0.1&#x000A;		c0,1.4-0.4,3.2,0.2,4.5c0.6,1.2,1.7,1.2,2.9,1.2c2,0,4-0.2,6-0.4C152.7,37.3,152.8,34.3,150.8,34.4z' fill='#FFFFFF'></path>
+            <path d='M165.2,23.5h-9.3c-1.9,0-1.9,3,0,3h2.8c-0.1,3.3,0,6.6,0.4,9.8c0.2,1.9,3.2,1.9,3,0&#x000A;		c-0.3-3.3-0.5-6.5-0.4-9.8h3.5C167.1,26.5,167.1,23.5,165.2,23.5z' fill='#FFFFFF'></path>
+            <path d='M189.3,25.5c0-1.6-2-1.9-2.8-0.8c-1.2,1.7-2.3,4-3.7,5.6c-0.9-0.8-1.6-2.6-2.2-3.4c-0.5-0.7-1-1.2-1.6-1.6&#x000A;		c-0.2-0.5-0.8-0.8-1.4-0.8c0,0-0.1,0-0.1,0c-0.9-0.4-1.9,0.5-1.9,1.4l0,9.2c0,1.9,2.9,1.9,3,0c0.1-1.9,0.2-3.7,0.3-5.6&#x000A;		c0.9,1.5,1.5,3.2,3.1,3.9c1.4,0.6,2.2-0.1,3-1.2c0.5-0.6,0.9-1.2,1.3-1.9c0,2,0,3.9,0.1,5.9c0,1.9,3,1.9,3,0&#x000A;		C189.3,32.7,189.3,29.1,189.3,25.5z' fill='#FFFFFF'></path>
+            <path d='M200.4,22.5c-2.6,0.8-5.2,1.2-7.9,1c-1.5-0.1-1.8,1.8-1,2.6c0,0.1,0,0.2,0,0.2l-0.5,5.8&#x000A;		c-0.1,1.3-0.7,3.3,0.1,4.4c0.8,1.2,2.3,1,3.5,0.9c1.8-0.1,3.6-0.4,5.3-0.7c1.9-0.4,1.1-3.3-0.8-2.9c-1.2,0.2-2.3,0.4-3.5,0.5&#x000A;		c-0.4,0-1.3,0.2-2,0.2c0-0.6,0.1-1.3,0.2-2c1.3-0.2,2.7-0.3,4-0.5c0.8-0.1,1.5-0.6,1.5-1.5c0-0.7-0.7-1.6-1.5-1.5&#x000A;		c-1.2,0.1-2.4,0.3-3.6,0.4c0.1-1,0.2-2,0.3-3.1c2.3-0.1,4.5-0.5,6.7-1.1C203,24.8,202.3,21.9,200.4,22.5z' fill='#FFFFFF'></path>
+            <path d='M221,22.4c-0.2-0.9-1-1.2-1.8-1c-2,0.3-3.9,0.6-5.9,0.9c-0.1,0-0.3,0.1-0.4,0.1c-0.9-0.3-2,0.1-1.9,1.3&#x000A;		c0.4,4.2,0.7,8.4,1.1,12.7c0.2,1.9,3.2,1.9,3,0c-0.2-2.1-0.3-4.2-0.5-6.3l3.8-0.7c0.8-0.1,1.2-1.1,1-1.8c-0.2-0.8-1-1.2-1.8-1&#x000A;		c-1.1,0.2-2.2,0.4-3.2,0.6l-0.2-1.9c0.2,0,0.3,0,0.4-0.1c1.8-0.3,3.6-0.5,5.4-0.8C220.7,24.1,221.2,23.1,221,22.4z' fill='#FFFFFF'></path>
+            <path d='M226.3,34.3c-0.6-2.7-0.8-5.5-0.6-8.3c0.1-1.9-2.9-1.9-3,0c-0.2,3.1,0,6.1,0.7,9.1&#x000A;		C223.8,36.9,226.7,36.1,226.3,34.3z' fill='#FFFFFF'></path>
+            <path d='M225.2,20.2h-0.3c-0.8,0-1.5,0.7-1.5,1.5c0,0.8,0.7,1.5,1.5,1.5h0.3c0.8,0,1.5-0.7,1.5-1.5&#x000A;		C226.6,20.8,226,20.2,225.2,20.2z' fill='#FFFFFF'></path>
+            <path d='M240.5,25.3c-0.1-1.9-3.1-1.9-3,0c0.1,1.6,0.2,3.2,0.3,4.9c0,0.8,0.2,1.8,0.1,2.8c-1.2-1.5-2.3-3-3.5-4.4&#x000A;		c-0.9-1.1-2-3.2-3.6-3.4c-0.8-1-2.8-0.7-2.7,0.8c0.2,3.5,0.4,6.9,1,10.3c0.3,1.7,3.1,1.3,2.9-0.4c-0.1-2.1-0.5-4.4-0.6-6.6&#x000A;		c0.8,1,1.7,2.4,2.1,3c1.2,1.5,2.4,3.1,3.6,4.6c0.5,0.6,1.6,0.6,2.1,0C242,33.9,240.7,29,240.5,25.3z' fill='#FFFFFF'></path>
+            <path d='M244.9,23c-0.1,0.1-0.2,0.1-0.3,0.2c-0.8-0.2-1.8,0.3-1.8,1.4c0,3.6,0.4,7.1,1,10.6&#x000A;		c-0.7,0.8-0.4,2.5,1.1,2.7c4.6,0.5,8.9-4.3,8.8-8.7C253.5,24.8,249.2,21.2,244.9,23z M250.5,30.1c-0.3,1.9-1.9,3.8-3.9,4.5&#x000A;		c-0.5-2.9-0.8-5.8-0.9-8.7C248.5,24.8,251,27.2,250.5,30.1z' fill='#FFFFFF'></path>
+            <path d='M267.9,34.3c-0.4-2.6-0.7-5.1-1.1-7.7c-0.3-1.9-3.2-1.1-2.9,0.8l1.1,7.7C265.3,37,268.1,36.2,267.9,34.3z' fill='#FFFFFF'></path>
+            <path d='M265.2,20.5c-1.9,0-1.9,3,0,3C267.1,23.5,267.1,20.5,265.2,20.5z' fill='#FFFFFF'></path>
+            <path d='M278.8,22.2c-3.3-0.1-6.7,0-10,0.4c-1.9,0.2-1.9,3.2,0,3c1-0.1,1.9-0.2,2.9-0.2c0,3.2,0.3,6.3,0.8,9.5&#x000A;		c0.3,1.9,3.2,1.1,2.9-0.8c-0.5-2.9-0.7-5.8-0.7-8.8c1.4,0,2.7,0,4.1,0C280.8,25.2,280.8,22.2,278.8,22.2z' fill='#FFFFFF'></path>
+            <path d='M303.9,32.9c-2.7-3.9-5.2-7.8-7.5-11.9c-0.7-1.2-2.3-0.8-2.7,0.4c-0.9,2.3-1.8,4.6-2.7,6.9&#x000A;		c-0.1,0.2-0.2,0.4-0.2,0.6c-0.6,1.5-1.1,2.9-1.7,4.4c-0.7,1.8,2.2,2.6,2.9,0.8c0.4-1.2,0.9-2.3,1.3-3.5c1.3-0.2,2.6-0.2,3.9-0.1&#x000A;		c0.6,0.1,0.9-0.2,1.2-0.5c1,1.5,1.9,3,3,4.4C302.4,36,305,34.5,303.9,32.9z M294.4,27.5c0.3-0.8,0.6-1.5,0.9-2.3&#x000A;		c0.5,0.8,1,1.5,1.4,2.3C296,27.4,295.2,27.4,294.4,27.5z' fill='#FFFFFF'></path>
+            <path d='M315,33c0.1-0.1,0.1-0.1,0.2-0.2c0.6-0.7,0.4-1.6-0.2-2.2c0-0.3,0-0.7,0-1c0-0.1,0-0.3,0-0.4&#x000A;		c0.2-0.3,0.3-0.6,0.3-0.9c0-0.9-0.7-1.4-1.5-1.5c-1.8-0.2-3.5,0.2-5.1,0.9c-0.7,0.3-0.9,1.4-0.5,2.1c0.5,0.8,1.3,0.9,2.1,0.5&#x000A;		c0.6-0.2,1.2-0.4,1.8-0.5c0,0.6-0.1,1.2-0.1,1.8c-2,1.3-4.8,0.6-5.6-2c-1-3.2,1.8-5.8,4.9-5.8c1.9,0,1.9-3,0-3&#x000A;		c-5.3,0-9.6,4.9-7.6,10.1c1.3,3.5,5.2,5.1,8.4,4c0.1,0.9,0.1,1.8,0.2,2.7c0.2,1.9,3.2,1.9,3,0C315.1,36.1,315,34.6,315,33z' fill='#FFFFFF'></path>
+            <path d='M327.7,33.6c-0.5-1.2-0.9-2.4-1.4-3.6c0.6-0.8,0.3-2.3-0.9-2.4c-0.8-2-1.5-4-2.3-6c-0.4-1-2.2-1.7-2.7-0.4&#x000A;		c-1.5,3.6-3,7.2-4.5,10.7c-0.7,1.8,1.8,3.3,2.6,1.5c0.4-1,0.8-1.9,1.2-2.9h3.7l1.5,3.9C325.5,36.1,328.4,35.4,327.7,33.6z&#x000A;		 M320.9,27.5c0.2-0.5,0.5-1.1,0.7-1.6l0.6,1.6H320.9z' fill='#FFFFFF'></path>
+            <path d='M333.2,24c-0.1-1.9-3.1-1.9-3,0l0.6,9.4c0.1,1.9,3.1,1.9,3,0L333.2,24z' fill='#FFFFFF'></path>
+            <path d='M330.8,17.8c-1.9,0-1.9,3,0,3C332.8,20.8,332.8,17.8,330.8,17.8z' fill='#FFFFFF'></path>
+            <path d='M349.8,32.1c-1-3.6-1.9-7.2-2.9-10.8c-0.5-1.9-3.4-1.1-2.9,0.8c0.5,1.9,1,3.9,1.6,5.8&#x000A;		c-1.7-1.7-3.4-3.4-5-5.2c0.1-0.8-0.4-1.6-1.4-1.5c-1.9,0.2-2.2,1.6-2.2,3.3c0,2.9,0.1,5.7,0.1,8.6c0,2,2.9,1.9,3,0&#x000A;		c0.2-2,0.2-4,0.3-6.1c2.2,2.3,4.5,4.5,6.9,6.6C348.4,34.5,350.2,33.6,349.8,32.1z' fill='#FFFFFF'></path>
+          </g>
+        </svg>
+        <a class='button fb-share popup' href='https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fsloth.animade.tv%2F' onclick="_gaq.push(['_trackEvent', 'social', 'click', 'shareFacebook']);" target='_blank'>
+          <svg class='button_svg' enable-background='new 0 0 266.893 266.895' height='9px' space='preserve' version='1.1' viewbox='0 0 266.893 266.895' width='9px' x='0px' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
+            <path d='M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812&#x000A;	c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225&#x000A;	H248.082z' fill='#FFFFFF' id='Blue_1_'></path>
+            <path d='M182.409,262.307v-99.803h33.499l5.016-38.895h-38.515V98.777c0-11.261,3.127-18.935,19.275-18.935&#x000A;	l20.596-0.009V45.045c-3.562-0.474-15.788-1.533-30.012-1.533c-29.695,0-50.025,18.126-50.025,51.413v28.684h-33.585v38.895h33.585&#x000A;	v99.803H182.409z' fill='#652651' id='f'></path>
+          </svg>
+          Share
+        </a>
+        <a class='button popup twitter-share' href='https://twitter.com/intent/tweet/?text=Check%20out%20this%20awesome%20game%20by%20@mstoiber05%20and%20@beezilda!&amp;url=http%3A%2F%2Fsloth.animade.tv' onclick="_gaq.push(['_trackEvent', 'social', 'click', 'shareTwitter']);" target='_blank'>
+          <img height='9px' src='scenes/buttons/twitter.png' width='11px'>
+          Tweet
+        </a>
+      </div>
+    </div>
+    <audio autoplay='true' id='thememusic' loop='true'>
+      <source src='scenes/skyline/audio/mp3/theme.mp3' type='audio/mpeg'>
+    </audio>
+    <script src='javascripts/preloadjs.min.js'></script>
+    <script>
+      var sceneName;
+      // Take one of 4 sloth positions
+      var randomnumber = Math.floor(Math.random()*4) + 1;
+      var randomsentence = Math.floor(Math.random() * 3) + 1;
+      var queue;
+      var audioFilenames = [
+        { name: "mp3/street.mp3", vol: 0.75, loaded: false, dirAudio: false },
+        { name: "mp3/xmas.mp3", elem: "xmas", vol: 1, loaded: false, dirAudio: true },
+        { name: "mp3/shower.mp3", elem: "shower", vol: 1, loaded: false, dirAudio: true},
+        { name: "mp3/duck.mp3", elem: "duck", vol: 1, loaded: false, dirAudio: true },
+        { name: "mp3/tv.mp3", elem: "tv", vol: 1, loaded: false, dirAudio: true},
+        { name: "mp3/R2D2.mp3", elem: "r2d2", vol: 0.75, loaded: false, dirAudio: true},
+        { name: "mp3/fridge.mp3", elem: "fridge", vol: 1, loaded: false, dirAudio: true },
+        { name: "mp3/brazil.mp3", elem: "brazil", vol: 1, loaded: false, dirAudio: true },
+        { name: "mp3/fire.mp3", elem: "fire", vol: 1, loaded: false, dirAudio: true },
+        { name: "mp3/neve.mp3", elem: "neve", vol: 1, loaded: false, dirAudio: true},
+        { name: "mp3/underwater.mp3", elem: "underwater", vol: 1, loaded: false, dirAudio: true },
+        { name: "mp3/vvvvvv.mp3", elem: "vvv", vol: 0.5, loaded: false, dirAudio: true },
+        { name: "mp3/pingpong.mp3", elem: "ping_pong", vol: 1, loaded: false, dirAudio: true },
+        { name: "mp3/ukulele.mp3", elem: "ukulele", vol: 1, loaded: false, dirAudio: true},
+        { name: "mp3/cowboy.mp3", elem: "cowboy", vol: 0.5, loaded: false, dirAudio: true },
+        { name: "mp3/adventuretime.mp3", elem: "adventure_time", vol: 0.5, loaded: false, dirAudio: true }
+      ];
+      // Create an audio context
+      window.AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioContext = new AudioContext();
+      var title = true;
+    </script>
+    <script src='javascripts/initial.js'></script>
+  </body>
+</html>
