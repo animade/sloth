@@ -225,6 +225,13 @@ function onMouseMove(evt) {
 	}
 	// Then redraw the canvas
 	window.requestAnimationFrame(draw);
+	var underwatergif = document.getElementById('underwater').getBoundingClientRect();
+	if ((circleX > underwatergif.left - (circleRadius * 2) && circleX < underwatergif.left + underwatergif.width * 2 + ((circleRadius * 2) - underwatergif.width)) && (circleY > underwatergif.top - (circleRadius * 2) && circleY < underwatergif.top + underwatergif.height + (circleRadius * 2))) {
+		console.log(underwatergif.width);
+		$('#underwaterimg').css('display', 'block');
+	} else {
+		$('#underwaterimg').css('display', 'none');
+	}
 	// If audio is on, check if we need to
 	// change volume based on position.
 	if (audio && !audioButton) {
