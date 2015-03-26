@@ -12,7 +12,7 @@ sceneName = "skyline";
 
 // Put together filenames for easier extensibility
 var src 				= "scenes/" + sceneName;
-var animationSrc 		= src + "/animation/animation.gif";
+var animationSrc 		= src + "/animation/inside.mp4";
 var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
 var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
 var slothAnimationSrc	= src + "/animation/sloth" + randomnumber + ".gif";
@@ -138,12 +138,6 @@ function handleComplete(evt) {
 	var outside = queue.getResult("sceneryOutside");
 	document.getElementById("outside").appendChild(outside).setAttribute("id", "outsideImg");
 	document.getElementById("outsideImg").style.visibility = "hidden";
-
-	// Inject whole page animations
-	var img = queue.getResult("animation");
-	animationwrapper.appendChild(img).setAttribute("id", "animationimg");
-	var animationimgelem = $("#animationimg");
-	animationimgelem.css("left", window.innerWidth / 2 - animationimgelem.width() / 2);
 
 	// Inject sloth animation
 	var slothimg = queue.getResult("slothAnimation");

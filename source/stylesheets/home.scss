@@ -396,7 +396,6 @@ p {
 	left: 0;
 	width: 100%;
 	height: auto;
-	display: none!important;
 }
 
 // Sloth animation
@@ -415,6 +414,17 @@ p {
 	position: absolute;
 	bottom: 0;
 	left: 0;
+	height: calc(100vw * (1080 / 1920));
+	max-height: 100vh;
+	max-width: 100%;
+	display: block;
+	margin: 0 auto;
+}
+
+#animationimg {
+	position: absolute;
+	bottom: 0;
+	left: 0!important;
 	height: calc(100vw * (1080 / 1920));
 	max-height: 100vh;
 	max-width: 100%;
