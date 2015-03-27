@@ -183,7 +183,7 @@ p {
 }
 
 #logo {
-	width: 65%;
+	width: 50%;
 	max-width: 800px;
 	display: block;
 	margin: 0 auto;
@@ -422,9 +422,6 @@ p {
 }
 
 #animationimg {
-	position: absolute;
-	bottom: 0;
-	left: 0!important;
 	height: calc(100vw * (1080 / 1920));
 	max-height: 100vh;
 	max-width: 100%;
