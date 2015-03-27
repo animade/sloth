@@ -92,7 +92,7 @@ function preload() {
 	queue.loadFile({id:"sceneryOutside", src:sceneryOutsideSrc});
 	queue.loadFile({id:"sceneryInside", src:sceneryInsideSrc});
 	if (Modernizr.touch) {
-		queue.loadFile({id:"gifanimation", src: src + "/animation/inside.mp4"});
+		queue.loadFile({id:"gifanimation", src: src + "/animation/animation.gif"});
 	}
 	// Animations
 	queue.loadFile({id:"animation", src:animationSrc});
