@@ -165,8 +165,8 @@ function handleComplete(evt) {
 	if (Modernizr.touch) {
 		// Inject whole page animations
 		var img = queue.getResult("gifanimation");
-		animationwrapper.appendChild(img).setAttribute("id", "animationimg");
-		var animationimgelem = $("#animationimg");
+		animationwrapper.appendChild(img).setAttribute("id", "animationgif");
+		var animationimgelem = $("#animationgif");
 		animationimgelem.css("left", window.innerWidth / 2 - animationimgelem.width() / 2);
 	}
 

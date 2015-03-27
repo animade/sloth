@@ -436,6 +436,17 @@ p {
 	margin: 0 auto;
 }
 
+#animationgif {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: calc(100vw * (1080 / 1920));
+	max-height: 100vh;
+	max-width: 100%;
+	display: block;
+	margin: 0 auto;
+}
+
 //
 // Canvas
 //
