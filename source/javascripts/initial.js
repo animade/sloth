@@ -16,7 +16,7 @@ var animationSrc 		= src + "/animation/inside.mp4";
 var sceneryOutsideSrc 	= src + "/sceneries/outside.png";
 var sceneryInsideSrc 	= src + "/sceneries/inside.svg";
 var slothAnimationSrc	= src + "/animation/sloth" + randomnumber + ".gif";
-var underwaterAniSrc	= src + "/animation/underwater.gif";
+var underwaterAniSrc	= src + "/animation/underwater_isolated.gif";
 var audioSrc 			= src + "/audio/";
 var successSrc			= "scenes/success_screen/";
 var successSentenceSrc	= successSrc + "sentence" + randomsentence + ".svg";
@@ -91,6 +91,9 @@ function preload() {
 	// Scenery
 	queue.loadFile({id:"sceneryOutside", src:sceneryOutsideSrc});
 	queue.loadFile({id:"sceneryInside", src:sceneryInsideSrc});
+	if (Modernizr.touch) {
+		queue.loadFile({id:"gifanimation", src: src + "/animation/inside.mp4"});
+	}
 	// Animations
 	queue.loadFile({id:"animation", src:animationSrc});
 	queue.loadFile({id:"slothAnimation", src:slothAnimationSrc});
@@ -149,7 +152,8 @@ function handleComplete(evt) {
 	var underwaterimg = queue.getResult("underwaterAnimation");
 	animationwrapper.appendChild(underwaterimg).setAttribute("id", "underwaterimg");
 	var underwaterimgelem = $("#underwaterimg");
-	underwaterimgelem.css("left", window.innerWidth / 2 - underwaterimgelem.width() / 2);
+	var underwaterOriginal = document.getElementById("underwater").getBoundingClientRect();
+	underwaterimgelem.css("left", underwaterOriginal.left + "px").css("top", (underwaterOriginal.top - $("#animationwrapper").offset().top) + "px").css("width", underwaterOriginal.width);
 
 	// Inject success screen
 	var successDiv = document.getElementById("successwrapper");
@@ -157,6 +161,14 @@ function handleComplete(evt) {
 	successDiv.insertBefore(successSentence, successDiv.firstChild).setAttribute("id", "successSentence");
 	var successSloth = queue.getResult("successSloth");
 	successDiv.insertBefore(successSloth, successDiv.firstChild).setAttribute("id", "successSloth");
+
+	if (Modernizr.touch) {
+		// Inject whole page animations
+		var img = queue.getResult("gifanimation");
+		animationwrapper.appendChild(img).setAttribute("id", "animationimg");
+		var animationimgelem = $("#animationimg");
+		animationimgelem.css("left", window.innerWidth / 2 - animationimgelem.width() / 2);
+	}
 
 	complete = true;
 	// If play was already clicked and the audio files already decoded, initialize the game

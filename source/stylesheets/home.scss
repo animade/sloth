@@ -410,7 +410,7 @@ p {
 	max-height: 100vh;
 }
 
-#animationwrapper img {
+#slothimg {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -419,6 +419,13 @@ p {
 	max-width: 100%;
 	display: block;
 	margin: 0 auto;
+}
+
+#underwaterimg {
+	position: absolute;
+	display: block;
+	width: auto;
+	height: auto;
 }
 
 #animationimg {
