@@ -5,10 +5,25 @@
     %meta{content: "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
     %title
       = current_page.data.title || "Page Title"
-    %meta{:name => "description", content: "Do sloths hang out in ornate buildings? We're pretty sure they do, so we came up with this characterful web-toy."}
+    %meta{:name => "description", content: "Scan your cursor across Animade Town to find the elusive sloth and reveal what’s happening behind closed doors. There’s nothing rude, we promise."}
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0"}/
     %meta{:rel => "apple-touch-icon", :href => "favicons/apple-touch-icon.png"}
     %link{:rel => "icon", :href => "favicon.png"}
+
+    / Twitter Card data
+    %meta{:content => "summary", :name => "twitter:card"}/
+    %meta{:content => "@animadetv", :name => "twitter:site"}/
+    %meta{:content => "Page Title", :name => "twitter:title"}/
+    %meta{:content => "Scan your cursor across Animade Town to find the elusive sloth and reveal what’s happening behind closed doors. There’s nothing rude, we promise.", :name => "twitter:description"}/
+    %meta{:content => "@mstoiber05", :name => "twitter:creator"}/
+    %meta{:content => "favicon.png", :name => "twitter:image"}/
+    / Open Graph data
+    %meta{:content => "The lost sloth", :property => "og:title"}/
+    %meta{:content => "website", :property => "og:type"}/
+    %meta{:content => "http://sloth.animade.tv", :property => "og:url"}/
+    %meta{:content => "favicon.png", :property => "og:image"}/
+    %meta{:content => "Scan your cursor across Animade Town to find the elusive sloth and reveal what’s happening behind closed doors. There’s nothing rude, we promise.", :property => "og:description"}/
+    %meta{:content => "The lost sloth", :property => "og:site_name"}/
 
     /[if lt IE 9 ] <script type="text/javascript" src="javascripts/flashcanvas.js"></script> 
 
