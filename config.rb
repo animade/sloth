@@ -45,6 +45,7 @@ end
 
 # Deploy site to github pages
 activate :deploy do |deploy|
+  deploy.remote = 'git@github.com:animade/sloth.git'
   deploy.build_before = true
   deploy.method = :git
 end
